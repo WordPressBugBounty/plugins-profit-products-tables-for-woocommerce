@@ -40,28 +40,38 @@ add_action('woot_default_tables', function ($table_id = 0, $shortcode_args = [])
         ],
         'post_excerpt' => [
             'title' => esc_html__('Excerpt', 'profit-products-tables-for-woocommerce'),
-            'action' => function($post_id) {
+            'action' => function ($post_id) {
                 $title = esc_html__('Excerpt', 'profit-products-tables-for-woocommerce') . ': ';
                 $title .= get_post_field('post_title', $post_id);
+
                 return WOOT_HELPER::draw_html_item('a', [
-                            'href' => "javascript: new Popup23({title: \"{$title}\",post_id:$post_id, what: \"excerpt\"}); void(0);"
-                                ], esc_html__('See Excerpt', 'profit-products-tables-for-woocommerce'));
+                    'href' => '#',
+                    'title' => esc_attr($title),
+                    'data-popup-title' => esc_attr($title),
+                    'data-post-id' => intval($post_id),
+                    'data-what' => 'excerpt'
+                        ], esc_html__('See Excerpt', 'profit-products-tables-for-woocommerce'));
             }
         ],
         'post_content' => [
             'title' => esc_html__('Content', 'profit-products-tables-for-woocommerce'),
-            'action' => function($post_id) {
+            'action' => function ($post_id) {
                 $title = esc_html__('Content', 'profit-products-tables-for-woocommerce') . ': ';
                 $title .= get_post_field('post_title', $post_id);
+
                 return WOOT_HELPER::draw_html_item('a', [
-                            'href' => "javascript: new Popup23({title: \"{$title}\",post_id:$post_id, what: \"content\"}); void(0);"
-                                ], esc_html__('See Content', 'profit-products-tables-for-woocommerce'));
+                    'href' => '#',
+                    'title' => esc_attr($title),
+                    'data-popup-title' => esc_attr($title),
+                    'data-post-id' => intval($post_id),
+                    'data-what' => 'content'
+                        ], esc_html__('See Content', 'profit-products-tables-for-woocommerce'));
             }
         ],
         'menu_order' => [
             'title' => esc_html__('Menu order', 'profit-products-tables-for-woocommerce'),
             'order' => 'asc'
-        ],				
+        ],
         'post_status' => [
             'title' => esc_html__('Status', 'profit-products-tables-for-woocommerce'),
             'order' => 'asc'
@@ -77,11 +87,10 @@ add_action('woot_default_tables', function ($table_id = 0, $shortcode_args = [])
             'title' => esc_html__('Modified', 'profit-products-tables-for-woocommerce'),
             'order' => 'desc'
         ],
-				
         'comment_count' => [
             'title' => esc_html__('Comment count', 'profit-products-tables-for-woocommerce'),
             'order' => 'desc',
-            'action' => function($post_id) {
+            'action' => function ($post_id) {
                 return get_comments_number($post_id);
             }
         ],

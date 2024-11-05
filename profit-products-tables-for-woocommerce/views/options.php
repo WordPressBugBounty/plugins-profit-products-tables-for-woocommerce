@@ -83,7 +83,7 @@ if (!defined('ABSPATH'))
                             'href' => 'https://products-tables.com/downloads',
                             'target' => '_blank',
                             'class' => 'button woot-btn-upgrade',
-                            //'style' => '',
+                                //'style' => '',
                                 ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Upgrade to Premium', 'profit-products-tables-for-woocommerce'));
                         ?>
                     </div>
@@ -188,11 +188,33 @@ if (!defined('ABSPATH'))
                         'data-field' => true
                     ],
                 ]);
-                ?>
 
-                <a href='javascript: new Popup23({title: "<?php echo esc_html__('Info data: All possible columns keys for [woot] shortcode attributes', 'profit-products-tables-for-woocommerce') ?>", what: "possible_columns_keys"}); void(0);' class="woot-btn"><?php echo esc_html__('All possible columns keys', 'profit-products-tables-for-woocommerce') ?></a>&nbsp;
-                <a href='javascript: new Popup23({title: "<?php echo esc_html__('Export WOOT Data', 'profit-products-tables-for-woocommerce') ?>", what: "export"}); void(0);' class="woot-btn"><?php echo esc_html__('Export WOOT Data', 'profit-products-tables-for-woocommerce') ?></a>&nbsp;
-                <a href='javascript: new Popup23({title: "<?php echo esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce') ?>", what: "import"}); void(0);' class="woot-btn"><?php echo esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce') ?></a>
+                //+++
+
+                echo WOOT_HELPER::draw_html_item('a', [
+                    'href' => '#',
+                    'class' => 'woot-btn',
+                    'title' => esc_html__('Info data: All possible columns keys for [woot] shortcode attributes', 'profit-products-tables-for-woocommerce'),
+                    'data-popup-title' => esc_html__('Info data: All possible columns keys for [woot] shortcode attributes', 'profit-products-tables-for-woocommerce'),
+                    'data-what' => 'possible_columns_keys'
+                        ], esc_html__('All possible columns keys', 'profit-products-tables-for-woocommerce')) . '&nbsp;';
+
+                echo WOOT_HELPER::draw_html_item('a', [
+                    'href' => '#',
+                    'class' => 'woot-btn',
+                    'title' => esc_html__('Export WOOT Data', 'profit-products-tables-for-woocommerce'),
+                    'data-popup-title' => esc_html__('Export WOOT Data', 'profit-products-tables-for-woocommerce'),
+                    'data-what' => 'export'
+                        ], esc_html__('Export WOOT Data', 'profit-products-tables-for-woocommerce')) . '&nbsp;';
+
+                echo WOOT_HELPER::draw_html_item('a', [
+                    'href' => '#',
+                    'class' => 'woot-btn',
+                    'title' => esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce'),
+                    'data-popup-title' => esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce'),
+                    'data-what' => 'import'
+                        ], esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce'));
+                ?>
 
             </section>
 

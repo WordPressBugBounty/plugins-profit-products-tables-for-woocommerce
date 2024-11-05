@@ -4,16 +4,16 @@
   Plugin URI: https://products-tables.com/
   Description: WooCommerce plugin for displaying shop products in table format. Tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
   Requires at least: WP 4.9
-  Tested up to: WP 6.5
+  Tested up to: WP 6.7
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.6.4
+  Version: 1.0.6.5
   Requires PHP: 7.2
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
-  WC requires at least: 3.6
-  WC tested up to: 9.0
+  WC requires at least: 5.6
+  WC tested up to: 9.3
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.6.4');
+define('WOOT_VERSION', '1.0.6.5');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -46,8 +46,13 @@ include_once WOOT_PATH . 'classes/tables.php';
 //profiles
 //include WOOT_PATH . 'profiles/default.php';
 include_once WOOT_PATH . 'profiles/woocommerce/woocommerce.php';
+add_action('before_woocommerce_init', function () {
+    if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
-//16-05-2024
+//04-11-2024
 class WOOT {
 
     public $tables = null;
@@ -269,7 +274,7 @@ class WOOT {
             'hide_shop_cart_btn' => intval(WOOT_Settings::get('hide_shop_cart_btn')),
             'hide_checkout_btn' => intval(WOOT_Settings::get('hide_checkout_btn')),
             'selected_lang' => apply_filters('woot_current_lang', get_locale()),
-			'settings_nonce' =>  wp_create_nonce( 'woot_settings_nonce' ),
+            'settings_nonce' => wp_create_nonce('woot_settings_nonce'),
             'lang' => apply_filters('woot_helper_lang', [
                 'loading' => WOOT_Vocabulary::get(esc_html__('Loading ...', 'profit-products-tables-for-woocommerce')),
                 'no_data' => WOOT_Vocabulary::get(esc_html__('No Data!', 'profit-products-tables-for-woocommerce')),
@@ -403,7 +408,7 @@ class WOOT {
 
         //+++
 
-        if ($table_id > 0 AND!isset($args['table_html_id'])) {
+        if ($table_id > 0 AND !isset($args['table_html_id'])) {
             $table_html_id = $this->columns->options->get($table_id, 'table_html_id', '');
         }
 
@@ -439,7 +444,7 @@ class WOOT {
 
         //***
         //simple shortcode [woot]
-        if (!isset($args['id']) AND!isset($args['columns'])) {
+        if (!isset($args['id']) AND !isset($args['columns'])) {
             $args['columns'] = implode(',', $this->default_columns);
         }
 
@@ -474,7 +479,6 @@ class WOOT {
         }
 
         $args = apply_filters('woot_review_shortcode_args', $args);
-		
 
         return WOOT_HELPER::render_html('views/table.php', array(
                     'table_html_id' => $table_html_id,
@@ -493,7 +497,7 @@ class WOOT {
                     'orderby_select' => WOOT_WooCommerce::get_select_orderby_options(isset($args['orderby_select_fields']) ? $args['orderby_select_fields'] : (($table_id > 0 AND $this->columns->options->get($table_id, 'is_sort_droptdown_shown', 0)) ? $this->columns->options->get($table_id, 'orderby_select_fields', '') : ''), $table_id),
                     'cart_position' => isset($args['cart_position']) ? intval($args['cart_position']) : (($table_id > 0 ? $this->columns->options->get($table_id, 'cart_position', 0) : 0)),
                     'table_view' => isset($args['table_view']) ? $args['table_view'] : ''
-                ))  . $this->draw_table_data($args, $table_html_id);
+                )) . $this->draw_table_data($args, $table_html_id);
     }
 
     /**
@@ -545,9 +549,13 @@ class WOOT {
         $args_json = json_encode($args);
 
         return WOOT_HELPER::draw_html_item('a', [
-                    'href' => "javascript: new Popup23({title: \"{$popup_title}\",help_title: \"{$help_title}\",help_link: \"{$help_link}\",post_id: -1, what: JSON.stringify({$args_json})}); void(0);",
+                    'href' => '#',
                     'title' => esc_attr($popup_title),
-                    'class' => esc_attr($class)
+                    'class' => esc_attr($class),
+                    'data-popup-title' => esc_attr($popup_title),
+                    'data-help-title' => esc_attr($help_title),
+                    'data-help-link' => esc_url($help_link),
+                    'data-what' => esc_js($args_json)
                         ], $title);
     }
 
@@ -610,11 +618,11 @@ class WOOT {
 
         if (isset($args['action'])) {
 
-            $profile = apply_filters($args['action'], (isset($args['id']) ? intval($args['id']) : 0), $args);
 
+            $profile = apply_filters($args['action'], (isset($args['id']) ? intval($args['id']) : 0), $args);
             //***
 
-            if (isset($args['columns']) AND!empty($args['columns'])) {
+            if (isset($args['columns']) AND !empty($args['columns'])) {
 
                 if (is_string($args['columns'])) {
                     $cols = explode(',', $args['columns']);
@@ -909,15 +917,15 @@ class WOOT {
             $use_load_more = intval($args['use_load_more']);
         }
 
-        if (isset($args['cells_width']) AND!empty($args['cells_width'])) {
+        if (isset($args['cells_width']) AND !empty($args['cells_width'])) {
             $cells_width = explode(',', $args['cells_width']);
         }
 
-        if (isset($args['hide_on_mobile']) AND!empty($args['hide_on_mobile'])) {
+        if (isset($args['hide_on_mobile']) AND !empty($args['hide_on_mobile'])) {
             $hide_on_mobile = explode(',', $args['hide_on_mobile']);
         }
 
-        if (isset($args['author']) AND!empty($args['author'])) {
+        if (isset($args['author']) AND !empty($args['author'])) {
             $predefinition['author'] = intval($args['author']);
         }
 
@@ -1058,10 +1066,10 @@ class WOOT {
 
 
         if ($as_script) {
-            return  "<div class='{$as_script}' data-table-id='{$table_html_id}' style='display: none;'>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG) . '</div>';
+            return "<div class='{$as_script}' data-table-id='{$table_html_id}' style='display: none;'>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG) . '</div>';
         }
 
-		
+
         return json_encode($js_script_data);
     }
 
@@ -1264,7 +1272,7 @@ class WOOT {
         ];
 
         $args['woot_text_search_by'] = [];
-        if (isset($shortcode_args_set['woot_text_search_by']) AND!empty($shortcode_args_set['woot_text_search_by'])) {
+        if (isset($shortcode_args_set['woot_text_search_by']) AND !empty($shortcode_args_set['woot_text_search_by'])) {
             $woot_text_search = explode(',', $shortcode_args_set['woot_text_search_by']);
             $args['woot_text_search_by'] = array_filter($woot_text_search, function ($val) {
                 return in_array($val, ['post_title', 'post_content', 'post_excerpt']);
@@ -1276,7 +1284,7 @@ class WOOT {
         //***
         $limit_found_posts = -1;
 
-        if (isset($requested_data['predefinition']) AND!empty($requested_data['predefinition'])) {
+        if (isset($requested_data['predefinition']) AND !empty($requested_data['predefinition'])) {
             $predefinition = WOOT_HELPER::sanitize_array(json_decode(stripslashes($requested_data['predefinition']), true));
         }
 
@@ -1484,7 +1492,7 @@ class WOOT {
                                 case 'show_hidden':
 
                                     if (intval($value) > 0) {
-                                        if (isset($args['tax_query']) AND!empty($args['tax_query'])) {
+                                        if (isset($args['tax_query']) AND !empty($args['tax_query'])) {
                                             foreach ($args['tax_query'] as $key => $v) {
                                                 if ($v['taxonomy'] === 'product_visibility') {
                                                     unset($args['tax_query'][$key]);
@@ -1552,7 +1560,7 @@ class WOOT {
 
         //***
 
-        if (isset($args['meta_query']) AND!empty($args['meta_query'])) {
+        if (isset($args['meta_query']) AND !empty($args['meta_query'])) {
             if (!isset($args['meta_query']['relation'])) {
                 $args['meta_query'] = array_merge(['relation' => 'AND'], $args['meta_query']);
             }
@@ -1580,7 +1588,7 @@ class WOOT {
 
         //***
 
-        if (!empty($fields) AND!empty($query)) {
+        if (!empty($fields) AND !empty($query)) {
 
             foreach ($query->posts as $post) {
                 $tmp = [];
@@ -1659,9 +1667,9 @@ class WOOT {
                 break;
 
             case 'export':
-				if (!current_user_can('manage_woocommerce')) {
-					die('0');
-				}				
+                if (!current_user_can('manage_woocommerce')) {
+                    die('0');
+                }
                 $data = [];
                 $data['woot_tables'] = $this->tables->gets();
                 $data['woot_tables_columns'] = $this->columns->gets();
@@ -1669,12 +1677,12 @@ class WOOT {
                 $data['woot_vocabulary'] = $this->vocabulary->gets();
                 $data['woot_settings'] = get_option('woot_settings', []);
 
-                if ($data['woot_settings'] AND!is_array($data['woot_settings'])) {
+                if ($data['woot_settings'] AND !is_array($data['woot_settings'])) {
                     $data['woot_settings'] = json_decode($data['woot_settings'], true);
                 }
 
                 $data['woot_mime_types_association'] = get_option('woot_mime_types_association', []);
-                if ($data['woot_mime_types_association'] AND!is_array($data['woot_mime_types_association'])) {
+                if ($data['woot_mime_types_association'] AND !is_array($data['woot_mime_types_association'])) {
                     $data['woot_mime_types_association'] = json_decode($data['woot_mime_types_association'], true);
                 }
 
@@ -1686,9 +1694,9 @@ class WOOT {
                 break;
 
             case 'import':
-				if (!current_user_can('manage_woocommerce')) {
-					die('0');
-				}
+                if (!current_user_can('manage_woocommerce')) {
+                    die('0');
+                }
                 $res = '<div class="woot-notice">' . esc_html__('ATTENTION! All existed WOOT data will be wiped!', 'profit-products-tables-for-woocommerce') . '</div>';
                 $res .= WOOT_HELPER::draw_html_item('textarea', [
                             'autofocus' => '',
@@ -1837,9 +1845,11 @@ class WOOT {
         }
 
         return WOOT_HELPER::draw_html_item('a', [
-                    'href' => "javascript: new Popup23({title: \"{$popup_title}\", shortcodes_set: \"{$args['shortcode']}\"}); void(0);",
-                    'title' => $popup_title,
-                    'class' => $class
+                    'href' => '#',
+                    'title' => esc_attr($popup_title),
+                    'class' => esc_attr($class),
+                    'data-popup-title' => esc_attr($popup_title),
+                    'data-shortcodes-set' => esc_js($args['shortcode'])
                         ], $title);
     }
 
@@ -1873,14 +1883,14 @@ class WOOT {
      * @return void
      */
     public function import_data() {
-		
-		if (!current_user_can('manage_woocommerce')) {
+
+        if (!current_user_can('manage_woocommerce')) {
             die('0');
         }
-		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+
+        if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
             die('0');
-        }		
+        }
         if (WOOT_HELPER::can_manage_data()) {
             if (!empty($_REQUEST['data'])) {
                 $data = WOOT_HELPER::sanitize_array(json_decode(stripslashes($_REQUEST['data']), true));
@@ -1970,7 +1980,7 @@ class WOOT {
             ?>
             <div class="notice notice-info" id="pn_<?php echo $slug ?>_ask_favour" style="position: relative;">
                 <button onclick="javascript: pn_<?php echo $slug ?>_dismiss_review(1);
-                        void(0);" title="<?php _e('Later', 'profit-products-tables-for-woocommerce'); ?>" class="notice-dismiss"></button>
+                                    void(0);" title="<?php _e('Later', 'profit-products-tables-for-woocommerce'); ?>" class="notice-dismiss"></button>
                 <div id="pn_<?php echo $slug ?>_review_suggestion">
                     <p><?php _e('Hi! Are you enjoying using WOOT - WooCommerce Active Products Tables?', 'profit-products-tables-for-woocommerce'); ?></p>
                     <p><a href="javascript: pn_<?php echo $slug ?>_set_review(1); void(0);"><?php _e('Yes, I love it', 'profit-products-tables-for-woocommerce'); ?></a> 🙂 | <a href="javascript: pn_<?php echo $slug ?>_set_review(0); void(0);"><?php _e('Not really...', 'profit-products-tables-for-woocommerce'); ?></a></p>
@@ -2026,7 +2036,6 @@ class WOOT {
             <?php
         });
     }
-
 }
 
 //***
@@ -2067,10 +2076,18 @@ add_action('wp_loaded', function () {
 //Special shortcodes
 
 add_shortcode('woot_popup_iframe_button', function ($args) {
-    wp_enqueue_script('woot-helper', WOOT_ASSETS_LINK . 'js/helper.js', [], WOOT_VERSION, true);
-    wp_enqueue_script('popup-23', WOOT_ASSETS_LINK . 'js/popup-23.js', ['woot-helper'], WOOT_VERSION, true);
-    wp_enqueue_style('woot-popup-23', WOOT_ASSETS_LINK . 'css/popup-23.css', [], WOOT_VERSION);
-    wp_enqueue_style('woot-general', WOOT_ASSETS_LINK . 'css/general.css', [], WOOT_VERSION);
+    /*
+      wp_enqueue_script('woot-helper', WOOT_ASSETS_LINK . 'js/helper.js', [], WOOT_VERSION, true);
+      wp_enqueue_script('popup-23', WOOT_ASSETS_LINK . 'js/popup-23.js', ['woot-helper'], WOOT_VERSION, true);
+      wp_enqueue_style('woot-popup-23', WOOT_ASSETS_LINK . 'css/popup-23.css', [], WOOT_VERSION);
+      wp_enqueue_style('woot-general', WOOT_ASSETS_LINK . 'css/general.css', [], WOOT_VERSION);
+      wp_enqueue_script('woot-general', WOOT_ASSETS_LINK . 'js/general.js', [], WOOT_VERSION, true);
+     * 
+     */
+
+    global $WOOT;
+
+    $WOOT->include_assets();
 
     $popup_page_link = '';
     if (isset($args['popup_page_link'])) {
@@ -2107,8 +2124,14 @@ add_shortcode('woot_popup_iframe_button', function ($args) {
     }
 
     return WOOT_HELPER::draw_html_item('a', [
-        'href' => "javascript: new Popup23({iframe:\"{$popup_page_link}\", title:\"{$popup_title}\", style:\"height: 100vh\",help_title:\"{$help_title}\",help_link:\"{$help_link}\"});void(0);",
-        'class' => $css_class
+        'href' => '#',
+        'title' => esc_attr($popup_title),
+        'class' => esc_attr($css_class),
+        'data-popup-title' => esc_attr($popup_title),
+        'data-iframe' => esc_url($popup_page_link),
+        'data-style' => esc_attr('height: 100vh'),
+        'data-help-title' => esc_attr($help_title ?? ''),
+        'data-help-link' => esc_url($help_link ?? ''),
             ], $button_text);
 });
 

@@ -73,7 +73,7 @@ document.addEventListener('woot-tabs-switch', e => {
     //***
     let help_link = document.getElementById('main-table-help-link');
     switch (e.detail.current_tab_link.getAttribute('href')) {
-         case '#tabs-columns':
+        case '#tabs-columns':
             help_link.setAttribute('href', 'https://products-tables.com/document/columns/');
             break;
         case '#tabs-meta':
@@ -150,6 +150,39 @@ window.onload = function () {
         });
     }
 
+    //+++
+
+
+    document.querySelectorAll('a[data-popup-title]').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const attributeMap = {
+                title: 'data-popup-title',
+                help_title: 'data-help-title',
+                help_link: 'data-help-link',
+                what: 'data-what',
+                shortcodes_set: 'data-shortcodes-set',
+                class: 'data-class',
+                style: 'data-style',
+                iframe: 'data-iframe',
+                post_id: 'post-id',
+            };
+
+            let data = {};
+
+            for (const [key, attrName] of Object.entries(attributeMap)) {
+                if (element.hasAttribute(attrName)) {
+                    const attrValue = element.getAttribute(attrName);
+                    data[key] = attrValue;
+                }
+            }
+
+            new Popup23(data);
+        });
+    });
+
+
 };
 
 
@@ -218,7 +251,7 @@ function woot_change_thumbnail(button) {
                             post_id: post_id,
                             field: field,
                             value: uploaded_image.id,
-			    settings_nonce: woot_helper_vars.settings_nonce
+                            settings_nonce: woot_helper_vars.settings_nonce
                         })
                     }).then(response => response.text()).then(data => {
                         woot_helper.message(woot_helper_vars.lang.saved, 'notice');
@@ -252,7 +285,7 @@ function woot_import_options() {
                     body: woot_helper.prepare_ajax_form_data({
                         action: 'woot_import_data',
                         data: JSON.stringify(data),
-			settings_nonce: woot_helper_vars.settings_nonce
+                        settings_nonce: woot_helper_vars.settings_nonce
                     })
                 }).then(response => response.text()).then(data => {
                     woot_helper.message(woot_helper_vars.lang.imported, 'notice');

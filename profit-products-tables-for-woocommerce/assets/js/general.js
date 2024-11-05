@@ -79,6 +79,39 @@ window.addEventListener('load', function () {
         });
     }
 
+    //+++
+
+    document.querySelectorAll('a[data-popup-title]').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const attributeMap = {
+                title: 'data-popup-title',
+                help_title: 'data-help-title',
+                help_link: 'data-help-link',
+                what: 'data-what',
+                shortcodes_set: 'data-shortcodes-set',
+                class: 'data-class',
+                style: 'data-style',
+                iframe: 'data-iframe',
+                post_id: 'post-id',
+            };
+
+            let data = {post_id: -1};
+
+            for (const [key, attrName] of Object.entries(attributeMap)) {
+                if (element.hasAttribute(attrName)) {
+                    const attrValue = element.getAttribute(attrName);
+                    data[key] = attrValue;
+                }
+            }
+
+            //console.log(data);
+
+            new Popup23(data);
+        });
+    });
+
 });
 
 /************************************** make interactions more rich **********************************************/
@@ -86,7 +119,6 @@ window.addEventListener('load', function () {
 function woot_init_actions() {
     //add keyboard navigation to the gallery, etc...
     document.addEventListener('keydown', e => {
-
         if (document.querySelectorAll('.woot-gallery-lightbox:target').length > 0) {
             let current = null;
 
@@ -124,6 +156,7 @@ function woot_init_actions() {
                 woot_close_txt_container(document.querySelector('.woot-more-less-container-active'));
             }
         }
+
 
     });
 
