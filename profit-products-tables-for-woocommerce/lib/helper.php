@@ -68,7 +68,7 @@ final class WOOT_HELPER {
         if (!empty($options) AND is_array($options)) {
             foreach ($options as $key => $value) {
                 $data_color = '';
-                if (isset($options_attributes[$key]) AND!empty($options_attributes[$key])) {
+                if (isset($options_attributes[$key]) AND !empty($options_attributes[$key])) {
                     if (isset($options_attributes[$key]['color']) AND $options_attributes[$key]['color']) {
                         $data_color = "data-color='{$options_attributes[$key]['color']}'";
                     }
@@ -173,7 +173,7 @@ final class WOOT_HELPER {
      */
     public static function render_html($pagepath, $data = array(), $with_root = true) {
 
-        if (is_array($data) AND!empty($data)) {
+        if (is_array($data) AND !empty($data)) {
             if (isset($data['pagepath'])) {
                 unset($data['pagepath']);
             }
@@ -236,7 +236,7 @@ final class WOOT_HELPER {
     public static function get_link_data() {
         $res = [];
 
-        if (isset($_REQUEST['woot_link_get_data']) AND!empty($_REQUEST['woot_link_get_data'])) {
+        if (isset($_REQUEST['woot_link_get_data']) AND !empty($_REQUEST['woot_link_get_data'])) {
             $res = json_decode(stripslashes($_REQUEST['woot_link_get_data']), true);
         }
 
@@ -282,7 +282,7 @@ final class WOOT_HELPER {
 
     public static function sanitize_array($array) {
 
-        if (is_array($array) AND!empty($array)) {
+        if (is_array($array) AND !empty($array)) {
             foreach ($array as $key => $data) {
                 if (is_array($data)) {
                     $array[$key] = self::sanitize_array($data);
@@ -322,6 +322,51 @@ final class WOOT_HELPER {
         return $roles;
     }
 
+    public static function delete_not_allowed_shortcodes($content) {
+        $matches = array();
+        preg_match_all(
+                '/' . get_shortcode_regex() . '/',
+                $content,
+                $matches,
+                PREG_SET_ORDER
+        );
+        $tags = array(
+            'woot',
+            'woot_attachments',
+            'woot_attachments_btn',
+            'woot_button',
+            'woot_cart',
+            'woot_compare',
+            'woot_compare_btn',
+            'woot_cross_sells',
+            'woot_drop_down',
+            'woot_favourites',
+            'woot_favourites_single_btn',
+            'woot_gallery',
+            'woot_grouped',
+            'woot_popup_iframe_button',
+            'woot_related',
+            'woot_reviews',
+            'woot_single',
+            'woot_single_btn',
+            'woot_upsells',
+            'woot_variations',
+        );
+        $allowed_shortcodes = apply_filters('woot_allowed_shortcodes', $tags);
+
+        $all_shortcodes = [];
+        foreach ($matches as $shortcode) {
+            $all_shortcodes[] = $shortcode[2];
+        }
+
+        $not_allowed_shortcodes = array_diff($all_shortcodes, $allowed_shortcodes);
+
+        $pattern = get_shortcode_regex($not_allowed_shortcodes);
+
+        $content = preg_replace_callback('/' . $pattern . '/s', 'strip_shortcode_tag', $content);
+
+        return $content;
+    }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

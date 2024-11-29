@@ -7,13 +7,13 @@
   Tested up to: WP 6.7
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.6.5
+  Version: 1.0.6.6
   Requires PHP: 7.2
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 5.6
-  WC tested up to: 9.3
+  WC tested up to: 9.4
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.6.5');
+define('WOOT_VERSION', '1.0.6.6');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//04-11-2024
+//29-11-2024
 class WOOT {
 
     public $tables = null;
@@ -1663,7 +1663,8 @@ class WOOT {
                 break;
 
             case 'shortcodes_set':
-                $res = WOOT_HELPER::sanitize_array(do_shortcode($_REQUEST['shortcodes_set']));
+                $content = WOOT_HELPER::delete_not_allowed_shortcodes($_REQUEST['shortcodes_set']);
+                $res = WOOT_HELPER::sanitize_array(do_shortcode($content));
                 break;
 
             case 'export':

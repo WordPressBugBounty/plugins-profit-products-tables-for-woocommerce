@@ -77,16 +77,38 @@ if (!defined('ABSPATH'))
                     ?>
                 </div>
                 <?php if (woot()->show_notes): ?>
-                    <div style="float: right;">
-                        <?php
-                        echo WOOT_HELPER::draw_html_item('a', [
-                            'href' => 'https://products-tables.com/downloads',
-                            'target' => '_blank',
-                            'class' => 'button woot-btn-upgrade',
-                                //'style' => '',
-                                ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Upgrade to Premium', 'profit-products-tables-for-woocommerce'));
-                        ?>
-                    </div>
+
+                    <?php if (time() < 1733094000): ?>
+
+
+                        <div style="float: right;">
+                            <?php
+                            echo WOOT_HELPER::draw_html_item('a', [
+                                'href' => 'https://products-tables.com/downloads',
+                                'target' => '_blank',
+                                'class' => '',
+                                    ], '<img src="https://pluginus.net/wp-content/uploads/2024/11/envato-cybersale-2024.png" width="120" alt="Cybermonday AND Blackfriday" />');
+                            ?>
+                        </div>
+
+                    <?php else: ?>
+
+
+                        <div style="float: right;">
+                            <?php
+                            echo WOOT_HELPER::draw_html_item('a', [
+                                'href' => 'https://products-tables.com/downloads',
+                                'target' => '_blank',
+                                'class' => 'button woot-btn-upgrade',
+                                    //'style' => '',
+                                    ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Upgrade to Premium', 'profit-products-tables-for-woocommerce'));
+                            ?>
+                        </div>
+
+
+                    <?php endif; ?>
+
+
                 <?php endif; ?>
 
                 <div class="clearfix"></div>
