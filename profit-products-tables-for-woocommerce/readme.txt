@@ -5,7 +5,7 @@ Tags: table, product table,products filter,products table,woocommerce product ta
 Requires at least: 4.9
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.0.6.6
+Stable tag: 1.0.6.7
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -174,6 +174,9 @@ R: [Support](https://pluginus.net/support/forum/woot-woocommerce-active-products
 
 
 == Changelog ==
+
+= 1.0.6.7 =
+* one security fix, thanks to Brian Sans-Souci(liardom) and Wordfence
 
 = 1.0.6.6 =
 * one security fix, thanks to Arkadiusz Hydzik and Wordfence
