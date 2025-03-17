@@ -3,9 +3,9 @@ Contributors: RealMag777
 Donate link: https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580
 Tags: table, product table,products filter,products table,woocommerce product table
 Requires at least: 4.9
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 1.0.6.7
+Stable tag: 1.0.6.8
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,12 +168,18 @@ R: [https://products-tables.com/woot-documentation/](https://products-tables.com
 Q: I have an idea, can I discuss it with you?
 R: [Support](https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/)
 
+Q: Where can I send security bug report about the plugin?
+R: You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/profit-products-tables-for-woocommerce)
+
 
 == Screenshots ==
 1. The plugin settings
 
 
 == Changelog ==
+
+= 1.0.6.8 =
+* one security fix, thanks to Arkadiusz Hydzik and Wordfence
 
 = 1.0.6.7 =
 * one security fix, thanks to Brian Sans-Souci(liardom) and Wordfence

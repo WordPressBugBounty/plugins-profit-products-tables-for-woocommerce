@@ -7,13 +7,13 @@
   Tested up to: WP 6.7
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.6.7
+  Version: 1.0.6.8
   Requires PHP: 7.2
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 9.6
+  WC tested up to: 9.8
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.6.7');
+define('WOOT_VERSION', '1.0.6.8');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//14-02-2025
+//17-03-2025
 class WOOT {
 
     public $tables = null;
@@ -1746,10 +1746,10 @@ class WOOT {
 
                 break;
 
-            default:
+             default:
                 $what = json_decode(stripslashes(WOOT_HELPER::sanitize_text($_REQUEST['what'])), true);
                 $what = wc_clean($what);
-                if (isset($what['call_action'])) {
+                if (isset($what['call_action']) && strpos($what['call_action'], 'woot_') === 0) {
                     $res = apply_filters($what['call_action'], $what['more_data'], $_REQUEST['call_id']);
                 }
 
