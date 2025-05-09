@@ -5,7 +5,7 @@ Tags: table, product table,products filter,products table,woocommerce product ta
 Requires at least: 4.9
 Tested up to: 6.8
 Requires PHP: 7.2
-Stable tag: 1.0.6.8
+Stable tag: 1.0.6.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -177,6 +177,9 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 
 == Changelog ==
+
+= 1.0.6.9 =
+* one security fix, thanks to Peter Thaleikis and Darius from patchstack.com
 
 = 1.0.6.8 =
 * one security fix, thanks to Arkadiusz Hydzik and Wordfence

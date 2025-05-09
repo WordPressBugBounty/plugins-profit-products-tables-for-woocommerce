@@ -23,15 +23,15 @@ final class WOOT_HELPER {
      * @return string html of an element
      */
     public static function draw_html_item($type, $data, $content = '') {
-        $item = '<' . $type;
+        $item = '<' . esc_attr($type);
         foreach ($data as $key => $value) {
             if (is_string($key) AND is_scalar($value)) {
-                $item .= " {$key}='{$value}'";
+               $item .= " " . esc_attr($key) . "='" . esc_attr($value) . "'";
             }
         }
 
         if (!empty($content) OR in_array($type, array('textarea'))) {
-            $item .= '>' . $content . "</{$type}>";
+            $item .= '>' . $content . "</" . esc_attr($type) . ">";
         } else {
             $item .= ' />';
         }
@@ -68,7 +68,7 @@ final class WOOT_HELPER {
         if (!empty($options) AND is_array($options)) {
             foreach ($options as $key => $value) {
                 $data_color = '';
-                if (isset($options_attributes[$key]) AND !empty($options_attributes[$key])) {
+                if (isset($options_attributes[$key]) AND!empty($options_attributes[$key])) {
                     if (isset($options_attributes[$key]['color']) AND $options_attributes[$key]['color']) {
                         $data_color = "data-color='{$options_attributes[$key]['color']}'";
                     }
@@ -173,7 +173,7 @@ final class WOOT_HELPER {
      */
     public static function render_html($pagepath, $data = array(), $with_root = true) {
 
-        if (is_array($data) AND !empty($data)) {
+        if (is_array($data) AND!empty($data)) {
             if (isset($data['pagepath'])) {
                 unset($data['pagepath']);
             }
@@ -236,7 +236,7 @@ final class WOOT_HELPER {
     public static function get_link_data() {
         $res = [];
 
-        if (isset($_REQUEST['woot_link_get_data']) AND !empty($_REQUEST['woot_link_get_data'])) {
+        if (isset($_REQUEST['woot_link_get_data']) AND!empty($_REQUEST['woot_link_get_data'])) {
             $res = json_decode(stripslashes($_REQUEST['woot_link_get_data']), true);
         }
 
@@ -282,7 +282,7 @@ final class WOOT_HELPER {
 
     public static function sanitize_array($array) {
 
-        if (is_array($array) AND !empty($array)) {
+        if (is_array($array) AND!empty($array)) {
             foreach ($array as $key => $data) {
                 if (is_array($data)) {
                     $array[$key] = self::sanitize_array($data);
@@ -322,51 +322,52 @@ final class WOOT_HELPER {
         return $roles;
     }
 
-    public static function delete_not_allowed_shortcodes($content) {
-        $matches = array();
-        preg_match_all(
-                '/' . get_shortcode_regex() . '/',
-                $content,
-                $matches,
-                PREG_SET_ORDER
-        );
-        $tags = array(
-            'woot',
-            'woot_attachments',
-            'woot_attachments_btn',
-            'woot_button',
-            'woot_cart',
-            'woot_compare',
-            'woot_compare_btn',
-            'woot_cross_sells',
-            'woot_drop_down',
-            'woot_favourites',
-            'woot_favourites_single_btn',
-            'woot_gallery',
-            'woot_grouped',
-            'woot_popup_iframe_button',
-            'woot_related',
-            'woot_reviews',
-            'woot_single',
-            'woot_single_btn',
-            'woot_upsells',
-            'woot_variations',
-        );
-        $allowed_shortcodes = apply_filters('woot_allowed_shortcodes', $tags);
-
-        $all_shortcodes = [];
-        foreach ($matches as $shortcode) {
-            $all_shortcodes[] = $shortcode[2];
-        }
-
-        $not_allowed_shortcodes = array_diff($all_shortcodes, $allowed_shortcodes);
-
-        $pattern = get_shortcode_regex($not_allowed_shortcodes);
-
-        $content = preg_replace_callback('/' . $pattern . '/s', 'strip_shortcode_tag', $content);
-
-        return $content;
-    }
+	public static function delete_not_allowed_shortcodes($content){
+		$matches = array(); 
+		preg_match_all( 
+			'/' . get_shortcode_regex() . '/', 
+			$content, 
+			$matches, 
+			PREG_SET_ORDER
+		);
+		$tags = array(
+			'woot',
+			'woot_attachments',
+			'woot_attachments_btn',
+			'woot_button',
+			'woot_cart',
+			'woot_compare',
+			'woot_compare_btn',
+			'woot_cross_sells',
+			'woot_drop_down',
+			'woot_favourites',
+			'woot_favourites_single_btn',
+			'woot_gallery',
+			'woot_grouped',
+			'woot_popup_iframe_button',
+			'woot_related',
+			'woot_reviews',
+			'woot_single',
+			'woot_single_btn',
+			'woot_upsells',
+			'woot_variations',
+		);
+		$allowed_shortcodes = apply_filters('woot_allowed_shortcodes', $tags);
+		
+		$all_shortcodes = [];
+		foreach( $matches as $shortcode ) {
+			$all_shortcodes[] = $shortcode[2];
+		}
+		
+		$not_allowed_shortcodes = array_diff($all_shortcodes, $allowed_shortcodes);
+		
+		$pattern = get_shortcode_regex($not_allowed_shortcodes);
+		
+		$content = preg_replace_callback( '/'. $pattern .'/s', 'strip_shortcode_tag', $content );
+		
+		
+		return $content;
+	}
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -439,41 +440,41 @@ function woot_profiles_data_processor($table_id, $shortcode_args, $current_actio
 add_filter('woot_get_calendar_names', function ($names) {
     return [
 'month_names' => [
-    WOOT_Vocabulary::get(esc_html__('January', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('February', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('March', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('April', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('May', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('June', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('July', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('August', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('September', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('October', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('November', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('December', 'profit-products-tables-for-woocommerce'))
+    WOOT_Vocabulary::get(esc_html__('January', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('February', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('March', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('April', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('May', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('June', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('July', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('August', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('September', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('October', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('November', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('December', 'woot-products-tables'))
 ],
  'month_names_short' => [
-    WOOT_Vocabulary::get(esc_html__('Jan', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Feb', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Mar', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Apr', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('May', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Jun', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Jul', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Aug', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Sep', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Oct', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Nov', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Dec', 'profit-products-tables-for-woocommerce'))
+    WOOT_Vocabulary::get(esc_html__('Jan', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Feb', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Mar', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Apr', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('May', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Jun', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Jul', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Aug', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Sep', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Oct', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Nov', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Dec', 'woot-products-tables'))
 ],
  'day_names' => [
-    WOOT_Vocabulary::get(esc_html__('Mo', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Tu', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('We', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Th', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Fr', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Sa', 'profit-products-tables-for-woocommerce')),
-    WOOT_Vocabulary::get(esc_html__('Su', 'profit-products-tables-for-woocommerce'))
+    WOOT_Vocabulary::get(esc_html__('Mo', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Tu', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('We', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Th', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Fr', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Sa', 'woot-products-tables')),
+    WOOT_Vocabulary::get(esc_html__('Su', 'woot-products-tables'))
 ]
     ];
 });
