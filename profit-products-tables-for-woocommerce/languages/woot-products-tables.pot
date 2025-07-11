@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.2; wp-6.0\n"
-"X-Domain: profit-products-tables-for-woocommerce
+"X-Domain: profit-products-tables-for-woocommerce"
 
 #: classes/tables.php:239
 #, php-format

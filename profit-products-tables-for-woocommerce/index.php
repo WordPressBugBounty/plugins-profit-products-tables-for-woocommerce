@@ -7,13 +7,13 @@
   Tested up to: WP 6.8
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.6.9
-  Requires PHP: 7.2
+  Version: 1.0.7
+  Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 9.8
+  WC tested up to: 10.0
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.6.9');
+define('WOOT_VERSION', '1.0.7');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//09-05-2025
+//11-07-2025
 class WOOT {
 
     public $tables = null;
@@ -76,8 +76,7 @@ class WOOT {
     public static $app_mode = 'dev'; //dev, production - leave as dev, do not work, remove later
 
     public function __construct() {
-        $this->settings = new WOOT_Settings();
-        $this->vocabulary = new WOOT_Vocabulary();
+
 
         add_shortcode('woot', array($this, 'do_shortcode'));
         add_shortcode('woot_button', array($this, 'do_shortcode_button'));
@@ -88,28 +87,6 @@ class WOOT {
         add_action('wp_ajax_nopriv_woot_get_smth', array($this, 'get_smth'));
 
         add_action('wp_ajax_woot_import_data', array($this, 'import_data'));
-
-        global $active_tables_actions;
-        //self::$tables_actions['default'] = esc_html__('Default', 'profit-products-tables-for-woocommerce');
-        if (isset($active_tables_actions)) {
-            self::$tables_actions = array_merge(self::$tables_actions, $active_tables_actions);
-        }
-
-        if ($this->show_notes) {
-            $this->fb = false;
-            $this->max_col = 7;
-            if (intval(get_option('woot_free_1', -1)) === -1) {
-                //update_option('woot_free_1', 1);
-                $this->max_col = 5;
-                $this->fb = true;
-            }
-        }
-
-        $this->filter = new WOOT_Filter();
-        $this->predefinition = new WOOT_Predefinition();
-        $this->skins = new WOOT_Skins();
-        $this->tables = new WOOT_Tables();
-        $this->columns = new WOOT_Columns();
 
         add_action('admin_init', function () {
             if (WOOT_HELPER::can_manage_data()) {
@@ -148,6 +125,30 @@ class WOOT {
         if (!class_exists('WooCommerce')) {
             return;
         }
+
+        $this->settings = new WOOT_Settings();
+        $this->vocabulary = new WOOT_Vocabulary();
+        global $active_tables_actions;
+        //self::$tables_actions['default'] = esc_html__('Default', 'profit-products-tables-for-woocommerce');
+        if (isset($active_tables_actions)) {
+            self::$tables_actions = array_merge(self::$tables_actions, $active_tables_actions);
+        }
+
+        if ($this->show_notes) {
+            $this->fb = false;
+            $this->max_col = 7;
+            if (intval(get_option('woot_free_1', -1)) === -1) {
+                //update_option('woot_free_1', 1);
+                $this->max_col = 5;
+                $this->fb = true;
+            }
+        }
+
+        $this->filter = new WOOT_Filter();
+        $this->predefinition = new WOOT_Predefinition();
+        $this->skins = new WOOT_Skins();
+        $this->tables = new WOOT_Tables();
+        $this->columns = new WOOT_Columns();
 
         load_plugin_textdomain('profit-products-tables-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages');
 
@@ -1688,9 +1689,9 @@ class WOOT {
                 }
 
                 $res = WOOT_HELPER::draw_html_item('textarea', [
-                            'readonly' => 'readonly',
-                            'style' => 'width: 100%; height: 500px',
-                                ], json_encode($data));
+                    'readonly' => 'readonly',
+                    'style' => 'width: 100%; height: 500px',
+                        ], json_encode($data));
 
                 break;
 
@@ -1746,7 +1747,7 @@ class WOOT {
 
                 break;
 
-             default:
+            default:
                 $what = json_decode(stripslashes(WOOT_HELPER::sanitize_text($_REQUEST['what'])), true);
                 $what = wc_clean($what);
                 if (isset($what['call_action']) && strpos($what['call_action'], 'woot_') === 0) {
@@ -2125,15 +2126,15 @@ add_shortcode('woot_popup_iframe_button', function ($args) {
     }
 
     return WOOT_HELPER::draw_html_item('a', [
-        'href' => '#',
-        'title' => esc_attr($popup_title),
-        'class' => esc_attr($css_class),
-        'data-popup-title' => esc_attr($popup_title),
-        'data-iframe' => esc_url($popup_page_link),
-        'data-style' => esc_attr('height: 100vh'),
-        'data-help-title' => esc_attr($help_title ?? ''),
-        'data-help-link' => esc_url($help_link ?? ''),
-            ], $button_text);
+                'href' => '#',
+                'title' => esc_attr($popup_title),
+                'class' => esc_attr($css_class),
+                'data-popup-title' => esc_attr($popup_title),
+                'data-iframe' => esc_url($popup_page_link),
+                'data-style' => esc_attr('height: 100vh'),
+                'data-help-title' => esc_attr($help_title ?? ''),
+                'data-help-link' => esc_url($help_link ?? ''),
+                    ], $button_text);
 });
 
 //+++

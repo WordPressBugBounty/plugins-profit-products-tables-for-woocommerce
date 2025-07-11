@@ -26,7 +26,7 @@ final class WOOT_HELPER {
         $item = '<' . esc_attr($type);
         foreach ($data as $key => $value) {
             if (is_string($key) AND is_scalar($value)) {
-               $item .= " " . esc_attr($key) . "='" . esc_attr($value) . "'";
+               $item .= " " . esc_attr($key) . "='" . $value . "'";
             }
         }
 
@@ -440,41 +440,41 @@ function woot_profiles_data_processor($table_id, $shortcode_args, $current_actio
 add_filter('woot_get_calendar_names', function ($names) {
     return [
 'month_names' => [
-    WOOT_Vocabulary::get(esc_html__('January', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('February', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('March', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('April', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('May', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('June', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('July', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('August', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('September', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('October', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('November', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('December', 'woot-products-tables'))
+    WOOT_Vocabulary::get(esc_html__('January', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('February', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('March', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('April', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('May', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('June', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('July', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('August', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('September', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('October', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('November', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('December', 'profit-products-tables-for-woocommerce'))
 ],
  'month_names_short' => [
-    WOOT_Vocabulary::get(esc_html__('Jan', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Feb', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Mar', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Apr', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('May', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Jun', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Jul', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Aug', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Sep', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Oct', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Nov', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Dec', 'woot-products-tables'))
+    WOOT_Vocabulary::get(esc_html__('Jan', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Feb', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Mar', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Apr', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('May', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Jun', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Jul', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Aug', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Sep', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Oct', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Nov', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Dec', 'profit-products-tables-for-woocommerce'))
 ],
  'day_names' => [
-    WOOT_Vocabulary::get(esc_html__('Mo', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Tu', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('We', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Th', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Fr', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Sa', 'woot-products-tables')),
-    WOOT_Vocabulary::get(esc_html__('Su', 'woot-products-tables'))
+    WOOT_Vocabulary::get(esc_html__('Mo', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Tu', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('We', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Th', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Fr', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Sa', 'profit-products-tables-for-woocommerce')),
+    WOOT_Vocabulary::get(esc_html__('Su', 'profit-products-tables-for-woocommerce'))
 ]
     ];
 });

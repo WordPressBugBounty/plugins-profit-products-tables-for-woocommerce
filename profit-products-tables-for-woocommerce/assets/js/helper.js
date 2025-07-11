@@ -122,7 +122,6 @@ var woot_helper = new (function () {
             if (!call_id) {
                 call_id = woot_helper.create_id('woot-');
             }
-
             fetch(woot_helper_vars.ajax_url, {
                 method: 'POST',
                 credentials: 'same-origin',

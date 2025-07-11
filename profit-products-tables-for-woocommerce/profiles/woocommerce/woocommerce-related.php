@@ -16,11 +16,13 @@ final class WOOT_WooCommerceRelated extends WOOT_WooCommerceUniversal {
 
     public $slug = 'related';
 
-    public function __construct() {
-        $this->settings_columns_title = esc_html__('Related columns', 'profit-products-tables-for-woocommerce');
+    public function __construct() {        
+		add_action('init', [$this, 'init']);
         parent::__construct();
     }
-
+	public function init(){
+		$this->settings_columns_title = esc_html__('Related columns', 'profit-products-tables-for-woocommerce');
+	}
     /**
      * Set filtration arguments for the current table
      *

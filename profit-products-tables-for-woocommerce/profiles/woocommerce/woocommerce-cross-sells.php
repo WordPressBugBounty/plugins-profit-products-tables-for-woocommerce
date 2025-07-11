@@ -17,10 +17,13 @@ final class WOOT_WooCommerceCrossSells extends WOOT_WooCommerceUniversal {
     public $slug = 'cross_sells';
 
     public function __construct() {
-        $this->settings_columns_title = esc_html__('Cross-sells columns', 'profit-products-tables-for-woocommerce');
+		add_action('init', [$this, 'init']);
+        
         parent::__construct();
     }
-
+	public function init(){
+		$this->settings_columns_title = esc_html__('Cross-sells columns', 'profit-products-tables-for-woocommerce');
+	}
     /**
      * Set filtration arguments for the current table
      *

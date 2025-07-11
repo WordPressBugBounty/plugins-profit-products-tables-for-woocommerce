@@ -378,7 +378,7 @@ class WOOT_GeneratedTables extends DataTable23 {
             })
         }).then(response => response.text()).then(html => {
             document.getElementById('woot-popup-columns-template').querySelector('.woot-columns-table-zone').innerHTML = html;
-
+	    console.log(html);
             if (woot_columns_table) {
                 woot_columns_table.destructor();//detach woot_save_table_field
             }

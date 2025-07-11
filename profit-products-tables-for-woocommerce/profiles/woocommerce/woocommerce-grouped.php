@@ -17,10 +17,12 @@ final class WOOT_WooCommerceGrouped extends WOOT_WooCommerceUniversal {
     public $slug = 'grouped';
 
     public function __construct() {
-        $this->settings_columns_title = esc_html__('Grouped columns', 'profit-products-tables-for-woocommerce');
+        add_action('init', [$this, 'init']);
         parent::__construct();
     }
-
+	public function init(){
+		$this->settings_columns_title = esc_html__('Grouped columns', 'profit-products-tables-for-woocommerce');
+	}
     /**
      * Set filtration arguments for the current table
      *
