@@ -13,7 +13,7 @@
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 10.0
+  WC tested up to: 10.1
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 

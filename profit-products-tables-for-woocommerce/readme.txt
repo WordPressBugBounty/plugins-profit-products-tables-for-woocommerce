@@ -17,7 +17,7 @@ WooCommerce Active Products Tables - is the WooCommerce Products Table plugin di
 
 🐘 Latest PHP 8.x - FULL COMPATIBILITY! Compatibility: from v.3.6 to the latest woocommerce version.
 
-🌐 Demo site: [demo.products-tables.com](https://demo.products-tables.com/). [Also you can request backend demo](https://products-tables.com/woot-backend-demo-request).
+🌐 Demo site: [demo.products-tables.com](https://demo.products-tables.com/).
 
 📄 If you need plugin for pages, posts and their custom post types use: [TableOn](https://wordpress.org/plugins/posts-table-filterable/).
 
@@ -46,7 +46,7 @@ WooCommerce Active Products Tables - is the WooCommerce Products Table plugin di
 
 🔢&nbsp;25 ways of the products sorting
 
-🌍&nbsp;Power feature as [remote tables](https://inbuilt.products-tables.com/) which gives ability to spread your shop products to any another sites even created on pure HTML without any CMS, what allows you get more sells and also realize your own referral program
+🌍&nbsp;Power feature as [remote tables](https://products-tables.com/inbuilt) which gives ability to spread your shop products to any another sites even created on pure HTML without any CMS, what allows you get more sells and also realize your own referral program
 
 🖼️&nbsp;Column "Gallery" - smooth CSS gallery to showcase the best of your products. Also a product gallery can be represented by shortcode [[woot gallery]](https://products-tables.com/shortcode/woot_gallery/)
 
