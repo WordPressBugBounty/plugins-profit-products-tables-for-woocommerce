@@ -3,7 +3,7 @@ Contributors: RealMag777
 Donate link: https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580
 Tags: table, product table,products filter,products table,woocommerce product table
 Requires at least: 4.9
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 1.0.7
 License: GPLv2
@@ -241,7 +241,7 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 == License ==
 
-This plugin is copyright pluginus.net &copy; 2012-2025 with [GPLv2](https://en.wikipedia.org/wiki/GNU_General_Public_License) by realmag777.
+This plugin is copyright pluginus.net &copy; 2012-2026 with [GPLv2](https://en.wikipedia.org/wiki/GNU_General_Public_License) by realmag777.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the [GNU General Public License][] as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

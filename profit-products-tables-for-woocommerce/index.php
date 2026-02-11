@@ -4,7 +4,7 @@
   Plugin URI: https://products-tables.com/
   Description: WooCommerce plugin for displaying shop products in table format. Tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
   Requires at least: WP 4.9
-  Tested up to: WP 6.8
+  Tested up to: WP 6.9
   Author: realmag777
   Author URI: https://pluginus.net/
   Version: 1.0.7
@@ -13,7 +13,7 @@
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 10.1
+  WC tested up to: 10.5
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 

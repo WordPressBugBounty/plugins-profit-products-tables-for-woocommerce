@@ -449,9 +449,9 @@ if (!defined('ABSPATH'))
                     </div>
 
                     <ul class="woof__features-gallery woof__col-6">
-                        <li><a target="_blank" href="https://pluginus.net/affiliate/woocommerce-products-filter"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>/img/banners/woof-banner.png"></a></li>
-                        <li><a target="_blank" href="https://pluginus.net/affiliate/woocommerce-bulk-editor"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png"></a></li>
-                        <li><a target="_blank" href="https://pluginus.net/affiliate/woocommerce-currency-switcher"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png"></a></li>
+                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woof-woocommerce-products-filter"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>/img/banners/woof-banner.png"></a></li>
+                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woobe-woocommerce-bulk-editor-professional/21779835"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png"></a></li>
+                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woocommerce-currency-switcher/8085217"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png"></a></li>
                     </ul>
 
                 </div>
