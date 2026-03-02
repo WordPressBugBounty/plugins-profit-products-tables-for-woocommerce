@@ -7,7 +7,7 @@
   Tested up to: WP 6.9
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.7
+  Version: 1.0.8
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.7');
+define('WOOT_VERSION', '1.0.8');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//11-07-2025
+//20-02-2026
 class WOOT {
 
     public $tables = null;
@@ -2213,42 +2213,42 @@ add_shortcode('woot_single_btn', function ($args) {
     if ($post_id > 0) {
         woot()->include_assets();
 
-        $title = esc_html__('Product', 'profit-products-tables-for-woocommerce') . ': ';
+        $title = esc_html__('Product', 'woot-products-tables') . ': ';
         $title .= addslashes(get_post_field('post_title', $post_id));
         $unique_id = uniqid('gp');
 
         $button_text = '<i class="woot-icon">&#xf1c6;</i>';
         if (isset($args['button_text'])) {
-            $button_text = $args['button_text'];
+            $button_text = wp_kses_post($args['button_text']); // Allow safe HTML only
         }
 
         $css_class = 'woot-btn woot-btn-1';
         if (isset($args['css_class'])) {
-            $css_class = $args['css_class'];
+            $css_class = sanitize_html_class($args['css_class']); // Sanitize CSS class
         }
 
         $columns = '';
         if (isset($args['columns'])) {
-            $columns = $args['columns'];
+            $columns = esc_js(sanitize_text_field($args['columns']));
         }
 
         $help_title = '';
         if (isset($args['help_title'])) {
-            $help_title = WOOT_Vocabulary::get($args['help_title']);
-            $help_title = trim($help_title, '"');
-            $help_title = trim($help_title, "'");
+            $help_title = esc_js(WOOT_Vocabulary::get($args['help_title']));
+            //$help_title = trim($help_title, '"');
+            //$help_title = trim($help_title, "'");
             unset($args['help_title']);
         }
 
         $help_link = '';
         if (isset($args['help_link'])) {
-            $help_link = $args['help_link'];
+            $help_link = esc_url($args['help_link']);
             unset($args['help_link']);
         }
 
         $skin = '';
         if (isset($args) AND isset($args['skin'])) {
-            $skin = $args['skin'];
+            $skin = esc_js(sanitize_text_field($args['skin']));
         }
 
         return WOOT_HELPER::draw_html_item('a', array(
