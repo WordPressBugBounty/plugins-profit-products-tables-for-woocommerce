@@ -55,7 +55,7 @@ final class WOOT_WooCommerce {
                     //$data['mode'] = isset($args['mode']) ? $args['mode'] : 'ajax';do not do it here
                     $data['width'] = isset($args['width']) ? $args['width'] : '100%';
                     $data['height'] = isset($args['height']) ? $args['height'] : '300';
-                    $data['placeholder'] = isset($args['placeholder']) ? $args['placeholder'] : woot()->columns->options->get(intval($args['id']), 'text_search_placeholder', esc_html__('search by title', 'profit-products-tables-for-woocommerce') . ' ...');
+                    $data['placeholder'] = isset($args['placeholder']) ? $args['placeholder'] : woot()->columns->options->get(intval($args['id']), 'text_search_placeholder', esc_html__('search by title', 'woot-products-tables') . ' ...');
                     $data['skin'] = isset($args['skin']) ? $args['skin'] : '';
                 }
 
@@ -316,30 +316,30 @@ final class WOOT_WooCommerce {
      */
     private function init_orderby_select_fields() {
         self::$orderby_select_fields = apply_filters('woot_woocommerce_catalog_orderby', [
-            'popularity' => WOOT_Vocabulary::get(esc_html__('Sort by popularity', 'profit-products-tables-for-woocommerce')),
-            'rating' => WOOT_Vocabulary::get(esc_html__('Sort by average rating', 'profit-products-tables-for-woocommerce')),
-            'date' => WOOT_Vocabulary::get(esc_html__('Sort by latest', 'profit-products-tables-for-woocommerce')),
-            'price' => WOOT_Vocabulary::get(esc_html__('Sort by price: low to high', 'profit-products-tables-for-woocommerce')),
-            'price-desc' => WOOT_Vocabulary::get(esc_html__('Sort by price: high to low', 'profit-products-tables-for-woocommerce')),
-            'title' => WOOT_Vocabulary::get(esc_html__('Sort by name A-Z', 'profit-products-tables-for-woocommerce')),
-            'title-desc' => WOOT_Vocabulary::get(esc_html__('Sort by name Z-A', 'profit-products-tables-for-woocommerce')),
-            'sku' => WOOT_Vocabulary::get(esc_html__('SKU: Ascending', 'profit-products-tables-for-woocommerce')),
-            'sku-desc' => WOOT_Vocabulary::get(esc_html__('SKU: Descending', 'profit-products-tables-for-woocommerce')),
-            'stock' => WOOT_Vocabulary::get(esc_html__('Stock Quantity: Ascending', 'profit-products-tables-for-woocommerce')),
-            'stock-desc' => WOOT_Vocabulary::get(esc_html__('Stock Quantity: Descending', 'profit-products-tables-for-woocommerce')),
-            'sales' => WOOT_Vocabulary::get(esc_html__('Total Sales: Ascending', 'profit-products-tables-for-woocommerce')),
-            'sales-desc' => WOOT_Vocabulary::get(esc_html__('Total Sales: Descending', 'profit-products-tables-for-woocommerce')),
-            'comments' => WOOT_Vocabulary::get(esc_html__('Number of Comments: Ascending', 'profit-products-tables-for-woocommerce')),
-            'comments-desc' => WOOT_Vocabulary::get(esc_html__('Number of Comments: Descending', 'profit-products-tables-for-woocommerce')),
-            'modified' => WOOT_Vocabulary::get(esc_html__('Last Modified Date: Oldest to Newest', 'profit-products-tables-for-woocommerce')),
-            'modified-desc' => WOOT_Vocabulary::get(esc_html__('Last Modified Date: Newest to Oldest', 'profit-products-tables-for-woocommerce')),
-            'menu_order' => WOOT_Vocabulary::get(esc_html__('Sort by menu order', 'profit-products-tables-for-woocommerce')),
-            'on_sales' => WOOT_Vocabulary::get(esc_html__('Sales products first', 'profit-products-tables-for-woocommerce')),
-            //'on_featured' => WOOT_Vocabulary::get(esc_html__('Featured products first', 'profit-products-tables-for-woocommerce')),
-            'on_stock' => WOOT_Vocabulary::get(esc_html__('Sort by availability', 'profit-products-tables-for-woocommerce')),
-            'rand' => WOOT_Vocabulary::get(esc_html__('Sort by random', 'profit-products-tables-for-woocommerce')),
-            'id' => WOOT_Vocabulary::get(esc_html__('Sort by product ID: Ascending', 'profit-products-tables-for-woocommerce')),
-            'id-desc' => WOOT_Vocabulary::get(esc_html__('Sort by product ID: Descending', 'profit-products-tables-for-woocommerce'))
+            'popularity' => WOOT_Vocabulary::get(esc_html__('Sort by popularity', 'woot-products-tables')),
+            'rating' => WOOT_Vocabulary::get(esc_html__('Sort by average rating', 'woot-products-tables')),
+            'date' => WOOT_Vocabulary::get(esc_html__('Sort by latest', 'woot-products-tables')),
+            'price' => WOOT_Vocabulary::get(esc_html__('Sort by price: low to high', 'woot-products-tables')),
+            'price-desc' => WOOT_Vocabulary::get(esc_html__('Sort by price: high to low', 'woot-products-tables')),
+            'title' => WOOT_Vocabulary::get(esc_html__('Sort by name A-Z', 'woot-products-tables')),
+            'title-desc' => WOOT_Vocabulary::get(esc_html__('Sort by name Z-A', 'woot-products-tables')),
+            'sku' => WOOT_Vocabulary::get(esc_html__('SKU: Ascending', 'woot-products-tables')),
+            'sku-desc' => WOOT_Vocabulary::get(esc_html__('SKU: Descending', 'woot-products-tables')),
+            'stock' => WOOT_Vocabulary::get(esc_html__('Stock Quantity: Ascending', 'woot-products-tables')),
+            'stock-desc' => WOOT_Vocabulary::get(esc_html__('Stock Quantity: Descending', 'woot-products-tables')),
+            'sales' => WOOT_Vocabulary::get(esc_html__('Total Sales: Ascending', 'woot-products-tables')),
+            'sales-desc' => WOOT_Vocabulary::get(esc_html__('Total Sales: Descending', 'woot-products-tables')),
+            'comments' => WOOT_Vocabulary::get(esc_html__('Number of Comments: Ascending', 'woot-products-tables')),
+            'comments-desc' => WOOT_Vocabulary::get(esc_html__('Number of Comments: Descending', 'woot-products-tables')),
+            'modified' => WOOT_Vocabulary::get(esc_html__('Last Modified Date: Oldest to Newest', 'woot-products-tables')),
+            'modified-desc' => WOOT_Vocabulary::get(esc_html__('Last Modified Date: Newest to Oldest', 'woot-products-tables')),
+            'menu_order' => WOOT_Vocabulary::get(esc_html__('Sort by menu order', 'woot-products-tables')),
+            'on_sales' => WOOT_Vocabulary::get(esc_html__('Sales products first', 'woot-products-tables')),
+            //'on_featured' => WOOT_Vocabulary::get(esc_html__('Featured products first', 'woot-products-tables')),
+            'on_stock' => WOOT_Vocabulary::get(esc_html__('Sort by availability', 'woot-products-tables')),
+            'rand' => WOOT_Vocabulary::get(esc_html__('Sort by random', 'woot-products-tables')),
+            'id' => WOOT_Vocabulary::get(esc_html__('Sort by product ID: Ascending', 'woot-products-tables')),
+            'id-desc' => WOOT_Vocabulary::get(esc_html__('Sort by product ID: Descending', 'woot-products-tables'))
         ]);
     }
 
@@ -357,15 +357,15 @@ final class WOOT_WooCommerce {
 
                 $rows[] = [
                     'id' => $table_id,
-                    'title' => esc_html__('Show Sorting Dropdown', 'profit-products-tables-for-woocommerce'),
+                    'title' => esc_html__('Show Sorting Dropdown', 'woot-products-tables'),
                     'value' => WOOT_HELPER::draw_switcher('is_sort_droptdown_shown', woot()->columns->options->get($table_id, 'is_sort_droptdown_shown', 0), $table_id, 'woot_save_table_option'),
                     'value_custom_field_key' => 'is_sort_droptdown_shown',
-                    'notes' => esc_html__('Displays Sorting Dropdown list', 'profit-products-tables-for-woocommerce')
+                    'notes' => esc_html__('Displays Sorting Dropdown list', 'woot-products-tables')
                 ];
 
                 $rows[] = [
                     'id' => $table_id,
-                    'title' => esc_html__('Sorting Dropdown Fields', 'profit-products-tables-for-woocommerce'),
+                    'title' => esc_html__('Sorting Dropdown Fields', 'woot-products-tables'),
                     'value' => WOOT_HELPER::draw_select([
                         'class' => 'woot-multiple-select',
                         'multiple' => '',
@@ -374,59 +374,59 @@ final class WOOT_WooCommerce {
                         'data-use-drag' => 1,
                             ], apply_filters('woot_table_orderby_select_args', self::$orderby_select_fields, $table_id), explode(',', woot()->columns->options->get($table_id, 'orderby_select_fields', ''))),
                     'value_custom_field_key' => 'orderby_select_fields',
-                    'notes' => esc_html__('fields which you want to see in Sorting Dropdown fields. Press and wait to reorder.', 'profit-products-tables-for-woocommerce')
+                    'notes' => esc_html__('fields which you want to see in Sorting Dropdown fields. Press and wait to reorder.', 'woot-products-tables')
                 ];
 
                 $rows[] = [
                     'id' => $table_id,
-                    'title' => esc_html__('Show shop cart', 'profit-products-tables-for-woocommerce'),
+                    'title' => esc_html__('Show shop cart', 'woot-products-tables'),
                     'value' => WOOT_HELPER::draw_switcher('is_cart_shown', woot()->columns->options->get($table_id, 'is_cart_shown', 0), $table_id, 'woot_save_table_option'),
                     'value_custom_field_key' => 'is_cart_shown',
-                    'notes' => esc_html__('Displays cart as button with information, on click popup with selected products appears', 'profit-products-tables-for-woocommerce')
+                    'notes' => esc_html__('Displays cart as button with information, on click popup with selected products appears', 'woot-products-tables')
                 ];
 
                 $rows[] = [
                     'id' => $table_id,
-                    'title' => esc_html__('Cart/Sorting positions', 'profit-products-tables-for-woocommerce'),
+                    'title' => esc_html__('Cart/Sorting positions', 'woot-products-tables'),
                     'value' => WOOT_HELPER::draw_select([
                         'data-action' => 'woot_save_table_option',
                             ], [
-                        0 => esc_html__('Cart right, Sorting dropdown left', 'profit-products-tables-for-woocommerce'),
-                        1 => esc_html__('Cart left, Sorting dropdown right', 'profit-products-tables-for-woocommerce'),
+                        0 => esc_html__('Cart right, Sorting dropdown left', 'woot-products-tables'),
+                        1 => esc_html__('Cart left, Sorting dropdown right', 'woot-products-tables'),
                             ], woot()->columns->options->get($table_id, 'cart_position', 0)),
                     'value_custom_field_key' => 'cart_position',
-                    'notes' => esc_html__('On which side should be shop cart: be left or right. Sorting Dropdown will take opposite position.', 'profit-products-tables-for-woocommerce')
+                    'notes' => esc_html__('On which side should be shop cart: be left or right. Sorting Dropdown will take opposite position.', 'woot-products-tables')
                 ];
 
                 $rows[] = [
                     'id' => $table_id,
-                    'title' => esc_html__('After to cart adding', 'profit-products-tables-for-woocommerce'),
+                    'title' => esc_html__('After to cart adding', 'woot-products-tables'),
                     'value' => WOOT_HELPER::draw_select([
                         'data-action' => 'woot_save_table_option',
                             ], [
-                        0 => esc_html__('Stay on the same page', 'profit-products-tables-for-woocommerce'),
-                        1 => esc_html__('Redirect to the cart page', 'profit-products-tables-for-woocommerce'),
-                        2 => esc_html__('Redirect to the checkout page', 'profit-products-tables-for-woocommerce'),
+                        0 => esc_html__('Stay on the same page', 'woot-products-tables'),
+                        1 => esc_html__('Redirect to the cart page', 'woot-products-tables'),
+                        2 => esc_html__('Redirect to the checkout page', 'woot-products-tables'),
                             ], woot()->columns->options->get($table_id, 'add_to_cart_instant_redirect', 0)),
                     'value_custom_field_key' => 'add_to_cart_instant_redirect',
-                    'notes' => esc_html__('Action after clicking on button Add to cart', 'profit-products-tables-for-woocommerce')
+                    'notes' => esc_html__('Action after clicking on button Add to cart', 'woot-products-tables')
                 ];
 
                 if (!woot()->show_notes) {
                     $rows[] = [
                         'id' => $table_id,
-                        'title' => esc_html__('Hide added to cart products', 'profit-products-tables-for-woocommerce'),
+                        'title' => esc_html__('Hide added to cart products', 'woot-products-tables'),
                         'value' => WOOT_HELPER::draw_switcher('hide_in_cart_added', woot()->columns->options->get($table_id, 'hide_in_cart_added', 0), $table_id, 'woot_save_table_option'),
                         'value_custom_field_key' => 'hide_in_cart_added',
-                        'notes' => esc_html__('Do not display in the table products, which are in the cart', 'profit-products-tables-for-woocommerce')
+                        'notes' => esc_html__('Do not display in the table products, which are in the cart', 'woot-products-tables')
                     ];
                 } else {
                     $rows[] = [
                         'id' => $table_id,
-                        'title' => esc_html__('Hide added to cart products', 'profit-products-tables-for-woocommerce'),
-                        'value' => esc_html__('Premium version', 'profit-products-tables-for-woocommerce'),
+                        'title' => esc_html__('Hide added to cart products', 'woot-products-tables'),
+                        'value' => esc_html__('Premium version', 'woot-products-tables'),
                         'value_custom_field_key' => '',
-                        'notes' => esc_html__('Do not display in the table products, which are in the cart', 'profit-products-tables-for-woocommerce') . '. ' . '<a href="https://products-tables.com/downloads" target="_blank" style="color: red;">' . esc_html__('Premium version', 'profit-products-tables-for-woocommerce') . '</a>'
+                        'notes' => esc_html__('Do not display in the table products, which are in the cart', 'woot-products-tables') . '. ' . '<a href="https://products-tables.com/downloads" target="_blank" style="color: red;">' . esc_html__('Premium version', 'woot-products-tables') . '</a>'
                     ];
                 }
             }
@@ -490,7 +490,7 @@ final class WOOT_WooCommerce {
                 'filter_provider' => 'woocommerce'
             ],
             'id' => [
-                'title' => esc_html__('ID', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('ID', 'woot-products-tables'),
                 'order' => 'desc',
                 'options' => WOOT_WooCommerce::$fields_options,
                 'action' => function ($post_id) {
@@ -498,7 +498,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'thumbnail' => [
-                'title' => esc_html__('Thumbnail', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Thumbnail', 'woot-products-tables'),
                 'order' => FALSE,
                 'options' => ['thumbnail_width', 'thumbnail_no_link', 'thumbnail_preview_width', 'css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
@@ -525,22 +525,22 @@ final class WOOT_WooCommerce {
                     //***
 
                     $img = WOOT_HELPER::draw_html_item('img', array(
-                                'src' => apply_filters('woot_no_img_found', $thumb, $table_id, $post_id),
-                                'width' => $width,
-                                'alt' => '',
-                                'class' => 'woot-thumbnail'
+                        'src' => apply_filters('woot_no_img_found', $thumb, $table_id, $post_id),
+                        'width' => $width,
+                        'alt' => '',
+                        'class' => 'woot-thumbnail'
                     ));
 
                     if (has_post_thumbnail($post_id)) {
                         $img_src = wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'thumbnail');
 
-                        if (is_array($img_src) AND!empty($img_src[0])) {
+                        if (is_array($img_src) AND !empty($img_src[0])) {
                             $thumb = $img_src[0];
                             $img = WOOT_HELPER::draw_html_item('img', array(
-                                        'src' => $thumb,
-                                        'width' => $width,
-                                        'alt' => '',
-                                        'class' => 'woot-thumbnail'
+                                'src' => $thumb,
+                                'width' => $width,
+                                'alt' => '',
+                                'class' => 'woot-thumbnail'
                             ));
 
                             //***
@@ -588,14 +588,14 @@ final class WOOT_WooCommerce {
                                         'data-width' => $preview_width,
                                         'data-title' => $product->get_title(),
                                         'target' => '_blank',
-                                        'onmouseover' => $has_img && $preview_width > 0  && !wp_is_mobile() ? 'woot_helper.image_preview(this)' : ''
+                                        'onmouseover' => $has_img && $preview_width > 0 && !wp_is_mobile() ? 'woot_helper.image_preview(this)' : ''
                                             ), $img);
                         }
                     }
                 }
             ],
             'post_title' => [
-                'title' => esc_html__('Title', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Title', 'woot-products-tables'),
                 'order' => 'asc',
                 'options' => array_merge(['title_as_text', 'show_labels'], WOOT_WooCommerce::$fields_options),
                 'filter' => true,
@@ -650,9 +650,9 @@ final class WOOT_WooCommerce {
                             if ($show_labels) {
                                 $labels = '<div class="woot-profuct-tag-container">';
 
-                                $featured_lang = WOOT_Vocabulary::get(esc_html__('featured', 'profit-products-tables-for-woocommerce'));
-                                $on_sale_lang = WOOT_Vocabulary::get(esc_html__('on sale', 'profit-products-tables-for-woocommerce'));
-                                $stock_out_lang = WOOT_Vocabulary::get(esc_html__('out of stock', 'profit-products-tables-for-woocommerce'));
+                                $featured_lang = WOOT_Vocabulary::get(esc_html__('featured', 'woot-products-tables'));
+                                $on_sale_lang = WOOT_Vocabulary::get(esc_html__('on sale', 'woot-products-tables'));
+                                $stock_out_lang = WOOT_Vocabulary::get(esc_html__('out of stock', 'woot-products-tables'));
 
                                 if (in_array($post_id, wc_get_featured_product_ids())) {
                                     $labels .= "<span class='woot-profuct-tag woot-profuct-tag-featured'>{$featured_lang}</span>";
@@ -693,7 +693,7 @@ final class WOOT_WooCommerce {
                         add_filter('posts_where', function ($where = '') use ($args, $value) {
                             $sql = "";
 
-                            if (isset($args['woot_text_search_by']) AND!empty($args['woot_text_search_by'])) {
+                            if (isset($args['woot_text_search_by']) AND !empty($args['woot_text_search_by'])) {
                                 $sql = " AND (";
                                 foreach ($args['woot_text_search_by'] as $field) {
                                     $sql .= "LOWER({$field}) LIKE '%{$value}%' OR ";
@@ -714,7 +714,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_excerpt' => [
-                'title' => esc_html__('Excerpt', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Excerpt', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'filter' => true,
                 'filter_view' => 'textinput',
@@ -728,8 +728,10 @@ final class WOOT_WooCommerce {
 
                     if (!empty($value)) {
                         add_filter('posts_where', function ($where = '') use ($value) {
+                            global $wpdb;
                             $value = trim(WOOT_HELPER::strtolower($value));
-                            $where .= "  AND LOWER(post_excerpt) LIKE '%{$value}%'";
+                            $like = '%' . $wpdb->esc_like($value) . '%';
+                            $where .= $wpdb->prepare(" AND LOWER(post_excerpt) LIKE %s", $like);
                             return $where;
                         }, 101);
                     }
@@ -741,7 +743,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_content' => [
-                'title' => esc_html__('Content', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Content', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'filter' => true,
                 'filter_view' => 'textinput',
@@ -755,8 +757,10 @@ final class WOOT_WooCommerce {
 
                     if (!empty($value)) {
                         add_filter('posts_where', function ($where = '') use ($value) {
+                            global $wpdb;
                             $value = trim(WOOT_HELPER::strtolower($value));
-                            $where .= "  AND LOWER(post_content) LIKE '%{$value}%'";
+                            $like = '%' . $wpdb->esc_like($value) . '%';
+                            $where .= $wpdb->prepare(" AND LOWER(post_content) LIKE %s", $like);
                             return $where;
                         }, 101);
                     }
@@ -768,10 +772,10 @@ final class WOOT_WooCommerce {
                 }
             ],
             'single' => [
-                'title' => esc_html__('Single', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Single', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
-                    $title = esc_html__('Single product data', 'profit-products-tables-for-woocommerce') . ': ';
+                    $title = esc_html__('Single product data', 'woot-products-tables') . ': ';
                     $title .= addslashes(get_post_field('post_title', $post_id));
                     $unique_id = uniqid('gp');
 
@@ -793,7 +797,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_status' => [
-                'title' => esc_html__('Status', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Status', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'action' => function ($post_id) {
@@ -803,7 +807,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_author' => [
-                'title' => esc_html__('Author', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Author', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'filter' => true,
                 'filter_view' => 'select',
@@ -841,9 +845,9 @@ final class WOOT_WooCommerce {
                         }
                     }
 
-                    $title = esc_html__('Author', 'profit-products-tables-for-woocommerce');
+                    $title = esc_html__('Author', 'woot-products-tables');
                     $tmp = woot()->filter->get_field_drawing_data($table_id, 'post_author');
-                    if (isset($tmp['title']) AND!empty($tmp['title'])) {
+                    if (isset($tmp['title']) AND !empty($tmp['title'])) {
                         $title = $tmp['title'];
                     }
 
@@ -855,7 +859,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_date' => [
-                'title' => esc_html__('Post date', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Post date', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'desc',
                 'filter' => true,
@@ -865,7 +869,7 @@ final class WOOT_WooCommerce {
                     if (intval($post_id) > 0) {
                         $post = get_post($post_id);
 //						setlocale(LC_TIME, get_locale());
-//						return strftime('%d %B %Y', strtotime($post->post_date));						
+//						return strftime('%d %B %Y', strtotime($post->post_date));
                         return date_i18n(apply_filters('woot_date_format', get_option('date_format')), strtotime($post->post_date));
                     }
                 },
@@ -889,7 +893,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'post_modified' => [
-                'title' => esc_html__('Post modified', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Post modified', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'desc',
                 'filter' => true,
@@ -923,7 +927,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'comment_count' => [
-                'title' => esc_html__('Comment count', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Comment count', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'desc',
                 'filter' => true,
@@ -938,7 +942,7 @@ final class WOOT_WooCommerce {
 
                     if (!empty($value) AND is_array($value)) {
                         add_filter('posts_where', function ($where = '') use ($value) {
-                            $where .= "  AND (comment_count >= {$value[0]} AND comment_count <= {$value[1]})";
+                            $where .= " AND (comment_count >= " . intval($value[0]) . " AND comment_count <= " . intval($value[1]) . ")";
                             return $where;
                         }, 101);
                     }
@@ -960,7 +964,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'price' => [
-                'title' => esc_html__('Price', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Price', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -987,7 +991,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'regular_price' => [
-                'title' => esc_html__('Regular Price', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Regular Price', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1014,7 +1018,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'sale_price' => [
-                'title' => esc_html__('Sale Price', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Sale Price', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1041,7 +1045,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'on_sale' => [
-                'title' => esc_html__('On Sale', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('On Sale', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'filter' => true,
                 'filter_view' => 'switcher',
@@ -1075,7 +1079,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'sku' => [
-                'title' => esc_html__('SKU', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('SKU', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value',
@@ -1109,7 +1113,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'downloadable' => [
-                'title' => esc_html__('Downloadable', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Downloadable', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value',
@@ -1137,7 +1141,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'gallery' => [
-                'title' => esc_html__('Gallery', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Gallery', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) {
                     $product = self::get_product($post_id);
@@ -1167,7 +1171,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'weight' => [
-                'title' => esc_html__('Weight', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Weight', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1194,7 +1198,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'length' => [
-                'title' => esc_html__('Length', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Length', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1221,7 +1225,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'height' => [
-                'title' => esc_html__('Height', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Height', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1248,7 +1252,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'width' => [
-                'title' => esc_html__('Width', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Width', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1275,7 +1279,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'manage_stock' => [
-                'title' => esc_html__('Manage stock', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Manage stock', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value',
@@ -1285,7 +1289,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'stock_status' => [
-                'title' => esc_html__('Stock status', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Stock status', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value',
@@ -1323,7 +1327,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'stock_quantity' => [
-                'title' => esc_html__('Stock quantity', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Stock quantity', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1351,7 +1355,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'sold_individually' => [
-                'title' => esc_html__('Sold individually', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Sold individually', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value',
@@ -1379,7 +1383,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'total_sales' => [
-                'title' => esc_html__('Total sales', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Total sales', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1407,7 +1411,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'review_count' => [
-                'title' => esc_html__('Reviews count', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Reviews count', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1435,18 +1439,18 @@ final class WOOT_WooCommerce {
                 }
             ],
             'menu_order' => [
-                'title' => esc_html__('Menu order', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Menu order', 'woot-products-tables'),
                 'order' => 'asc',
             ],
             'tax_status' => [
-                'title' => esc_html__('Tax status', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Tax status', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'action' => function ($post_id) {
                     return WOOT_Vocabulary::get(trim($this->get_field_data('tax_status', $post_id)));
                 }
             ],
             'average_rating' => [
-                'title' => esc_html__('Rating', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Rating', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'order' => 'asc',
                 'orderby' => 'meta_value_num',
@@ -1480,35 +1484,35 @@ final class WOOT_WooCommerce {
                 },
                 'get_filter_draw_data' => function ($table_id) {
                     return [
-                'title' => WOOT_Vocabulary::get(esc_html__('Rating', 'profit-products-tables-for-woocommerce')),
+                'title' => WOOT_Vocabulary::get(esc_html__('Rating', 'woot-products-tables')),
                 'view' => 'select',
                 'options' => [
                     [
                         'id' => 1,
-                        'title' => WOOT_Vocabulary::get(esc_html__('from 1 to 2', 'profit-products-tables-for-woocommerce')),
+                        'title' => WOOT_Vocabulary::get(esc_html__('from 1 to 2', 'woot-products-tables')),
                     ],
                     [
                         'id' => 2,
-                        'title' => WOOT_Vocabulary::get(esc_html__('from 2 to 3', 'profit-products-tables-for-woocommerce')),
+                        'title' => WOOT_Vocabulary::get(esc_html__('from 2 to 3', 'woot-products-tables')),
                     ],
                     [
                         'id' => 3,
-                        'title' => WOOT_Vocabulary::get(esc_html__('from 3 to 4', 'profit-products-tables-for-woocommerce')),
+                        'title' => WOOT_Vocabulary::get(esc_html__('from 3 to 4', 'woot-products-tables')),
                     ],
                     [
                         'id' => 4,
-                        'title' => WOOT_Vocabulary::get(esc_html__('from 4 to 5', 'profit-products-tables-for-woocommerce')),
+                        'title' => WOOT_Vocabulary::get(esc_html__('from 4 to 5', 'woot-products-tables')),
                     ],
                     [
                         'id' => 5,
-                        'title' => WOOT_Vocabulary::get(esc_html__('exactly 5', 'profit-products-tables-for-woocommerce')),
+                        'title' => WOOT_Vocabulary::get(esc_html__('exactly 5', 'woot-products-tables')),
                     ]
                 ]
                     ];
                 }
             ],
             'grouped' => [
-                'title' => esc_html__('Grouped', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Grouped', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
                     $product = self::get_product($post_id);
@@ -1535,7 +1539,7 @@ final class WOOT_WooCommerce {
                                             'onclick' => "let skin=woot_helper.get_closest_skin(this, \"{$skin}\"); return woot_helper.call_popup(\"woot_woocommerce_get_grouped_table\",{product_id: {$product->get_id()}, skin: skin, not_paste:1},\"{$unique_id}\", \"{$title}\");",
                                             'title' => $product->get_title(),
                                             'class' => 'woot-btn',
-                                                ), sprintf(WOOT_Vocabulary::get(esc_html__('Group[%s]', 'profit-products-tables-for-woocommerce')), $count));
+                                                ), sprintf(WOOT_Vocabulary::get(esc_html__('Group[%s]', 'woot-products-tables')), $count));
                             } else {
                                 return '-';
                             }
@@ -1546,7 +1550,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'upsell' => [
-                'title' => esc_html__('Upsells', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Upsells', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
                     //return $this->get_field_data('upsell', $post_id);
@@ -1572,7 +1576,7 @@ final class WOOT_WooCommerce {
                                         'onclick' => "let skin=woot_helper.get_closest_skin(this, \"{$skin}\"); return woot_helper.call_popup(\"woot_woocommerce_get_upsells_table\",{product_id: {$product->get_id()}, skin: skin, not_paste:1},\"{$unique_id}\", \"{$title}\");",
                                         'title' => $product->get_title(),
                                         'class' => 'woot-btn'
-                                            ), sprintf(WOOT_Vocabulary::get(esc_html__('Upsells[%s]', 'profit-products-tables-for-woocommerce')), count($product->get_upsell_ids())));
+                                            ), sprintf(WOOT_Vocabulary::get(esc_html__('Upsells[%s]', 'woot-products-tables')), count($product->get_upsell_ids())));
                         } else {
                             return '-';
                         }
@@ -1580,7 +1584,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'cross_sell' => [
-                'title' => esc_html__('Cross sells', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Cross sells', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
                     //return $this->get_field_data('cross_sell', $post_id);
@@ -1608,7 +1612,7 @@ final class WOOT_WooCommerce {
                                         'title' => $product->get_title(),
                                         'id' => 'call-btn-' . $unique_id,
                                         'class' => 'woot-btn'
-                                            ), sprintf(WOOT_Vocabulary::get(esc_html__('Cross[%s]', 'profit-products-tables-for-woocommerce')), count($product->get_cross_sell_ids())));
+                                            ), sprintf(WOOT_Vocabulary::get(esc_html__('Cross[%s]', 'woot-products-tables')), count($product->get_cross_sell_ids())));
                         } else {
                             return '-';
                         }
@@ -1616,7 +1620,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'variations' => [
-                'title' => esc_html__('Variations', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Variations', 'woot-products-tables'),
                 'options' => ['css-background', 'css-media-hide'],
                 'action' => function ($post_id) use ($table_id, $shortcode_args) {
                     $product = self::get_product($post_id);
@@ -1643,7 +1647,7 @@ final class WOOT_WooCommerce {
                                             'onclick' => "let skin=woot_helper.get_closest_skin(this, \"{$skin}\"); return woot_helper.call_popup(\"woot_woocommerce_get_variations_table\",{product_id: {$product->get_id()}, skin: skin, not_paste:1},\"{$unique_id}\", \"{$title}\");",
                                             'title' => $product->get_title(),
                                             'class' => 'woot-btn'
-                                                ), sprintf(WOOT_Vocabulary::get(esc_html__('Var.[%s]', 'profit-products-tables-for-woocommerce')), $count));
+                                                ), sprintf(WOOT_Vocabulary::get(esc_html__('Var.[%s]', 'woot-products-tables')), $count));
                             } else {
                                 return '-';
                             }
@@ -1654,7 +1658,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'product_type' => [
-                'title' => esc_html__('Type', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Type', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'action' => function ($post_id) {
                     $product_type = self::get_product_type($post_id);
@@ -1662,7 +1666,7 @@ final class WOOT_WooCommerce {
                 }
             ],
             'featured' => [
-                'title' => esc_html__('Featured', 'profit-products-tables-for-woocommerce'),
+                'title' => esc_html__('Featured', 'woot-products-tables'),
                 'options' => WOOT_WooCommerce::$fields_options,
                 'filter' => true,
                 'filter_view' => 'switcher',
@@ -1734,12 +1738,12 @@ final class WOOT_WooCommerce {
                             if (!empty($attributes) AND isset($attributes[$t->name])) {
                                 $term = get_term_by('slug', $attributes[$t->name], $t->name);
                                 $res = WOOT_HELPER::draw_html_item('a', array(
-                                            'href' => get_term_link($term->term_id),
-                                            'class' => 'woot-tax-term woot-' . $term->taxonomy . '-' . $term->slug,
-                                            'target' => '_blank',
-                                                ), WOOT_Vocabulary::get($term->name));
+                                    'href' => get_term_link($term->term_id),
+                                    'class' => 'woot-tax-term woot-' . $term->taxonomy . '-' . $term->slug,
+                                    'target' => '_blank',
+                                        ), WOOT_Vocabulary::get($term->name));
                             } else {
-                                $res = esc_html__('attribute not exist', 'profit-products-tables-for-woocommerce');
+                                $res = esc_html__('attribute not exist', 'woot-products-tables');
                             }
                         } else {
 
@@ -1767,14 +1771,14 @@ final class WOOT_WooCommerce {
                                 foreach ($options as $t) {
                                     if (!$display_as_text) {
                                         $links[] = WOOT_HELPER::draw_html_item('a', array(
-                                                    'href' => get_term_link($t['id']),
-                                                    'class' => 'woot-tax-term woot-' . $t['name'] . '-' . $t['slug'],
-                                                    'target' => '_blank',
-                                                        ), WOOT_Vocabulary::get($t['name']));
+                                            'href' => get_term_link($t['id']),
+                                            'class' => 'woot-tax-term woot-' . $t['name'] . '-' . $t['slug'],
+                                            'target' => '_blank',
+                                                ), WOOT_Vocabulary::get($t['name']));
                                     } else {
                                         $links[] = WOOT_HELPER::draw_html_item('span', array(
-                                                    'class' => 'woot-tax-term woot-' . $t['name'] . '-' . $t['slug']
-                                                        ), WOOT_Vocabulary::get($t['name']));
+                                            'class' => 'woot-tax-term woot-' . $t['name'] . '-' . $t['slug']
+                                                ), WOOT_Vocabulary::get($t['name']));
                                     }
                                 }
 
@@ -1841,7 +1845,7 @@ final class WOOT_WooCommerce {
      */
     private function get_add_to_cart_btn($table_id = 0) {
         return [
-            'title' => esc_html__('Cart', 'profit-products-tables-for-woocommerce'),
+            'title' => esc_html__('Cart', 'woot-products-tables'),
             'order' => FALSE,
             'action' => function ($post_id) use ($table_id) {
                 $product = self::get_product($post_id);
@@ -1987,9 +1991,9 @@ final class WOOT_WooCommerce {
                             foreach ($ids as $pid) {
                                 $p = self::get_product($pid);
                                 $value[] = WOOT_HELPER::draw_html_item('a', [
-                                            'href' => $p->get_permalink(),
-                                            'target' => '_blank'
-                                                ], $p->get_title());
+                                    'href' => $p->get_permalink(),
+                                    'target' => '_blank'
+                                        ], $p->get_title());
                             }
 
                             $value = implode(', ', $value);
@@ -2092,9 +2096,9 @@ final class WOOT_WooCommerce {
                             $profile[$key] = $woo_profile[WOOT::$synonyms[$key]];
                         } else {
                             $profile[$key] = [
-                                'title' => esc_html__('not exists', 'profit-products-tables-for-woocommerce'),
+                                'title' => esc_html__('not exists', 'woot-products-tables'),
                                 'action' => function ($post_id) {
-                                    return esc_html__('not exists', 'profit-products-tables-for-woocommerce');
+                                    return esc_html__('not exists', 'woot-products-tables');
                                 }
                             ];
                         }
@@ -2120,7 +2124,6 @@ final class WOOT_WooCommerce {
         $price = str_replace('class', 'data-class', $price);
         return $price;
     }
-
 }
 
 //+++

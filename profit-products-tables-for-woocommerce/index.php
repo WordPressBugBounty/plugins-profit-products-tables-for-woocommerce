@@ -4,16 +4,16 @@
   Plugin URI: https://products-tables.com/
   Description: WooCommerce plugin for displaying shop products in table format. Tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
   Requires at least: WP 4.9
-  Tested up to: WP 6.9
+  Tested up to: WP 7.0
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.8
+  Version: 1.0.9
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 10.5
+  WC tested up to: 10.7
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
  */
 
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.8');
+define('WOOT_VERSION', '1.0.9');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//20-02-2026
+//01-05-2026
 class WOOT {
 
     public $tables = null;
