@@ -691,14 +691,16 @@ final class WOOT_WooCommerce {
                     if (!empty($value)) {
 
                         add_filter('posts_where', function ($where = '') use ($args, $value) {
+                            global $wpdb;
                             $sql = "";
+                            $escaped_value = '%' . $wpdb->esc_like(WOOT_HELPER::strtolower(trim($value))) . '%';
 
                             if (isset($args['woot_text_search_by']) AND !empty($args['woot_text_search_by'])) {
                                 $sql = " AND (";
                                 foreach ($args['woot_text_search_by'] as $field) {
-                                    $sql .= "LOWER({$field}) LIKE '%{$value}%' OR ";
+                                    $sql .= $wpdb->prepare("LOWER({$field}) LIKE %s OR ", $escaped_value);
                                 }
-                                $sql = trim($sql, ' OR ');
+                                $sql = rtrim($sql, ' OR ');
                                 $sql .= ")";
                             }
 

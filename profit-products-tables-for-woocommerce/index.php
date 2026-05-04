@@ -7,7 +7,7 @@
   Tested up to: WP 7.0
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.0.9
+  Version: 1.1.0
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.0.9');
+define('WOOT_VERSION', '1.1.0');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//01-05-2026
+//04-05-2026
 class WOOT {
 
     public $tables = null;
@@ -1067,7 +1067,7 @@ class WOOT {
 
 
         if ($as_script) {
-            return "<div class='{$as_script}' data-table-id='{$table_html_id}' style='display: none;'>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG) . '</div>';
+            return "<div class='{$as_script}' data-table-id='" . esc_attr($table_html_id) . "' style='display: none;'>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG) . '</div>';
         }
 
 
@@ -1751,7 +1751,7 @@ class WOOT {
                 $what = json_decode(stripslashes(WOOT_HELPER::sanitize_text($_REQUEST['what'])), true);
                 $what = wc_clean($what);
                 if (isset($what['call_action']) && strpos($what['call_action'], 'woot_') === 0) {
-                    $res = apply_filters($what['call_action'], $what['more_data'], $_REQUEST['call_id']);
+                    $res = apply_filters($what['call_action'], $what['more_data'], sanitize_text_field($_REQUEST['call_id']));
                 }
 
                 break;
