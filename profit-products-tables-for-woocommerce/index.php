@@ -3,11 +3,11 @@
   Plugin Name: Active Products Tables for WooCommerce
   Plugin URI: https://products-tables.com/
   Description: WooCommerce plugin for displaying shop products in table format. Tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
-  Requires at least: WP 4.9
-  Tested up to: WP 7.0
+  Requires at least: 4.9
+  Tested up to: 7.0
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 1.1.0
+  Version: 1.1.1
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -28,7 +28,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '1.1.0');
+define('WOOT_VERSION', '1.1.1');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -52,7 +52,7 @@ add_action('before_woocommerce_init', function () {
     }
 });
 
-//04-05-2026
+//22-05-2026
 class WOOT {
 
     public $tables = null;
@@ -414,8 +414,8 @@ class WOOT {
         }
 
         if (isset($args['table_html_id'])) {
-            $table_html_id = $args['table_html_id'];
-        }
+			$table_html_id = sanitize_html_class($args['table_html_id']);
+		}
 
         if (empty($table_html_id)) {
             $table_html_id = uniqid('t');
@@ -1659,9 +1659,10 @@ class WOOT {
                 break;
 
             case 'shortcode_button':
-                $shortcode_button_args = json_decode(html_entity_decode(stripslashes($shortcode_button_args)), ARRAY_A);
-                $res = $this->do_shortcode($shortcode_button_args);
-                break;
+				$shortcode_button_args = json_decode(html_entity_decode(stripslashes($shortcode_button_args)), ARRAY_A);
+				$shortcode_button_args = is_array($shortcode_button_args) ? wc_clean($shortcode_button_args) : array();
+				$res = $this->do_shortcode($shortcode_button_args);
+				break;
 
             case 'shortcodes_set':
                 $content = WOOT_HELPER::delete_not_allowed_shortcodes(esc_html($_REQUEST['shortcodes_set']));
