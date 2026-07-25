@@ -1,45 +1,105 @@
+/* ============================================================================
+   WOOT — print stylesheet (assets/css/print.css)
+   Loaded into the print window by data-table-23.js (print_css_url).
+   This is a PAPER stylesheet, not the on-screen skin: light background,
+   dark text, clear borders — clean and readable when printed.
+   ========================================================================== */
+
 body {
-    -webkit-print-color-adjust:exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1a1a1a;
+    margin: 18px;
+    font-size: 12px;
+    line-height: 1.45;
 }
 
-table{
+/* document title written by the print routine */
+h3 {
+    font-size: 16px;
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #222;
+}
+
+/* -------------------------------------------------------------- table ---- */
+table {
     width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
 }
 
-th{
-    text-align: center;
+/* header + footer label rows */
+thead th,
+tfoot th {
+    background: #eef1f6;
+    color: #111;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    padding: 9px 10px;
+    border: 1px solid #cfd6e2;
+}
+thead th { border-bottom: 2px solid #333; }
+tfoot th { border-top: 2px solid #333; }
+
+/* body cells */
+tbody td {
+    padding: 8px 10px;
+    border: 1px solid #dce1ea;
+    vertical-align: middle;
+    color: #222;
+    max-width: 220px;
+    word-wrap: break-word;
 }
 
-table, th, td
-{
-    border-collapse:collapse;
-    border: 1px solid #aaa;
-    color: #333;
+/* zebra striping for readability on paper */
+tbody tr:nth-child(even) td { background: #f7f9fc; }
+
+/* product thumbnails: keep small and tidy */
+td img {
+    max-width: 52px;
+    height: auto;
+    border-radius: 4px;
+    display: block;
 }
 
-td{
-    width: content-box;
-    max-width: 90px;
-}
-
-td a{
+/* links print as plain black text */
+a,
+td a {
     text-decoration: none;
-    color: #333;
+    color: #111;
 }
 
+/* struck-through (regular) price: muted */
+del { color: #888; }
 
+/* -------------------------------------------------- hide the non-paper ---- */
+/* interactive controls make no sense on a printout */
 td audio,
-.woot-profuct-tag-container{
-    display: none;
+input,
+select,
+button,
+.woot-btn,
+.woot-add-to-cart-btn,
+.woot-button-buy-pack,
+.woot-checkmark-container,
+.woot-woocommerce-cart,
+.woot-profuct-tag-container,
+.table23-print-btn {
+    display: none !important;
 }
 
+/* rows the plugin marks as non-printable (unchanged behaviour) */
 tr[data-pid="gallery"],
 tr[data-pid="add_to_cart"],
-tr[data-pid="single"]{
+tr[data-pid="single"],
+.woot-do-not-print {
     display: none;
 }
 
-.woot-do-not-print{
-    display: none;
-}
-
+/* page margins */
+@page { margin: 12mm; }

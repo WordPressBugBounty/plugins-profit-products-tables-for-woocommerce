@@ -1,0 +1,559 @@
+/* ============================================================================
+   ONYX — WOOT flagship skin (dark neon / acid-on-black)
+   Near-black panels, acid-lime -> cyan -> magenta neon accents, glowing rim
+   outlines and text. High-contrast cyberpunk counterpart to Fable's soft glass.
+
+   Engine note: every selector is prefixed with #tid (engine swaps 'tid' for the
+   real table id). The substring "tid" appears ONLY inside #tid.
+
+   Lessons baked in (Fable/Aurora/Frost parity):
+   - override base via #tid; never edit base files
+   - td/th forced transparent so the theme's opaque cell bg can't hide the dark row
+   - .table23-wrapper + <table> transparent, light table border removed
+   - flow-header / tfoot: font-size PINNED, nowrap, padding, cloned header look
+   - excerpt/content popup opaque + readable; button hover text pinned
+   - cart CELL never flexed; filter chip padding on chip only (not the slider)
+   - product tag arrow via clip-path; pagination min-height 44 + arrows by class
+   - calendar day states in palette; price via same-element td.<class>
+   - count badge kept small/absolute (not merged with the button)
+   ========================================================================== */
+
+:root {
+    --onyx-bg:            #07070d;                          /* near black */
+    --onyx-panel:         rgba(24, 26, 40, 0.72);           /* row surface */
+    --onyx-panel-2:       rgba(16, 17, 28, 0.72);           /* zebra darker */
+    --onyx-panel-hover:   rgba(40, 44, 66, 0.85);           /* row hover */
+    --onyx-border:        rgba(120, 140, 200, 0.16);        /* neutral hairline */
+    --onyx-border-strong: rgba(150, 170, 220, 0.30);        /* inputs */
+    --onyx-ink:           #e8ebf7;                          /* near-white text */
+    --onyx-ink-soft:      #8b90ad;                          /* secondary text */
+    --onyx-acid:          #b6ff2e;                          /* acid lime (signature) */
+    --onyx-cyan:          #1ff0ff;                          /* electric cyan */
+    --onyx-magenta:       #ff2ec4;                          /* hot magenta */
+    --onyx-price:         #ff2ec4;                          /* price = magenta */
+    --onyx-glow-acid:     rgba(182, 255, 46, 0.45);
+    --onyx-glow-cyan:     rgba(31, 240, 255, 0.40);
+    --onyx-popup:         #10111c;                          /* opaque popup surface */
+    /* neon signature gradient (acid -> cyan -> magenta) */
+    --onyx-grad:          linear-gradient(120deg, #b6ff2e 0%, #1ff0ff 55%, #ff2ec4 100%);
+    --onyx-grad-2:        linear-gradient(120deg, #b6ff2e 0%, #1ff0ff 100%);
+}
+
+/* ---- table shell : black slab with neon corner glow + neon rim ----------- */
+#tid.data-table-23 {
+    background:
+        radial-gradient(50% 55% at 0% 0%,   rgba(182, 255, 46, 0.10) 0%, rgba(182,255,46,0) 55%),
+        radial-gradient(50% 55% at 100% 0%, rgba(31, 240, 255, 0.10) 0%, rgba(31,240,255,0) 55%),
+        radial-gradient(60% 65% at 85% 100%, rgba(255, 46, 196, 0.10) 0%, rgba(255,46,196,0) 58%),
+        linear-gradient(180deg, #0b0c15 0%, var(--onyx-bg) 100%) !important;
+    border: 1px solid rgba(182, 255, 46, 0.30) !important;
+    border-radius: 16px !important;
+    padding: 22px !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.6),
+                0 30px 70px -30px rgba(0,0,0,0.9),
+                0 0 40px -10px rgba(31,240,255,0.15) !important;
+    color: var(--onyx-ink) !important;
+}
+
+#tid.data-table-23 .table23-wrapper { background: transparent !important; }
+#tid.data-table-23 table {
+    border: none !important;
+    color: var(--onyx-ink) !important;
+    background: transparent !important;
+    border-collapse: separate !important;
+    border-spacing: 0 6px !important;
+}
+
+/* ---- header : black bar, acid neon labels, glowing neon underline --------- */
+#tid.data-table-23 table thead tr {
+    background: linear-gradient(180deg, #12131f, #0a0b13) !important;
+}
+#tid.woot-data-table table thead th {
+    background: transparent !important;
+    color: var(--onyx-acid) !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: .10em !important;
+    padding: 16px 12px !important;
+    border: none !important;
+    text-shadow: 0 0 10px var(--onyx-glow-acid) !important;
+    box-shadow: inset 0 -2px 0 rgba(182,255,46,0.55), inset 0 -14px 20px -14px rgba(31,240,255,0.35) !important;
+}
+#tid.woot-data-table table thead th:first-child { border-top-left-radius: 12px !important; border-bottom-left-radius: 12px !important; }
+#tid.woot-data-table table thead th:last-child  { border-top-right-radius: 12px !important; border-bottom-right-radius: 12px !important; }
+#tid table thead th .table23-order-arrows,
+#tid table thead th i { color: var(--onyx-cyan) !important; }
+
+/* ---- flow-header (clone) + tfoot : same black neon bar ------------------- */
+#tid .table23-flow-header {
+    background: linear-gradient(180deg, #12131f, #0a0b13) !important;
+    opacity: 1 !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    box-shadow: inset 0 -2px 0 rgba(182,255,46,0.55) !important;
+}
+#tid .table23-flow-header > div {
+    color: var(--onyx-acid) !important;
+    font-weight: 800 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: .10em !important;
+    white-space: nowrap !important;
+    line-height: 1.3 !important;
+    padding: 16px 12px !important;
+    text-shadow: 0 0 10px var(--onyx-glow-acid) !important;
+}
+#tid.data-table-23 table tfoot > tr { background: linear-gradient(180deg, #12131f, #0a0b13) !important; }
+#tid.woot-data-table table tfoot th {
+    background: transparent !important;
+    color: var(--onyx-acid) !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: .10em !important;
+    border: none !important;
+    text-shadow: 0 0 10px var(--onyx-glow-acid) !important;
+}
+
+/* ---- rows : dark panels, zebra, neon hover, cells transparent ------------ */
+#tid.data-table-23 table tbody tr:nth-of-type(odd)  { background: var(--onyx-panel) !important; }
+#tid.data-table-23 table tbody tr:nth-of-type(even) { background: var(--onyx-panel-2) !important; }
+#tid.data-table-23 table tbody tr {
+    transition: background .2s ease, box-shadow .2s ease !important;
+}
+#tid.data-table-23 table tbody tr:hover {
+    background: var(--onyx-panel-hover) !important;
+    box-shadow: inset 3px 0 0 0 var(--onyx-acid),
+                0 0 22px -6px var(--onyx-glow-acid) !important;
+}
+
+/* CRITICAL: force cells transparent so the dark row shows (not theme's light) */
+#tid.data-table-23 table tbody td,
+#tid.data-table-23 table tbody th {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--onyx-ink) !important;
+    padding: 14px 12px !important;
+}
+#tid.data-table-23 table tbody td:first-child,
+#tid.data-table-23 table tbody th:first-child { border-top-left-radius: 10px !important; border-bottom-left-radius: 10px !important; }
+#tid.data-table-23 table tbody td:last-child,
+#tid.data-table-23 table tbody th:last-child  { border-top-right-radius: 10px !important; border-bottom-right-radius: 10px !important; }
+
+/* thumbnails : dark tile with neon rim */
+#tid.woot-data-table table td img {
+    border-radius: 10px !important;
+    box-shadow: 0 0 0 1px rgba(31,240,255,0.35), 0 6px 16px -6px rgba(0,0,0,0.8) !important;
+}
+
+/* text / links / title */
+#tid.woot-data-table table .table23_td_post_title,
+#tid.woot-data-table table .table23_td_title,
+#tid.woot-data-table table td a { color: var(--onyx-ink) !important; text-decoration: none !important; }
+#tid.woot-data-table table td a:hover { color: var(--onyx-cyan) !important; text-shadow: 0 0 8px var(--onyx-glow-cyan) !important; }
+
+/* price : neon magenta glow. Same-element td.<class>. */
+#tid.data-table-23 table tbody td.table23_td_price,
+#tid.data-table-23 table tbody td.table23_td_sale_price {
+    color: var(--onyx-price) !important;
+    font-weight: 800 !important;
+    text-shadow: 0 0 10px rgba(255,46,196,0.5) !important;
+}
+#tid.data-table-23 table tbody td.table23_td_price del,
+#tid.data-table-23 table tbody td.table23_td_regular_price {
+    color: var(--onyx-ink-soft) !important;
+    font-weight: 400 !important;
+    text-decoration: line-through !important;
+    opacity: .7 !important;
+    text-shadow: none !important;
+}
+#tid.data-table-23 table tbody td.table23_td_price small,
+#tid.data-table-23 table tbody td.table23_td_cell em { color: var(--onyx-ink-soft) !important; text-shadow: none !important; }
+
+/* ---- inputs / controls : dark with neon focus ---------------------------- */
+#tid input[type="text"],
+#tid input[type="search"],
+#tid input[type="number"],
+#tid .woot-text-search,
+#tid select,
+#tid .selectm23,
+#tid .selectm23-selected {
+    background: rgba(10, 11, 20, 0.85) !important;
+    color: var(--onyx-ink) !important;
+    border: 1px solid var(--onyx-border-strong) !important;
+    border-radius: 8px !important;
+}
+#tid input::placeholder, #tid .woot-text-search::placeholder { color: var(--onyx-ink-soft) !important; }
+#tid input:focus,
+#tid .woot-text-search:focus,
+#tid select:focus {
+    border-color: var(--onyx-acid) !important;
+    box-shadow: 0 0 0 3px rgba(182,255,46,0.16), 0 0 14px -2px var(--onyx-glow-acid) !important;
+    outline: none !important;
+}
+
+/* generic buttons : dark + neon outline + acid text */
+#tid .woot-btn {
+    background: rgba(14, 16, 28, 0.85) !important;
+    color: var(--onyx-acid) !important;
+    border: 1px solid rgba(182,255,46,0.5) !important;
+    border-radius: 8px !important;
+    transition: transform .15s ease, box-shadow .2s ease !important;
+}
+#tid .woot-btn:hover { transform: translateY(-1px) !important; box-shadow: 0 0 16px -2px var(--onyx-glow-acid) !important; }
+#tid.woot-data-table a.woot-btn { color: var(--onyx-acid) !important; }
+
+/* ---- filter control labels ----------------------------------------------- */
+#tid .woot-slider-label,
+#tid .switcher23-container,
+#tid .switcher23-container label,
+#tid .woot-filter-cell label,
+#tid .woot-filter-title,
+#tid .table23-filter-label,
+#tid .woot-filter-cell > span:first-child,
+#tid label { color: var(--onyx-ink) !important; font-weight: 600 !important; }
+#tid .woot-filter-cell-type-mselect .selectm23,
+#tid .selectm23 { color: var(--onyx-ink) !important; }
+#tid .ranger23-title,
+#tid .woot-filter-navigation-label,
+#tid .woot-filter-cell-type-range .woot-filter-title { color: var(--onyx-ink) !important; }
+
+/* filter tag chips */
+#tid .woot-tax-term {
+    padding: 7px 13px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(31,240,255,0.5) !important;
+    background: rgba(10, 11, 20, 0.7) !important;
+    color: var(--onyx-cyan) !important;
+    line-height: 1.5 !important;
+    font-size: 0.85em !important;
+    box-shadow: 0 0 12px -4px var(--onyx-glow-cyan) !important;
+}
+
+/* range sliders */
+#tid .ranger23-container { background: rgba(10,11,20,0.8) !important; border-radius: 999px !important; }
+#tid .ranger23-bar { background: var(--onyx-grad-2) !important; box-shadow: 0 0 14px var(--onyx-glow-acid) !important; }
+#tid .ranger23-pointer,
+#tid .ranger23-pointer-max,
+#tid .ranger23-pointer-min {
+    background: #0a0b14 !important;
+    border: 2px solid var(--onyx-acid) !important;
+    box-shadow: 0 0 12px var(--onyx-glow-acid) !important;
+}
+
+/* filter navigation marker chip — padding HERE only (never on the slider) */
+#tid .woot-filter-navigation-label {
+    background: rgba(10, 11, 20, 0.7) !important;
+    border-radius: 999px !important;
+    padding: 7px 17px !important;
+    border: 1px solid rgba(31,240,255,0.4) !important;
+}
+
+/* ---- calendar ------------------------------------------------------------ */
+#tid div.calendar23-label { background: var(--onyx-grad) !important; color: #06060a !important; }
+#tid .calendar23-day:hover { background: var(--onyx-grad-2) !important; color: #06060a !important; }
+#tid .calendar23-day.calendar23-focused { background: var(--onyx-magenta) !important; color: #06060a !important; }
+#tid .calendar23-day.calendar23-today {
+    background: rgba(182,255,46,0.14) !important;
+    box-shadow: inset 0 0 0 1px var(--onyx-acid) !important;
+}
+
+/* ---- excerpt / content "read more" popup --------------------------------- */
+#tid .woot-more-less-container { border-bottom: 1px dotted var(--onyx-acid) !important; }
+#tid .woot-more-less-container.woot-more-less-container-active > div {
+    background: var(--onyx-popup) !important;
+    color: var(--onyx-ink) !important;
+    border: 1px solid rgba(182,255,46,0.4) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.9), 0 0 30px -8px var(--onyx-glow-acid) !important;
+}
+#tid .woot-more-less-container.woot-more-less-container-active > div > strong { color: var(--onyx-acid) !important; }
+#tid .woot-more-less-container.woot-more-less-container-active a { color: var(--onyx-cyan) !important; }
+
+/* ---- cart : Add to cart = neon gradient fill, black text, glow ------------ */
+#tid table .woot-btn.woot-add-to-cart-btn {
+    position: relative !important;
+    background: var(--onyx-grad-2) !important;
+    color: #06060a !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 22px -4px var(--onyx-glow-acid) !important;
+    transition: transform .18s ease, box-shadow .2s ease !important;
+}
+#tid table .woot-btn.woot-add-to-cart-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 30px -2px var(--onyx-glow-cyan) !important;
+}
+#tid table .woot-btn.woot-add-to-cart-btn,
+#tid table .woot-btn.woot-add-to-cart-btn:hover,
+#tid table .woot-btn.woot-add-to-cart-btn span,
+#tid table .woot-btn.woot-add-to-cart-btn:hover span,
+#tid table .woot-btn.woot-add-to-cart-btn i,
+#tid table .woot-btn.woot-add-to-cart-btn:hover i { color: #06060a !important; }
+
+/* small count badge on the cart button (keep its absolute position) */
+#tid .woot_count_in_cart,
+#tid table .woot-btn.woot-add-to-cart-btn span.woot_count_in_cart {
+    background: var(--onyx-magenta) !important;
+    color: #06060a !important;
+    border: 2px solid #0a0b14 !important;
+    box-shadow: 0 0 10px rgba(255,46,196,0.6) !important;
+    -webkit-text-fill-color: #06060a !important;
+    line-height: 15px;
+}
+
+/* cart column header raised */
+#tid table thead th[data-key="add_to_cart"] { cursor: pointer !important; }
+
+/* master checkbox */
+#tid th[data-key="add_to_cart"] .woot-checkmark-container {
+    top: 50% !important; transform: translateY(-50%) !important; right: 8px !important;
+}
+#tid .woot-checkmark {
+    background-color: rgba(10,11,20,0.9) !important;
+    border: 1px solid var(--onyx-acid) !important;
+    color: var(--onyx-acid) !important;
+    border-radius: 6px !important;
+}
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark,
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark::before {
+    background: var(--onyx-acid) !important;
+    color: #06060a !important;
+}
+
+/* "add selected" (select [n]) */
+#tid .woot-add-to-cart-all-btn {
+    background: var(--onyx-grad-2) !important;
+    color: #06060a !important;
+    font-weight: 800 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: 0 0 18px -4px var(--onyx-glow-acid) !important;
+    letter-spacing: .04em !important;
+}
+
+/* cart cell + quantity input */
+#tid .woot-woocommerce-cart {
+    background: rgba(10,11,20,0.6) !important;
+    border: 1px solid var(--onyx-border) !important;
+    border-radius: 10px !important;
+}
+#tid .table23_td_quantity input,
+#tid .table23_td_add_to_cart input[type="number"] {
+    background: rgba(10,11,20,0.9) !important;
+    border: 1px solid var(--onyx-border-strong) !important;
+    color: var(--onyx-ink) !important;
+    border-radius: 8px !important;
+    padding: 9px 10px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+}
+
+/* ---- semantic marks + product tag badges (neon fills) -------------------- */
+#tid span.woot-html-cross { color: var(--onyx-magenta) !important; text-shadow: 0 0 8px rgba(255,46,196,0.5) !important; }
+#tid span.woot-html-check { color: var(--onyx-acid) !important; text-shadow: 0 0 8px var(--onyx-glow-acid) !important; }
+
+#tid .woot-profuct-tag-featured { background: var(--onyx-acid) !important; }
+#tid .woot-profuct-tag-sale     { background: var(--onyx-cyan) !important; }
+#tid .woot-profuct-tag-out      { background: var(--onyx-magenta) !important; }
+#tid .woot-profuct-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: #06060a !important;
+    font-weight: 800 !important;
+    font-size: 0.68em !important;
+    letter-spacing: .04em !important;
+    text-transform: uppercase !important;
+    padding: 6px 17px 6px 11px !important;
+    margin: 0 7px 0 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    border-radius: 0 !important;
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%) !important;
+    filter: drop-shadow(0 0 8px rgba(182,255,46,0.4)) !important;
+    box-shadow: none !important;
+}
+#tid .woot-profuct-tag:after { display: none !important; }
+#tid .woot-profuct-tag:before { background: rgba(6,6,10,0.55) !important; width: 6px !important; height: 6px !important; margin: 0 !important; flex: 0 0 auto !important; }
+
+/* separated divider retint */
+#tid.data-table-23-separated table thead th,
+#tid.data-table-23-separated table tfoot th { border-right: 1px solid rgba(31,240,255,0.25) !important; }
+
+#tid .woot_compare_remove_btn { color: var(--onyx-magenta) !important; }
+
+/* ============================================================================
+   INNARDS — full parity, onyx neon language
+   ========================================================================== */
+
+/* range slider handles */
+#tid .ranger23-handler-left,
+#tid .ranger23-handler-right {
+    background: #0a0b14 !important;
+    border: 2px solid var(--onyx-acid) !important;
+    box-shadow: 0 0 12px var(--onyx-glow-acid) !important;
+    border-radius: 999px !important;
+}
+#tid .ranger23-min, #tid .ranger23-max { color: var(--onyx-ink-soft) !important; }
+#tid .ranger23-handler-left span,
+#tid .ranger23-handler-right span { color: var(--onyx-acid) !important; font-weight: 700 !important; }
+
+/* switchers : off dark / on neon gradient */
+#tid .switcher23-toggle:before { background: #2a2d40 !important; }
+#tid .switcher23-toggle span   { background: #e8ebf7 !important; box-shadow: 0 0 8px rgba(0,0,0,0.6) !important; }
+#tid .switcher23:checked + .switcher23-toggle:before { background: var(--onyx-grad-2) !important; box-shadow: 0 0 12px var(--onyx-glow-acid) !important; }
+#tid .switcher23:checked + .switcher23-toggle span   { background: #06060a !important; }
+
+/* print / load-more : dark neon-outline */
+#tid .table23-print-btn,
+#tid .table23-load-more-button a {
+    background: rgba(14,16,28,0.85) !important;
+    color: var(--onyx-acid) !important;
+    border: 1px solid rgba(182,255,46,0.5) !important;
+    border-radius: 8px !important;
+    transition: transform .15s ease, box-shadow .2s ease !important;
+}
+#tid .table23-print-btn:hover,
+#tid .table23-load-more-button a:hover { transform: translateY(-1px) !important; box-shadow: 0 0 16px -2px var(--onyx-glow-acid) !important; }
+
+/* Ask Me + in-cell buttons : dark + neon outline + acid text */
+#tid td .woot-btn:not(.woot-add-to-cart-btn) {
+    position: relative !important;
+    background: rgba(14,16,28,0.85) !important;
+    color: var(--onyx-acid) !important;
+    border: 1px solid rgba(182,255,46,0.55) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 12px -4px var(--onyx-glow-acid) !important;
+}
+#tid td .woot-btn:not(.woot-add-to-cart-btn):hover { box-shadow: 0 0 18px -2px var(--onyx-glow-acid) !important; }
+
+/* in-cell attribute pills + numeric cells : dark fill + neon outline + neon text */
+#tid .table23_td_cell .woot-tax-term,
+#tid .woot-num-cell {
+    border: 1px solid rgba(31,240,255,0.55) !important;
+    border-radius: 999px !important;
+    background: rgba(10,11,20,0.7) !important;
+    color: var(--onyx-cyan) !important;
+    -webkit-text-fill-color: var(--onyx-cyan) !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 12px -4px var(--onyx-glow-cyan) !important;
+    text-shadow: 0 0 8px var(--onyx-glow-cyan) !important;
+}
+
+/* horizontal scrollbar */
+#tid .horizontal-scrollbar23-handler { background: var(--onyx-grad-2) !important; border: none !important; border-radius: 999px !important; box-shadow: 0 0 10px var(--onyx-glow-acid) !important; }
+#tid .horizontal-scrollbar23-track { border-color: var(--onyx-border) !important; background: rgba(10,11,20,0.7) !important; border-radius: 999px !important; }
+
+/* loader stripe / notice */
+#tid .table23-tr-notice,
+#tid .table23-place-loader { background: var(--onyx-grad) !important; color: #06060a !important; }
+
+/* star ratings */
+#tid .table23_td_cell .star-rating span::before,
+#tid .table23_td_cell .star-rating::before { color: var(--onyx-acid) !important; text-shadow: 0 0 8px var(--onyx-glow-acid) !important; }
+
+/* multi-select dropdown */
+#tid .selectm23-selected { color: var(--onyx-acid) !important; }
+#tid .selectm23-option-selected,
+#tid .selectm23-option:hover { background: rgba(182,255,46,0.14) !important; color: var(--onyx-ink) !important; }
+
+/* display-cell-info popover */
+#tid.woot_woocommerce_tables .table23-display-cell-info {
+    color: var(--onyx-ink) !important;
+    background: var(--onyx-popup) !important;
+    border: 1px solid rgba(31,240,255,0.4) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,0.9), 0 0 20px -6px var(--onyx-glow-cyan) !important;
+}
+
+/* sort arrows */
+#tid.data-table-23 table th.table23-order-able.table23-order-asc:before,
+#tid.data-table-23 table th.table23-order-able.table23-order-desc:after { color: var(--onyx-acid) !important; }
+#tid.data-table-23 table th.table23-order-able:before,
+#tid.data-table-23 table th.table23-order-able:after { color: var(--onyx-ink-soft) !important; }
+
+/* action column labels (cart/compare/favourites) : ink (kills base red) */
+#tid table th[data-key="add_to_cart"],
+#tid table span[data-key="add_to_cart"],
+#tid table b[data-key="add_to_cart"],
+#tid table th[data-key="compare"],
+#tid table span[data-key="compare"],
+#tid table b[data-key="compare"],
+#tid table th[data-key="favourites"],
+#tid table span[data-key="favourites"],
+#tid table b[data-key="favourites"] {
+    color: var(--onyx-acid) !important;
+    border-bottom-color: rgba(182,255,46,0.4) !important;
+}
+/* but the header labels stay acid via thead rule; popup labels need readable ink */
+#tid table tbody th[data-key="add_to_cart"],
+#tid table tbody td[data-key="add_to_cart"] { color: var(--onyx-ink) !important; }
+
+/* excerpt popup close x + favourite heart */
+#tid .woot-more-less-container-closer { color: var(--onyx-magenta) !important; }
+#tid .woot-data-table-favourites,
+#tid .table23_td_cell .woot-favourite,
+#tid [data-key="favourites"] i { color: var(--onyx-magenta) !important; text-shadow: 0 0 8px rgba(255,46,196,0.5) !important; }
+
+/* ---- pagination : dark neon-outline buttons ------------------------------ */
+#tid .table23-pagination {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    flex-wrap: wrap !important; color: var(--onyx-ink) !important; margin: 6px 0 !important;
+}
+#tid input.table23-pager {
+    background: rgba(10,11,20,0.9) !important;
+    color: var(--onyx-ink) !important;
+    border: 1px solid var(--onyx-border-strong) !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    min-width: 56px !important; min-height: 44px !important;
+    box-sizing: border-box !important; font-weight: 800 !important;
+}
+#tid .table23-prev,
+#tid .table23-next {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+}
+#tid .table23-prev,
+#tid .table23-next,
+#tid .table23-pagination a {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-height: 44px !important; box-sizing: border-box !important;
+    background: rgba(14,16,28,0.85) !important;
+    color: var(--onyx-acid) !important;
+    -webkit-text-fill-color: var(--onyx-acid) !important;
+    border-radius: 999px !important;
+    padding: 0 22px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    border: 1px solid rgba(182,255,46,0.5) !important;
+    box-shadow: 0 0 12px -4px var(--onyx-glow-acid) !important;
+    transition: transform .18s ease, box-shadow .2s ease !important;
+}
+#tid .table23-pagination a:hover { transform: translateY(-1px) !important; box-shadow: 0 0 18px -2px var(--onyx-glow-acid) !important; }
+#tid .table23-current-page {
+    display: inline-flex !important; align-items: center !important;
+    min-height: 44px !important; box-sizing: border-box !important;
+    color: var(--onyx-ink-soft) !important;
+    background: rgba(10,11,20,0.7) !important;
+    border: 1px solid var(--onyx-border) !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important; font-style: normal !important;
+}
+#tid .table23-per-page-selector {
+    min-height: 44px !important; box-sizing: border-box !important;
+    background: rgba(10,11,20,0.9) !important;
+    color: var(--onyx-ink) !important;
+    border: 1px solid var(--onyx-border-strong) !important;
+    border-radius: 8px !important;
+}
+
+/* favourites / rating accents */
+#tid table .star-rating span::before,
+#tid table [data-key="favourites"] { color: var(--onyx-acid) !important; }

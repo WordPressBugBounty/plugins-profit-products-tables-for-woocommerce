@@ -236,10 +236,6 @@ class WOOT_Filter {
 
             //***
 
-            if (woot()->show_notes) {
-                $filter_data = array_slice($filter_data, 0, 2);
-            }
-
             return json_encode($filter_data);
         }
 

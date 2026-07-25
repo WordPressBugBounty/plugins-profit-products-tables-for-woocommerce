@@ -11,12 +11,10 @@
 //disabled
 class WOOT_RATE_ALERT {
 
-    protected $notes_for_free = true;
     private $show_after_time = 86400 * 2;
     private $meta_key = 'woot_manage_rate_alert';
 
     public function __construct($for_free) {
-        $this->notes_for_free = $for_free;
         add_action('wp_ajax_woot_manage_alert', array($this, 'manage_alert'));
     }
 
@@ -70,10 +68,9 @@ class WOOT_RATE_ALERT {
                     <hr />
 
                     <?php
-                    $link = 'https://codecanyon.net/downloads#item-27928580';
-                    if ($this->notes_for_free) {
+       
                         $link = 'https://wordpress.org/support/plugin/profit-products-tables-for-woocommerce/reviews/#new-post';
-                    }
+                    
                     ?>
 
                     <table>

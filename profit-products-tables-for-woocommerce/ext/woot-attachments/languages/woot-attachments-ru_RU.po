@@ -1,0 +1,187 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2020-08-03 17:32+0000\n"
+"PO-Revision-Date: 2020-08-03 17:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Language: ru_RU\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
+
+#: index.php:43
+msgid "Global default icons associations"
+msgstr "Глобальные ассоциации значков по умолчанию"
+
+#: index.php:44
+msgid "Selected icons will be attached automatically while files appending."
+msgstr ""
+"Выбранные значки будут прикрепляться автоматически при добавлении файлов."
+
+#: index.php:45
+msgid "Select attachment icon"
+msgstr "Выберите значок вложения"
+
+#: index.php:46
+msgid "Select attachment(s)"
+msgstr "Выберите вложения"
+
+#: index.php:47
+msgid "Set association"
+msgstr "Установить связь"
+
+#: index.php:67 index.php:299
+msgid "Group"
+msgstr "Группа"
+
+#: index.php:74
+msgid ""
+"What group of attachments show. Not selected means all attachments from "
+"product metabox WOOT Attachments will be shown."
+msgstr ""
+"Какую группу вложений показывать. Не выбран означает, что будут отображены "
+"все вложения из метабокса товара."
+
+#: index.php:84
+msgid "In popup"
+msgstr "Во всплывающем окне"
+
+#: index.php:86
+msgid ""
+"Should the attachments be shown in the popup or directly in the table cell."
+msgstr ""
+"Должны ли вложения отображаться во всплывающем окне или непосредственно в "
+"ячейке таблицы."
+
+#: index.php:95
+msgid "Icon width"
+msgstr "Ширина значка"
+
+#: index.php:104
+msgid "Attachment button icon width (px)"
+msgstr "Ширина значка кнопки прикрепления (px)"
+
+#: index.php:124
+msgid "Attachments"
+msgstr "Вложения"
+
+#: index.php:167
+msgid "Attachment icon width"
+msgstr "Ширина значка вложения"
+
+#: index.php:172
+msgid "Default attachment button icon width (px)"
+msgstr "Ширина значка кнопки вложения по умолчанию (px)"
+
+#: index.php:252
+msgid "WOOT Attachments"
+msgstr "WOOT Вложения"
+
+#: index.php:274
+msgid "Move"
+msgstr "Двигать"
+
+#: index.php:279
+msgid "drag and drope"
+msgstr "перетащить"
+
+#: index.php:285 index.php:357
+msgid "Title"
+msgstr "Заголовок"
+
+#: index.php:293 index.php:364
+msgid "Type"
+msgstr "Тип"
+
+#: index.php:310
+msgid "Icon"
+msgstr "Иконка"
+
+#: index.php:315
+msgid "click to change icon"
+msgstr "нажмите, чтобы изменить значок"
+
+#: index.php:324
+msgid "Actions"
+msgstr "Операции"
+
+#: index.php:333
+msgid "delete"
+msgstr "удалить"
+
+#: index.php:370
+msgid "File"
+msgstr "Файл"
+
+#: index.php:389
+msgid "Description"
+msgstr "Описание"
+
+#: index.php:408
+msgid "not selected"
+msgstr "не выбран"
+
+#: index.php:743
+#, php-format
+msgid "Attachments of product: %s"
+msgstr "Вложения продукта: %s"
+
+#: index.php:1118
+msgid "Mime type"
+msgstr "MIME тип"
+
+#: index.php:1122
+msgid "Default icon"
+msgstr "Значок по умолчанию"
+
+#: index.php:1146
+msgid "click to change"
+msgstr "нажмите, чтобы изменить"
+
+#: views/meta-box.php:12
+msgid "Add Files"
+msgstr "Добавить файлы"
+
+#: views/meta-box.php:16
+msgid ""
+"For ordering files positions operation it is necessary condition display all "
+"them on one page! Select 100 items per page by the top selector."
+msgstr ""
+"Для работы с позициями файлов необходимо, чтобы все они отображались на "
+"одной странице! Выберите 100 элементов на странице верхним селектором."
+
+#: views/meta-box.php:18
+#, php-format
+msgid "Use function %s to get attachments of the product or shortcode %s"
+msgstr ""
+"Используйте функцию %s, чтобы получить вложения продукта или шорткод %s"
+
+#. Name of the plugin
+msgid "WOOT - Attachments"
+msgstr "WOOT - Вложения"
+
+#. Description of the plugin
+msgid ""
+"WOOT extension. Gives opportunity to attach files to the single product and "
+"display it in table or as icons."
+msgstr ""
+"WOOT расширение. Предоставляет возможность прикреплять файлы к одному "
+"продукту и отображать его в виде таблицы или значков."
+
+#. URI of the plugin
+msgid "https://products-tables.com/extension/attachments/"
+msgstr ""
+
+#. Author of the plugin
+msgid "realmag777"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://pluginus.net/"
+msgstr ""

@@ -1,19 +1,19 @@
-=== Active Products Tables for WooCommerce. Use constructor to create tables  ===
+=== Active Woot Products Tables for WooCommerce. 100% FREE  ===
 Contributors: RealMag777
-Donate link: https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580
-Tags: table, product table,products filter,products table,woocommerce product table
-Requires at least: 4.9
+Donate link: https://www.paypal.com/donate/?hosted_button_id=9SU55EFFWLTV2
+Tags: woocommerce,product table,woof,husky,bear,table
+Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 2.1.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce Active Products Tables - is the WooCommerce Products Table plugin displaying shop products in table format
+WooCommerce Active Products Tables (former name WOOT) - is the WooCommerce Products Table plugin displaying shop products in table format
 
 == Description ==
 
-**Active Products Tables for WooCommerce** (second name is WOOT) - is WordPress plugin for WooCommerce products, created for displaying woo shop products in the table format. Woo Products tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered! Ideal way to higher sells on your woocommerce store!
+**Active Woot Products Tables for WooCommerce** (second name is WOOT) - is WordPress plugin for WooCommerce products, created for displaying woo shop products in the table format. Woo Products tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered! Ideal way to higher sells on your woocommerce store!
 
 🐘 Latest PHP 8.x - FULL COMPATIBILITY! Compatibility: from v.3.6 to the latest woocommerce version.
 
@@ -22,7 +22,7 @@ WooCommerce Active Products Tables - is the WooCommerce Products Table plugin di
 📄 If you need plugin for pages, posts and their custom post types use: [TableOn](https://wordpress.org/plugins/posts-table-filterable/).
 
 
-### Active Products Tables Features:
+### Features:
 
 🛠️&nbsp;Columns constructor
 
@@ -116,25 +116,18 @@ WooCommerce Active Products Tables - is the WooCommerce Products Table plugin di
 
 
 * [📚 Documentation](https://products-tables.com/woot-documentation/)
-* [💎 The Premium version](https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580)
 
 
 https://www.youtube.com/watch?v=4f1wyApG68Y
 
-### Premium version:
 
-🌟 In the premium version [all features and extensions included](https://products-tables.com/downloads)
+### Make your site more power with next powerful scripts:
 
-🌟 You can get premium version of the plugin on the [CodeCanyon](https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580)
-
-
-### Make your site more profitable with next powerful scripts:
-
-&#9989;&nbsp;[WOOF - Products Filter for WooCommerce](https://wordpress.org/plugins/woocommerce-products-filter/): products filter plugin for WooCommerce that allows your customers filter products by categories, attributes, products tags, products custom taxonomies and price – a must have plugin for your WooCommerce online store!
+&#9989;&nbsp;[HUSKY - Products Filter for WooCommerce](https://wordpress.org/plugins/woocommerce-products-filter/): products filter plugin for WooCommerce that allows your customers filter products by categories, attributes, products tags, products custom taxonomies and price – a must have plugin for your WooCommerce online store!
 
 &#9989;&nbsp;[BEAR - WooCommerce Bulk Editor and Products Manager Professional](https://bulk-editor.com/): WordPress plugin for managing and bulk edit WooCommerce Products data in the reliable and flexible way! Be professionals with managing data of your e-shop!
 
-&#9989;&nbsp;[WOOCS - Currency Switcher for WooCommerce](https://wordpress.org/plugins/woocommerce-currency-switcher/): is WooCommerce multi currency plugin, that allows your site visitors switch products prices currencies according to set currencies rates in the real time and pay in the selected currency (optionally). Allows to add any currency for WooCommerce store!
+&#9989;&nbsp;[FOX - Currency Switcher for WooCommerce](https://wordpress.org/plugins/woocommerce-currency-switcher/): is WooCommerce multi currency plugin, that allows your site visitors switch products prices currencies according to set currencies rates in the real time and pay in the selected currency (optionally). Allows to add any currency for WooCommerce store!
 
 &#9989;&nbsp;[TABLEON - WordPress Post Tables Filterable](https://wordpress.org/plugins/posts-table-filterable): WordPress plugin for displaying site posts and their custom post types in table format. Tables makes focus for your customers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
 
@@ -152,9 +145,6 @@ https://www.youtube.com/watch?v=4f1wyApG68Y
 
 
 == Frequently Asked Questions ==
-
-Q: Where can I get the Premium version of the plugin
-R: [CodeCanyon](https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580)
 
 Q: How to create a custom taxomomy?
 R: Use this plugin [https://wordpress.org/plugins/custom-post-type-ui/](https://wordpress.org/plugins/custom-post-type-ui/)
@@ -177,6 +167,11 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 
 == Changelog ==
+
+= 2.1.2 =
+* 1 security fix, thanks to Asim Alshaya and Darius from patchstack.com
+* From Now 100% free — all former premium features included
+* Added modern flagship skins (Fable, Aurora, Frost, Onyx)
 
 = 1.1.1 =
 * 1 security fix, thanks to hhhai and Darius from patchstack.com

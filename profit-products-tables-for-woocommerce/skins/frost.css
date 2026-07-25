@@ -1,0 +1,626 @@
+/* ============================================================================
+   FROST — WOOT flagship skin (true glassmorphism)
+   Iridescent holographic pastel backdrop shining THROUGH translucent frosted
+   panes. Dark ink text on light glass, luminous white rim edges, soft neumorphic
+   shadows, gradient rim-light buttons. Built to match the reference render.
+
+   Engine note: every selector is prefixed with #tid (engine swaps 'tid' for the
+   real table id). The substring "tid" appears ONLY inside #tid.
+
+   Lessons baked in (Fable/Aurora parity):
+   - override base via #tid; never edit base files
+   - td/th forced transparent so the theme's opaque cell bg can't hide the row
+     AND so the iridescent shell shows through each row
+   - .table23-wrapper + <table> transparent, light table border removed
+   - flow-header / tfoot: font-size PINNED, nowrap, padding, cloned header look
+   - excerpt/content popup opaque + readable; button hover text pinned
+   - cart CELL never flexed; filter chip padding on chip only (not the slider)
+   - product tag arrow via clip-path; pagination min-height 44 + arrows by class
+   - calendar day states in palette; price via same-element td.<class>
+   ========================================================================== */
+
+:root {
+    /* dark ink on light glass (reference uses dark labels, not white) */
+    --frost-ink:           #2b2c40;
+    --frost-ink-soft:      #6c6f8f;
+    --frost-price:         #ec1f7a;                         /* vivid pink */
+    --frost-teal:          #23c9bd;                         /* stars / yes */
+
+    /* frosted glass surfaces (white veils over the iridescent shell) */
+    --frost-glass:         rgba(255, 255, 255, 0.42);       /* buttons / badges */
+    --frost-glass-2:       rgba(255, 255, 255, 0.55);       /* header / stronger */
+    --frost-row:           rgba(255, 255, 255, 0.20);       /* odd row veil */
+    --frost-row-2:         rgba(255, 255, 255, 0.08);       /* even row — more see-through */
+    --frost-row-hover:     rgba(255, 255, 255, 0.40);       /* row hover */
+    --frost-rim:           rgba(255, 255, 255, 0.72);       /* bright hairline rim */
+    --frost-border-strong: rgba(120, 140, 200, 0.34);       /* inputs */
+    --frost-border-lit:    rgba(120, 160, 255, 0.7);        /* focus */
+    --frost-glow:          rgba(120, 130, 200, 0.30);
+
+    /* the signature iridescent gradient for rims, bars, accents */
+    --frost-iris:          linear-gradient(120deg, #ff9ec8 0%, #c3a6ff 34%, #8fc4ff 66%, #74e6cf 100%);
+    /* neumorphic soft shadow (light element on pastel) */
+    --frost-neu:           -2px -2px 6px rgba(255,255,255,0.65), 4px 4px 12px rgba(120,130,185,0.28);
+}
+
+/* ---- table shell : the iridescent holographic pane ----------------------- */
+#tid.data-table-23 {
+    background:
+        radial-gradient(62% 82% at 8% 12%,  #6fe6c0 0%, rgba(111,230,192,0) 55%),
+        radial-gradient(66% 86% at 92% 14%, #ff8fc4 0%, rgba(255,143,196,0) 55%),
+        radial-gradient(72% 92% at 86% 92%, #7fa8ff 0%, rgba(127,168,255,0) 58%),
+        radial-gradient(62% 82% at 10% 95%, #c79cff 0%, rgba(199,156,255,0) 55%),
+        linear-gradient(120deg, #7fe6cf 0%, #b79cff 34%, #ff9ecb 66%, #8fb6ff 100%) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 26px !important;
+    padding: 22px !important;
+    box-shadow: 0 34px 80px -36px rgba(90, 110, 190, 0.55),
+                inset 0 1px 0 rgba(255,255,255,0.9),
+                inset 0 0 0 1px rgba(255,255,255,0.25) !important;
+    color: var(--frost-ink) !important;
+}
+
+/* inner wrapper painted #fff by base -> transparent so the shell shows */
+#tid.data-table-23 .table23-wrapper { background: transparent !important; }
+#tid.data-table-23 table {
+    border: none !important;
+    color: var(--frost-ink) !important;
+    background: transparent !important;
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;      /* vertical gap: detaches header from rows + spaces rows */
+}
+
+/* ---- header : frosted light glass bar, DARK ink labels ------------------- */
+#tid.data-table-23 table thead tr {
+    background: var(--frost-glass-2) !important;
+}
+#tid.woot-data-table table thead th {
+    background: transparent !important;
+    color: var(--frost-ink) !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: .05em !important;
+    padding: 17px 12px !important;
+    border: none !important;
+}
+#tid.woot-data-table table thead th:first-child { border-top-left-radius: 16px !important; border-bottom-left-radius: 16px !important; }
+#tid.woot-data-table table thead th:last-child  { border-top-right-radius: 16px !important; border-bottom-right-radius: 16px !important; }
+/* rim highlight on the header bar */
+#tid.data-table-23 table thead tr th:first-child { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9) !important; }
+#tid table thead th .table23-order-arrows,
+#tid table thead th i { color: var(--frost-ink-soft) !important; }
+
+/* ---- flow-header (clone) + tfoot : same frosted light bar, dark text ----- */
+#tid .table23-flow-header {
+    background: var(--frost-glass-2) !important;
+    opacity: 1 !important;
+    border-radius: 14px !important;
+    font-size: 12px !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 24px -12px var(--frost-glow) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+}
+#tid .table23-flow-header > div {
+    color: var(--frost-ink) !important;
+    font-weight: 800 !important;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: .05em !important;
+    white-space: nowrap !important;
+    line-height: 1.3 !important;
+    padding: 17px 12px !important;
+}
+#tid.data-table-23 table tfoot > tr { background: var(--frost-glass-2) !important; }
+#tid.woot-data-table table tfoot th {
+    background: transparent !important;
+    color: var(--frost-ink) !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: .05em !important;
+    border: none !important;
+}
+
+/* ---- rows : translucent frosted veils, iridescent shell shining through --- */
+#tid.data-table-23 table tbody tr:nth-of-type(odd)  { background: var(--frost-row) !important; }
+#tid.data-table-23 table tbody tr:nth-of-type(even) { background: var(--frost-row-2) !important; }
+#tid.data-table-23 table tbody tr {
+    transition: background .2s ease, box-shadow .2s ease !important;
+}
+#tid.data-table-23 table tbody tr:hover {
+    background: var(--frost-row-hover) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8),
+                0 10px 26px -16px var(--frost-glow) !important;
+}
+
+/* CRITICAL: force cells transparent so the row veil + shell show through */
+#tid.data-table-23 table tbody td,
+#tid.data-table-23 table tbody th {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--frost-ink) !important;
+    padding: 15px 12px !important;
+}
+/* rounded row cards (rows are separated by border-spacing now) */
+#tid.data-table-23 table tbody td:first-child,
+#tid.data-table-23 table tbody th:first-child {
+    border-top-left-radius: 16px !important; border-bottom-left-radius: 16px !important;
+}
+#tid.data-table-23 table tbody td:last-child,
+#tid.data-table-23 table tbody th:last-child {
+    border-top-right-radius: 16px !important; border-bottom-right-radius: 16px !important;
+}
+
+/* rounded frosted thumbnail / gallery tiles */
+#tid.woot-data-table table td img {
+    border-radius: 12px !important;
+    box-shadow: 0 5px 14px -5px rgba(80, 100, 170, 0.45), 0 0 0 3px rgba(255,255,255,0.6) !important;
+}
+
+/* text / links / title */
+#tid.woot-data-table table .table23_td_post_title,
+#tid.woot-data-table table .table23_td_title,
+#tid.woot-data-table table td a { color: var(--frost-ink) !important; text-decoration: none !important; }
+#tid.woot-data-table table td a:hover { color: var(--frost-price) !important; }
+
+/* price: vivid pink; regular struck muted. Same-element td.<class>. */
+#tid.data-table-23 table tbody td.table23_td_price,
+#tid.data-table-23 table tbody td.table23_td_sale_price {
+    color: var(--frost-price) !important;
+    font-weight: 800 !important;
+}
+#tid.data-table-23 table tbody td.table23_td_price del,
+#tid.data-table-23 table tbody td.table23_td_regular_price {
+    color: var(--frost-ink-soft) !important;
+    font-weight: 400 !important;
+    text-decoration: line-through !important;
+    opacity: .8 !important;
+}
+#tid.data-table-23 table tbody td.table23_td_price small,
+#tid.data-table-23 table tbody td.table23_td_cell em { color: var(--frost-ink-soft) !important; }
+
+/* ---- inputs / controls : frosted glass fields ---------------------------- */
+#tid input[type="text"],
+#tid input[type="search"],
+#tid input[type="number"],
+#tid .woot-text-search,
+#tid select,
+#tid .selectm23,
+#tid .selectm23-selected {
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--frost-neu) !important;
+}
+#tid input::placeholder, #tid .woot-text-search::placeholder { color: var(--frost-ink-soft) !important; }
+#tid input:focus,
+#tid .woot-text-search:focus,
+#tid select:focus {
+    border-color: var(--frost-border-lit) !important;
+    box-shadow: 0 0 0 3px rgba(120,160,255,0.20) !important;
+    outline: none !important;
+}
+
+/* generic frosted glass buttons */
+#tid .woot-btn {
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--frost-neu) !important;
+    transition: transform .15s ease, box-shadow .2s ease !important;
+}
+#tid .woot-btn:hover { transform: translateY(-1px) !important; }
+#tid.woot-data-table a.woot-btn { color: var(--frost-ink) !important; }
+
+/* ---- filter control labels (dark ink) ------------------------------------ */
+#tid .woot-slider-label,
+#tid .switcher23-container,
+#tid .switcher23-container label,
+#tid .woot-filter-cell label,
+#tid .woot-filter-title,
+#tid .table23-filter-label,
+#tid .woot-filter-cell > span:first-child,
+#tid label { color: var(--frost-ink) !important; font-weight: 600 !important; }
+#tid .woot-filter-cell-type-mselect .selectm23,
+#tid .selectm23 { color: var(--frost-ink) !important; }
+#tid .ranger23-title,
+#tid .woot-filter-navigation-label,
+#tid .woot-filter-cell-type-range .woot-filter-title { color: var(--frost-ink) !important; }
+
+/* filter tag chips */
+#tid .woot-tax-term {
+    padding: 7px 13px !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--frost-rim) !important;
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    line-height: 1.5 !important;
+    font-size: 0.85em !important;
+    box-shadow: var(--frost-neu) !important;
+}
+
+/* range sliders */
+#tid .ranger23-container { background: rgba(255,255,255,0.35) !important; border-radius: 999px !important; }
+#tid .ranger23-bar { background: var(--frost-iris) !important; }
+#tid .ranger23-pointer,
+#tid .ranger23-pointer-max,
+#tid .ranger23-pointer-min {
+    background: #ffffff !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 4px 12px -3px var(--frost-glow), 0 0 0 2px rgba(160,140,255,0.5) !important;
+}
+
+/* filter navigation marker chip — padding HERE only (never on the slider) */
+#tid .woot-filter-navigation-label {
+    background: var(--frost-glass) !important;
+    border-radius: 999px !important;
+    padding: 7px 17px !important;
+    box-shadow: var(--frost-neu) !important;
+}
+
+/* ---- calendar ------------------------------------------------------------ */
+#tid div.calendar23-label { background: var(--frost-iris) !important; color: #ffffff !important; }
+#tid .calendar23-day:hover { background: var(--frost-iris) !important; color: #ffffff !important; }
+#tid .calendar23-day.calendar23-focused { background: var(--frost-iris) !important; color: #ffffff !important; }
+#tid .calendar23-day.calendar23-today {
+    background: rgba(120,160,255,0.16) !important;
+    box-shadow: inset 0 0 0 1px rgba(160,140,255,0.7) !important;
+}
+
+/* ---- excerpt / content "read more" popup --------------------------------- */
+#tid .woot-more-less-container { border-bottom: 1px dotted rgba(160,140,255,0.8) !important; }
+#tid .woot-more-less-container.woot-more-less-container-active > div {
+    background: rgba(255,255,255,0.95) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 16px !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    backdrop-filter: blur(24px) !important;
+    box-shadow: 0 26px 60px -20px rgba(80, 100, 180, 0.5) !important;
+}
+#tid .woot-more-less-container.woot-more-less-container-active > div > strong { color: var(--frost-price) !important; }
+#tid .woot-more-less-container.woot-more-less-container-active a { color: #6aa6ff !important; }
+
+/* ---- cart : Add to cart = frosted fill + iridescent RIM + dark text ------- */
+#tid table .woot-btn.woot-add-to-cart-btn {
+    position: relative !important;
+    background: var(--frost-glass-2) !important;
+    color: var(--frost-ink) !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    box-shadow: var(--frost-neu) !important;
+    transition: transform .18s ease, box-shadow .2s ease !important;
+}
+#tid table .woot-btn.woot-add-to-cart-btn::before {
+    content: "" !important;
+    position: absolute !important; inset: 0 !important;
+    border-radius: 999px !important;
+    padding: 2px !important;
+    background: var(--frost-iris) !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+    -webkit-mask-composite: xor !important; mask-composite: exclude !important;
+    pointer-events: none !important;
+}
+#tid table .woot-btn.woot-add-to-cart-btn:hover { transform: translateY(-2px) !important; }
+#tid table .woot-btn.woot-add-to-cart-btn,
+#tid table .woot-btn.woot-add-to-cart-btn:hover,
+#tid table .woot-btn.woot-add-to-cart-btn span,
+#tid table .woot-btn.woot-add-to-cart-btn:hover span,
+#tid table .woot-btn.woot-add-to-cart-btn i,
+#tid table .woot-btn.woot-add-to-cart-btn:hover i { color: var(--frost-ink) !important; }
+
+/* small count badge on the cart button (keep its absolute position) */
+#tid .woot_count_in_cart,
+#tid table .woot-btn.woot-add-to-cart-btn span.woot_count_in_cart {
+    background: var(--frost-iris) !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255,255,255,0.9) !important;
+    box-shadow: 0 2px 6px rgba(80,100,170,0.45) !important;
+    -webkit-text-fill-color: #ffffff !important;
+    line-height: 15px;
+}
+
+/* cart column header raised glass */
+#tid table thead th[data-key="add_to_cart"] {
+    cursor: pointer !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5), inset 0 2px 0 rgba(255,255,255,0.6) !important;
+}
+
+/* master checkbox align + retune */
+#tid th[data-key="add_to_cart"] .woot-checkmark-container {
+    top: 50% !important; transform: translateY(-50%) !important; right: 8px !important;
+}
+#tid .woot-checkmark {
+    background-color: rgba(255,255,255,0.7) !important;
+    border: 1px solid var(--frost-rim) !important;
+    color: #6aa6ff !important;
+    border-radius: 6px !important;
+}
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark,
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark::before {
+    background: var(--frost-iris) !important;
+    color: #ffffff !important;
+}
+
+/* "add selected" (select [n]) : frosted + iridescent rim */
+#tid .woot-add-to-cart-all-btn {
+    position: relative !important;
+    background: var(--frost-glass-2) !important;
+    color: var(--frost-ink) !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 999px !important;
+    box-shadow: var(--frost-neu) !important;
+    letter-spacing: .03em !important;
+}
+#tid .woot-add-to-cart-all-btn::before {
+    content: "" !important;
+    position: absolute !important; inset: 0 !important;
+    border-radius: 999px !important;
+    padding: 2px !important;
+    background: var(--frost-iris) !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+    -webkit-mask-composite: xor !important; mask-composite: exclude !important;
+    pointer-events: none !important;
+}
+
+/* cart cell container + quantity input */
+#tid .woot-woocommerce-cart {
+    background: rgba(255,255,255,0.35) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 14px !important;
+}
+#tid .table23_td_quantity input,
+#tid .table23_td_add_to_cart input[type="number"] {
+    background: rgba(255,255,255,0.6) !important;
+    border: 1px solid var(--frost-rim) !important;
+    color: var(--frost-ink) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--frost-neu) !important;
+    padding: 9px 10px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+}
+
+/* ---- semantic marks + product tag badges --------------------------------- */
+#tid span.woot-html-cross { color: var(--frost-price) !important; }
+#tid span.woot-html-check { color: var(--frost-teal) !important; }
+
+#tid .woot-profuct-tag-featured { background: linear-gradient(120deg, #8fc4ff, #c3a6ff) !important; }
+#tid .woot-profuct-tag-sale     { background: linear-gradient(120deg, #74e6cf, #8fc4ff) !important; }
+#tid .woot-profuct-tag-out      { background: linear-gradient(120deg, #ff9ec8, #ec1f7a) !important; }
+#tid .woot-profuct-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.68em !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+    padding: 6px 17px 6px 11px !important;
+    margin: 0 7px 0 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    border-radius: 0 !important;
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%) !important;
+    filter: drop-shadow(0 5px 10px rgba(80,100,180,0.35)) !important;
+    box-shadow: none !important;
+    text-shadow: 0 1px 1px rgba(40,60,110,0.25) !important;
+}
+#tid .woot-profuct-tag:after { display: none !important; }
+#tid .woot-profuct-tag:before { background: rgba(255,255,255,0.85) !important; width: 6px !important; height: 6px !important; margin: 0 !important; flex: 0 0 auto !important; }
+
+/* separated divider retint */
+#tid.data-table-23-separated table thead th,
+#tid.data-table-23-separated table tfoot th { border-right: 1px solid rgba(255,255,255,0.4) !important; }
+
+#tid .woot_compare_remove_btn { color: var(--frost-price) !important; }
+
+/* ============================================================================
+   INNARDS — full parity, frost glass language
+   ========================================================================== */
+
+/* range slider handles */
+#tid .ranger23-handler-left,
+#tid .ranger23-handler-right {
+    background: #ffffff !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 3px 10px -2px var(--frost-glow), 0 0 0 2px rgba(160,140,255,0.5) !important;
+    border-radius: 999px !important;
+}
+#tid .ranger23-min, #tid .ranger23-max { color: var(--frost-ink-soft) !important; }
+#tid .ranger23-handler-left span,
+#tid .ranger23-handler-right span { color: var(--frost-ink) !important; font-weight: 600 !important; }
+
+/* switchers : off grey / on iridescent */
+#tid .switcher23-toggle:before { background: rgba(150,160,200,0.6) !important; }
+#tid .switcher23-toggle span   { background: #ffffff !important; box-shadow: 0 2px 6px rgba(80,100,170,0.4) !important; }
+#tid .switcher23:checked + .switcher23-toggle:before { background: var(--frost-iris) !important; }
+#tid .switcher23:checked + .switcher23-toggle span   { background: #ffffff !important; }
+
+/* print / load-more : frosted */
+#tid .table23-print-btn,
+#tid .table23-load-more-button a {
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--frost-neu) !important;
+    transition: transform .15s ease !important;
+}
+#tid .table23-print-btn:hover,
+#tid .table23-load-more-button a:hover { transform: translateY(-1px) !important; }
+
+/* Ask Me + in-cell buttons : frosted + iridescent rim ring */
+#tid td .woot-btn:not(.woot-add-to-cart-btn) {
+    position: relative !important;
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    box-shadow: var(--frost-neu) !important;
+}
+#tid td .woot-btn:not(.woot-add-to-cart-btn)::before {
+    content: "" !important;
+    position: absolute !important; inset: 0 !important;
+    border-radius: 12px !important;
+    padding: 2px !important;
+    background: var(--frost-iris) !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+    -webkit-mask-composite: xor !important; mask-composite: exclude !important;
+    pointer-events: none !important;
+}
+
+/* in-cell attribute pills + numeric cells : frosted fill + gradient RIM +
+   DARK readable text. (Gradient text is invisible over the colourful shell,
+   so we keep the iridescent rim but fill the pill and use ink text.) */
+#tid .table23_td_cell .woot-tax-term,
+#tid .woot-num-cell {
+    position: relative !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    color: var(--frost-ink) !important;
+    -webkit-text-fill-color: var(--frost-ink) !important;
+    font-weight: 800 !important;
+    box-shadow: var(--frost-neu) !important;
+}
+#tid .table23_td_cell .woot-tax-term::before,
+#tid .woot-num-cell::before {
+    content: "" !important;
+    position: absolute !important; inset: 0 !important;
+    border-radius: 999px !important;
+    padding: 2px !important;
+    background: var(--frost-iris) !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+    -webkit-mask-composite: xor !important; mask-composite: exclude !important;
+    pointer-events: none !important;
+}
+#tid .table23_td_cell .woot-tax-term:hover { background: rgba(255, 255, 255, 0.78) !important; }
+
+/* horizontal scrollbar */
+#tid .horizontal-scrollbar23-handler { background: var(--frost-iris) !important; border: none !important; border-radius: 999px !important; }
+#tid .horizontal-scrollbar23-track { border-color: var(--frost-rim) !important; background: rgba(255,255,255,0.35) !important; border-radius: 999px !important; }
+
+/* loader stripe / notice */
+#tid .table23-tr-notice,
+#tid .table23-place-loader { background: var(--frost-iris) !important; color: #ffffff !important; }
+
+/* star ratings */
+#tid .table23_td_cell .star-rating span::before,
+#tid .table23_td_cell .star-rating::before { color: var(--frost-teal) !important; }
+
+/* multi-select dropdown */
+#tid .selectm23-selected { color: #6aa6ff !important; }
+#tid .selectm23-option-selected,
+#tid .selectm23-option:hover { background: rgba(120,160,255,0.16) !important; color: var(--frost-ink) !important; }
+
+/* display-cell-info popover */
+#tid.woot_woocommerce_tables .table23-display-cell-info {
+    color: var(--frost-ink) !important;
+    background: rgba(255,255,255,0.95) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 10px !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow: 0 12px 30px -12px var(--frost-glow) !important;
+}
+
+/* sort arrows */
+#tid.data-table-23 table th.table23-order-able.table23-order-asc:before,
+#tid.data-table-23 table th.table23-order-able.table23-order-desc:after { color: var(--frost-ink) !important; }
+#tid.data-table-23 table th.table23-order-able:before,
+#tid.data-table-23 table th.table23-order-able:after { color: var(--frost-ink-soft) !important; }
+
+/* action column labels (cart/compare/favourites) : ink (kills base red) */
+#tid table th[data-key="add_to_cart"],
+#tid table span[data-key="add_to_cart"],
+#tid table b[data-key="add_to_cart"],
+#tid table th[data-key="compare"],
+#tid table span[data-key="compare"],
+#tid table b[data-key="compare"],
+#tid table th[data-key="favourites"],
+#tid table span[data-key="favourites"],
+#tid table b[data-key="favourites"] {
+    color: var(--frost-ink) !important;
+    border-bottom-color: var(--frost-rim) !important;
+}
+
+/* excerpt popup close x + favourite heart */
+#tid .woot-more-less-container-closer { color: var(--frost-price) !important; }
+#tid .woot-data-table-favourites,
+#tid .table23_td_cell .woot-favourite,
+#tid [data-key="favourites"] i { color: var(--frost-price) !important; }
+
+/* ---- pagination : frosted neumorphic (light, not solid) ------------------- */
+#tid .table23-pagination {
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    flex-wrap: wrap !important; color: var(--frost-ink) !important; margin: 6px 0 !important;
+}
+#tid input.table23-pager {
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    min-width: 56px !important; min-height: 44px !important;
+    box-sizing: border-box !important; font-weight: 800 !important;
+    box-shadow: var(--frost-neu) !important;
+}
+#tid .table23-prev,
+#tid .table23-next {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+}
+#tid .table23-prev,
+#tid .table23-next,
+#tid .table23-pagination a {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-height: 44px !important; box-sizing: border-box !important;
+    background: var(--frost-glass-2) !important;
+    color: var(--frost-ink) !important;
+    -webkit-text-fill-color: var(--frost-ink) !important;
+    border-radius: 999px !important;
+    padding: 0 22px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    border: 1px solid var(--frost-rim) !important;
+    box-shadow: var(--frost-neu) !important;
+    transition: transform .18s ease !important;
+}
+#tid .table23-pagination a:hover { transform: translateY(-1px) !important; }
+#tid .table23-current-page {
+    display: inline-flex !important; align-items: center !important;
+    min-height: 44px !important; box-sizing: border-box !important;
+    color: var(--frost-ink-soft) !important;
+    background: var(--frost-glass) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important; font-style: normal !important;
+    box-shadow: var(--frost-neu) !important;
+}
+#tid .table23-per-page-selector {
+    min-height: 44px !important; box-sizing: border-box !important;
+    background: var(--frost-glass) !important;
+    color: var(--frost-ink) !important;
+    border: 1px solid var(--frost-rim) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--frost-neu) !important;
+}
+
+/* favourites / rating accents */
+#tid table .star-rating span::before,
+#tid table [data-key="favourites"] { color: var(--frost-teal) !important; }
+
+#tid .woocs_price_code, 
+#tid .woocs_price_code ins{
+    color: #000;
+}

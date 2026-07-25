@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2020-08-03 17:41+0000\n"
+"PO-Revision-Date: 2020-08-03 17:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Language: ru_RU\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
+
+#: index.php:64 views/single.php:25 views/heart.php:23
+msgid "My Favourites"
+msgstr "Мои избранные"
+
+#: index.php:74
+msgid "Favourites"
+msgstr "Избранные"
+
+#: index.php:107
+msgid "Favourites columns"
+msgstr "Колонки избранных продуктов"
+
+#: index.php:117
+msgid "Columns used in extension Favourites. Press and wait to reorder."
+msgstr ""
+"Столбцы, используемые в расширении Избранное. Нажмите и подождите, чтобы "
+"изменить порядок."
+
+#: index.php:257
+msgid "delete"
+msgstr "удалить"
+
+#: index.php:388
+msgid "Share your favorites products"
+msgstr "Поделитесь своими избранными продуктами"
+
+#. Name of the plugin
+msgid "WOOT - Favourites"
+msgstr "WOOT - Избранное"
+
+#. Description of the plugin
+msgid ""
+"WOOT extension. Provides ability for the customers collect products for "
+"further buying of them."
+msgstr ""
+"WOOT расширение. Предоставляет покупателям возможность собирать товары для "
+"дальнейшей их покупки."
+
+#. URI of the plugin
+msgid "https://products-tables.com/extension/favourites/"
+msgstr ""
+
+#. Author of the plugin
+msgid "realmag777"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://pluginus.net/"
+msgstr ""

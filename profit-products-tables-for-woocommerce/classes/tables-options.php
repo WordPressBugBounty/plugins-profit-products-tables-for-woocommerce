@@ -369,22 +369,6 @@ class WOOT_TablesOptions {
             ]
         ];
 
-        if (woot()->show_notes) {
-            foreach ($rows as $k => $row) {
-                if ($row['value_custom_field_key'] === 'use_load_more_button') {
-                    $rows[$k] = [
-                        'id' => $table_id,
-                        'title' => esc_html__('Use load more button', 'profit-products-tables-for-woocommerce'),
-                        'value' => esc_html__('Premium version', 'profit-products-tables-for-woocommerce'),
-                        'value_custom_field_key' => '',
-                        'editable' => 'no',
-                        'notes' => esc_html__('Use load more button instead of pagination. If it is activated, pagination and per-page drop-down will be hidden', 'profit-products-tables-for-woocommerce') . '. ' . '<a href="https://products-tables.com/downloads/" target="_blank" style="color: red;"> ' . esc_html__('Premium version', 'profit-products-tables-for-woocommerce') . '</a>'
-                    ];
-                }
-            }
-        }
-
-
         return apply_filters('woot_extend_options', $rows, $table_id);
     }
 

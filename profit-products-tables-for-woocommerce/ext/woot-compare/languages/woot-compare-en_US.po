@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2020-07-29 12:48+0000\n"
+"PO-Revision-Date: 2020-07-29 12:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: English (United States)\n"
+"MIME-Version: 1.0\n"
+"Language: en_US\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.4.0; wp-5.4.2"
+
+#: index.php:55 index.php:65
+msgid "Compare"
+msgstr ""
+
+#: index.php:105
+msgid "Compare columns"
+msgstr ""
+
+#: index.php:115
+msgid "Columns used in extension Compare. Press and wait to reorder."
+msgstr ""
+
+#: index.php:184
+msgid "Fields"
+msgstr ""
+
+#: index.php:272
+msgid "No products added to compare!"
+msgstr ""
+
+#. Name of the plugin
+msgid "WOOT - Compare"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"WOOT extension. Gives extension allows to create table with products to "
+"compare them."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://products-tables.com/extension/compare/"
+msgstr ""
+
+#. Author of the plugin
+msgid "realmag777"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://pluginus.net/"
+msgstr ""

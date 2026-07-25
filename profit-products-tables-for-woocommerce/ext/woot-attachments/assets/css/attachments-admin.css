@@ -1,0 +1,51 @@
+.woot-data-table-attachments .table23_td_move,
+.woot-data-table-attachments .table23_td_type,
+.woot-data-table-attachments .table23_td_icon{
+    width: 1px !important;
+}
+
+.woot-data-table .table23_td_icon a{
+    display: inline-block;
+}
+
+.woot-data-table-attachments .table23_td_title{
+    width: 45% !important;
+    max-width: 280px;
+}
+
+.woot-data-table-attachments .table23_td_group{
+    width: 80px !important;
+}
+
+.woot-data-table-attachments .table23_td_group select{
+    width: 100% !important;
+}
+
+.woot-data-table-attachments .table23_td_actions{
+    width: 70px !important;
+}
+
+.woot-data-table-attachments .button{
+    padding: 0 5px;
+}
+
+.woot-data-table-attachments th[data-key="icon"]{
+    color: red !important;
+    border-bottom: 1px dotted !important;
+    cursor: pointer;
+}
+
+/* attachments */
+@media screen and (max-width: 782px){
+    .woot-data-table-attachments .button{
+        line-height: 0;
+        min-height: fit-content;
+        padding: 1px 4px 7px 4px;
+        margin-bottom: 2px;
+    }
+}
+
+.woot-modal-title-info{
+    top: 26px;
+}
+

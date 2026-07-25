@@ -1,0 +1,88 @@
+th[data-key="compare"]{
+    color: red !important;
+    border-bottom: 1px dotted !important;
+    cursor: pointer;
+    text-align: center;
+}
+
+.woot-data-table td.table23_td_compare{
+    text-align: center;
+}
+
+@media print {
+    .woot-data-table .table23_td_compare,
+    .woot-data-table th[data-key="compare"]
+    {
+        display: none;
+    }
+}
+
+.woot-data-table .table23_td_compare_fields{
+    font-weight: 500;
+    color: maroon;
+    font-family: var(--woot-font);
+}
+
+th[data-key^="product_compare_"]{
+    position: relative;
+}
+
+/*
+th[data-key^="product_compare_"]::after{
+    content: '⬄';
+    position: absolute;
+    right: 2px;
+    top: -9px;
+}
+*/
+
+.woot_compare .woot-checkmark-container{
+    display: none;
+}
+
+.woot_compare_remove_btn{
+    position: absolute;
+    right: 0;
+    top: 0 !important;
+}
+
+tfoot .woot_compare_remove_btn{
+    top: -8px;
+}
+
+.woot-data-table-compare .woot-checkmark-container{
+    display: none;
+}
+
+.woot_compare .woot-btn.woot-add-to-cart-btn{
+    padding: 7px 5px;
+}
+
+.woot-compare-btn{
+    display: block;
+    border-bottom: none !important;
+}
+
+td.table23_td_cell .woot-compare-btn{
+    display: none;
+}
+
+[data-key="compare"]{
+    color: red !important;
+    border-bottom: 1px dotted !important;
+    cursor: pointer;
+    text-align: center;
+}
+
+div[data-key="compare"]{
+    border-bottom: none !important;
+}
+
+.woot-data-table-compare table tbody td{
+    min-width: 200px;
+}
+
+.table23_td_compare .table23_td_cell_title{
+    display: none;
+}
+

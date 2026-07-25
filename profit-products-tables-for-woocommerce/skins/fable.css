@@ -1,0 +1,606 @@
+/*
+  Skin: Fable
+  A glass-and-light flagship skin for WOOT.
+  Same DOM as every other skin - the difference is entirely in the CSS:
+  deep tinted glass surfaces, soft depth, a luminous accent that lives
+  on the buy actions, and calm motion on hover.
+
+  NOTE for the skin engine: the loader does str_replace('tid', real_id),
+  so the token "tid" must never appear except inside the "#tid" root
+  selector. All variables below are namespaced without that token.
+*/
+
+:root {
+    --woot-fable-bg:            #0e1524;/* table shell background */
+    --woot-fable-surface:       rgba(30, 41, 66, 0.55);/* glass cell surface */
+    --woot-fable-surface-2:     rgba(30, 41, 66, 0.30);/* alternate row */
+    --woot-fable-surface-hover: rgba(56, 78, 128, 0.45);/* row hover */
+    --woot-fable-border:        rgba(120, 150, 210, 0.20);/* hairline borders */
+    --woot-fable-border-strong:  rgba(140, 170, 230, 0.38);/* stronger borders: inputs, checkbox */
+    --woot-fable-border-lit:    rgba(130, 170, 255, 0.55);/* focus / active border */
+    --woot-fable-ink:           #e8edfb;/* primary text */
+    --woot-fable-ink-soft:      #9fb0d4;/* secondary text */
+    --woot-fable-accent:        #6ea8ff;/* luminous accent */
+    --woot-fable-accent-2:      #a878ff;/* accent gradient partner */
+    --woot-fable-accent-3:      #56e0c8;/* tertiary glow (cart/rating) */
+    --woot-fable-price:         #ff9db0;/* price color, soft rose on dark */
+    --woot-fable-glow:          rgba(110, 168, 255, 0.35);/* accent glow */
+    --woot-fable-popup:         #16223c;/* opaque dark surface for popups over content */
+}
+
+/* ---- table shell -------------------------------------------------- */
+
+#tid.data-table-23 {
+    background:
+        radial-gradient(90% 60% at 12% -5%, rgba(110,168,255,0.20) 0%, rgba(110,168,255,0) 55%),
+        radial-gradient(80% 60% at 100% 0%, rgba(168,120,255,0.18) 0%, rgba(168,120,255,0) 50%),
+        linear-gradient(180deg, #1a2748 0%, #101a30 60%) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 20px !important;
+    padding: 22px !important;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06) !important;
+    color: var(--woot-fable-ink) !important;
+}
+
+/* the inner wrapper is painted #fff by data-table-23.css -> the white box.
+   Force it transparent so the shell shows through. */
+#tid.data-table-23 .table23-wrapper {
+    background: transparent !important;
+}
+
+/* the <table> element itself (data-table-23.css) carries a light 1px #eceef
+   border and dark #373a3c text; neutralise both so no light outline bleeds */
+#tid.data-table-23 table {
+    border: none !important;
+    color: var(--woot-fable-ink) !important;
+    background: transparent !important;
+}
+
+/* flow header = a duplicated (sticky/bottom) clone of the header row that
+   data-table-23.css paints #fff with cornflowerblue text. Give it the SAME
+   gradient as the real header so it reads as a header, not a white plaque. */
+#tid .table23-flow-header {
+    background: linear-gradient(180deg, rgba(88, 116, 190, 0.92), rgba(44, 60, 104, 0.92)) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    opacity: 1 !important;
+    border-bottom: 2px solid var(--woot-fable-accent) !important;
+    font-size: 12px !important;
+}
+#tid .table23-flow-header > div {
+    color: #f2f6ff !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;        /* match the real header (skin sets thead th to 12px); base clone otherwise inherits a bigger modal font and wraps */
+    text-transform: uppercase !important;
+    letter-spacing: .06em !important;
+    white-space: nowrap !important;    /* stop "THUMBNA IL" / "QUANTIT Y" wrapping */
+    line-height: 1.3 !important;
+    padding: 16px 7px !important;      /* give it real height like the header th (was cramped) */
+}
+
+/* ---- inputs / controls -------------------------------------------- */
+
+#tid.data-table-23 input[type='text'],
+#tid.data-table-23 input[type='number'],
+#tid.data-table-23 input[type='email'],
+#tid.data-table-23 input[type='tel'],
+#tid.data-table-23 input[type='url'],
+#tid.data-table-23 input[type='password'],
+#tid.data-table-23 input[type='search'],
+#tid.data-table-23 textarea,
+#tid.woot-filter-cell-type-select select,
+#tid.data-table-23 button,
+#tid.data-table-23 input,
+#tid.data-table-23 select,
+#tid.data-table-23 textarea,
+#tid.data-table-23 .selectm23,
+#tid .woot-woocommerce-cart,
+#tid .woot-filter-navigation-label,
+#tid .woot-tax-term,
+#tid .woot-woocommerce-text-search-container[data-table-id="tid"] input[type='search'] {
+    background: var(--woot-fable-surface) !important;
+    color: var(--woot-fable-ink) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 10px !important;
+    outline-color: var(--woot-fable-border-lit) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease !important;
+}
+
+#tid.data-table-23 input:focus,
+#tid.data-table-23 select:focus,
+#tid.data-table-23 textarea:focus,
+#tid.data-table-23 input[type='search']:focus {
+    border-color: var(--woot-fable-border-lit) !important;
+    box-shadow: 0 0 0 3px var(--woot-fable-glow) !important;
+}
+
+#tid .woot-text-search::placeholder { color: var(--woot-fable-ink-soft) !important; }
+
+#tid .woot-tax-term,
+#tid .woot-filter-navigation-label { color: var(--woot-fable-ink-soft) !important; }
+
+/* search scrollbar */
+#tid .woot-woocommerce-text-search-container[data-table-id="tid"] .woot-woocommerce-text-search-wrapper::-webkit-scrollbar { background: transparent !important; }
+#tid .woot-woocommerce-text-search-container[data-table-id="tid"] .woot-woocommerce-text-search-wrapper::-webkit-scrollbar-thumb { background: var(--woot-fable-accent) !important; border-radius: 8px !important; }
+
+/* ---- price range slider ------------------------------------------- */
+
+#tid .ranger23-container,
+#tid .woot-filter-navigation-label {
+    background: var(--woot-fable-surface-2) !important;
+    border-radius: 999px !important;
+}
+/* padding ONLY on the filter marker chip — NOT on .ranger23-container,
+   which is the slider track (padding there deforms the sliders) */
+#tid .woot-filter-navigation-label {
+    padding: 7px 17px !important;
+}
+#tid .ranger23-bar {
+    background: linear-gradient(90deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important;
+    box-shadow: 0 0 14px var(--woot-fable-glow) !important;
+}
+#tid .ranger23-handler-left,
+#tid .ranger23-handler-right {
+    background: #fff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 0 4px var(--woot-fable-glow) !important;
+    border-radius: 999px !important;
+}
+#tid .ranger23-min,
+#tid .ranger23-max { color: var(--woot-fable-ink-soft) !important; }
+#tid .ranger23-handler-left span,
+#tid .ranger23-handler-right span { color: #0e1524 !important; font-weight: 600 !important; }
+
+/* ---- switchers ---------------------------------------------------- */
+
+#tid .switcher23-toggle span { background: var(--woot-fable-surface) !important; border-radius: 999px !important; }
+#tid .switcher23-toggle:before { background: var(--woot-fable-ink-soft) !important; }
+#tid .switcher23:checked + .switcher23-toggle span { background: linear-gradient(90deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important; }
+#tid .switcher23:checked + .switcher23-toggle:before { background: #fff !important; }
+
+/* ---- generic buttons ---------------------------------------------- */
+
+#tid .woot-btn,
+#tid .table23-print-btn,
+#tid .table23-load-more-button a,
+#tid .woot-add-to-cart-all-btn {
+    background: var(--woot-fable-surface) !important;
+    color: var(--woot-fable-ink) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 10px !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+    transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease !important;
+}
+#tid .woot-btn:hover,
+#tid .table23-print-btn:hover,
+#tid .table23-load-more-button a:hover,
+#tid .woot-add-to-cart-all-btn:hover {
+    transform: translateY(-1px) !important;
+    border-color: var(--woot-fable-border-lit) !important;
+    box-shadow: 0 8px 24px -10px var(--woot-fable-glow) !important;
+}
+#tid.woot-data-table a.woot-btn { color: var(--woot-fable-ink) !important; }
+
+/* Ask Me / info style buttons keep the glass, accent text */
+#tid .woot-num-cell { color: var(--woot-fable-accent) !important; border-color: var(--woot-fable-border) !important; }
+
+/* horizontal scrollbar */
+#tid .horizontal-scrollbar23-handler { background: linear-gradient(90deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important; border: none !important; border-radius: 999px !important; }
+#tid .horizontal-scrollbar23-track { border-color: var(--woot-fable-border) !important; }
+
+/* ---- table head --------------------------------------------------- */
+
+#tid.woot-data-table table thead th {
+    background: linear-gradient(180deg, rgba(88, 116, 190, 0.85), rgba(44, 60, 104, 0.85)) !important;
+    color: #f2f6ff !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: .06em !important;
+    border-bottom: 2px solid var(--woot-fable-accent) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 6px 20px -8px var(--woot-fable-glow) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2 !important;
+}
+#tid.woot-data-table table thead th:first-child { border-top-left-radius: 12px !important; }
+#tid.woot-data-table table thead th:last-child  { border-top-right-radius: 12px !important; }
+#tid.woot-data-table table tfoot th {
+    background: linear-gradient(0deg, rgba(88, 116, 190, 0.85), rgba(44, 60, 104, 0.85)) !important;
+    color: #f2f6ff !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    letter-spacing: .06em !important;
+    border-top: 2px solid var(--woot-fable-accent) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+}
+/* bottom footer row (data-table-23.css paints tfoot > tr #fcfcfc) */
+#tid.data-table-23 table tfoot > tr { background: transparent !important; }
+
+#tid table th.table23-order-asc,
+#tid table th.table23-order-desc,
+#tid table td.table23-order-asc,
+#tid table td.table23-order-desc {
+    background: var(--woot-fable-surface-hover) !important;
+}
+
+/* ---- add to cart : the luminous buy action ------------------------ */
+
+#tid table .woot-btn.woot-add-to-cart-btn,
+#tid .woot_count_in_cart {
+    background: linear-gradient(120deg, var(--woot-fable-accent) 0%, var(--woot-fable-accent-2) 100%) !important;
+    color: #0b1020 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 8px 22px -8px var(--woot-fable-glow) !important;
+    transition: transform .18s ease, box-shadow .2s ease, filter .2s ease !important;
+}
+#tid table .woot-btn.woot-add-to-cart-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 14px 34px -10px var(--woot-fable-glow) !important;
+}
+/* base .woot-data-table a:hover turns link text light-blue; keep the button
+   label dark and readable in every state */
+#tid table .woot-btn.woot-add-to-cart-btn,
+#tid table .woot-btn.woot-add-to-cart-btn:hover,
+#tid table .woot-btn.woot-add-to-cart-btn span,
+#tid table .woot-btn.woot-add-to-cart-btn:hover span,
+#tid table .woot-btn.woot-add-to-cart-btn i,
+#tid table .woot-btn.woot-add-to-cart-btn:hover i { color: #0b1020 !important; }
+
+#tid .woot-checkmark { background: var(--woot-fable-surface) !important; border: 1px solid var(--woot-fable-border) !important; border-radius: 6px !important; }
+#tid .woot-woocommerce-cart { background: var(--woot-fable-surface) !important; border-radius: 12px !important; }
+
+/* ---- rows : glass with quiet zebra + lift ------------------------- */
+
+#tid.data-table-23 table tbody tr:nth-of-type(odd)  { background: rgba(52, 68, 104, 0.62) !important; }
+#tid.data-table-23 table tbody tr:nth-of-type(even) { background: rgba(34, 46, 78, 0.52) !important; }
+#tid.data-table-23 table tbody tr {
+    transition: background .2s ease, box-shadow .2s ease, transform .18s ease !important;
+}
+#tid.data-table-23 table tbody tr:hover {
+    background: var(--woot-fable-surface-hover) !important;
+    box-shadow: inset 4px 0 0 0 var(--woot-fable-accent), 0 10px 30px -16px var(--woot-fable-glow) !important;
+}
+
+/* CRITICAL: theme (e.g. Storefront) paints an opaque background on every td/th,
+   which sits ON TOP of the tr background and hides it. Force cells transparent so
+   the row color shows through; keep only the hairline separator. */
+#tid.data-table-23 table tbody td,
+#tid.data-table-23 table tbody th {
+    background: transparent !important;
+    background-color: transparent !important;
+    border-top: 1px solid var(--woot-fable-border) !important;
+    border-bottom: none !important;
+    color: var(--woot-fable-ink) !important;
+}
+#tid.data-table-23 table tbody tr:first-child td { border-top: none !important; }
+
+/* loader stripe */
+#tid .table23-tr-notice,
+#tid .table23-place-loader {
+    background: linear-gradient(135deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important;
+    color: #0b1020 !important;
+}
+
+/* ---- ratings / selects / calendar --------------------------------- */
+
+#tid .table23_td_cell .star-rating span::before,
+#tid .table23_td_cell .star-rating::before { color: var(--woot-fable-accent-3) !important; }
+
+#tid .selectm23-selected { color: var(--woot-fable-accent) !important; }
+#tid .selectm23-option-selected,
+#tid .selectm23-option:hover { background: var(--woot-fable-surface-hover) !important; color: var(--woot-fable-ink) !important; }
+#tid div.calendar23-label { background: linear-gradient(120deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important; color: #fff !important; }
+
+/* calendar day states: base uses orange (hover), green (selected), cyan (today);
+   retune to the skin palette while keeping the white calendar body. Highlighted
+   cells (on the gradient) use white text so the year/month reads clearly. */
+#tid .calendar23-day:hover {
+    background: linear-gradient(135deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important;
+    color: #fff !important;
+}
+#tid .calendar23-day.calendar23-focused {
+    background: linear-gradient(135deg, var(--woot-fable-accent-2), var(--woot-fable-accent)) !important;
+    color: #fff !important;
+}
+#tid .calendar23-day.calendar23-today {
+    background: rgba(110, 168, 255, 0.16) !important;
+    box-shadow: inset 0 0 0 1px var(--woot-fable-accent) !important;
+}
+
+#tid.woot_woocommerce_tables .table23-display-cell-info {
+    color: var(--woot-fable-ink) !important;
+    background: var(--woot-fable-surface) !important;
+    border: 1px solid var(--woot-fable-border-lit) !important;
+    border-radius: 8px !important;
+}
+
+/* order arrows */
+#tid.data-table-23 table th.table23-order-able.table23-order-asc:before,
+#tid.data-table-23 table th.table23-order-able.table23-order-desc:after { color: var(--woot-fable-accent) !important; }
+#tid.data-table-23 table th.table23-order-able:before,
+#tid.data-table-23 table th.table23-order-able:after { color: var(--woot-fable-ink-soft) !important; }
+
+/* action column heads (cart / compare / favourites) */
+#tid table th[data-key="add_to_cart"],
+#tid table span[data-key="add_to_cart"],
+#tid table b[data-key="add_to_cart"],
+#tid table th[data-key="compare"],
+#tid table span[data-key="compare"],
+#tid table b[data-key="compare"],
+#tid table th[data-key="favourites"],
+#tid table span[data-key="favourites"],
+#tid table b[data-key="favourites"] {
+    color: var(--woot-fable-accent) !important;
+    border-bottom-color: var(--woot-fable-accent) !important;
+}
+
+#tid .woot_compare_remove_btn { color: #fff !important; }
+
+/* ---- filter tag chips (On Sale x / Cities x) ------------------------- */
+/* general.css gives them cramped 5px 6px padding + hard blue border */
+#tid .woot-tax-term {
+    padding: 7px 13px !important;
+    border-radius: 999px !important;
+    border: 1px solid var(--woot-fable-border-strong) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--woot-fable-ink) !important;
+    line-height: 1.5 !important;
+    font-size: 0.85em !important;
+}
+
+/* ---- "read more" popup for excerpt / content cells ------------------ */
+/* .woot-more-less-container-active > div is painted #fff by general.css and
+   lives inside the cell (inside #tid), so the skin's light cell text lands on
+   white = unreadable. Make the popup surface dark and the text light. */
+#tid .woot-more-less-container {
+    border-bottom: 1px dotted var(--woot-fable-accent) !important;
+}
+#tid .woot-more-less-container.woot-more-less-container-active > div {
+    background: var(--woot-fable-popup) !important;
+    color: var(--woot-fable-ink) !important;
+    border: 1px solid var(--woot-fable-border-strong) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.75) !important;
+}
+#tid .woot-more-less-container.woot-more-less-container-active > div > strong {
+    color: var(--woot-fable-accent) !important;   /* the title line inside the popup */
+}
+#tid .woot-more-less-container.woot-more-less-container-active a {
+    color: var(--woot-fable-accent) !important;
+}
+
+/* ---- cart column header : subtle raised, clickable affordance --------- */
+/* NOTE: do NOT flex the cart CELL — it collapses the column width and the
+   button overflows. Keep the cell in normal flow; only touch the header. */
+#tid table thead th[data-key="add_to_cart"] {
+    cursor: pointer !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16),
+                inset 0 2px 0 rgba(255,255,255,0.22),
+                inset 0 -3px 8px -4px rgba(0,0,0,0.5) !important;
+}
+
+/* ---- semantic indicators : yes/no marks and product tag badges ------ */
+/* base general.css paints these harsh red/blue/green; retune to the skin
+   while keeping their meaning (cross = no/out, check = yes, on the dark shell) */
+
+#tid span.woot-html-cross { color: #ff7d92 !important; }        /* "no" / negative — soft rose, not burning red */
+#tid span.woot-html-check { color: var(--woot-fable-accent-3) !important; } /* "yes" — teal glow */
+
+#tid .woot-profuct-tag-featured { background: var(--woot-fable-accent) !important; }
+#tid .woot-profuct-tag-featured:after { border-color: transparent transparent transparent var(--woot-fable-accent) !important; }
+#tid .woot-profuct-tag-sale { background: var(--woot-fable-accent-3) !important; }
+#tid .woot-profuct-tag-sale:after { border-color: transparent transparent transparent var(--woot-fable-accent-3) !important; }
+#tid .woot-profuct-tag-out { background: #d65a6e !important; } /* out of stock — muted red, still reads as stop */
+#tid .woot-profuct-tag-out:after { border-color: transparent transparent transparent #d65a6e !important; }
+
+/* modern look: compact pill with a FULL-HEIGHT pointed right edge (clip-path),
+   so there's no little step/notch in the bottom-right corner */
+#tid .woot-profuct-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    color: #0b1020 !important;
+    font-weight: 700 !important;
+    font-size: 0.68em !important;
+    letter-spacing: .03em !important;
+    text-transform: uppercase !important;
+    padding: 6px 17px 6px 11px !important;   /* extra right padding = room for the point */
+    margin: 0 7px 0 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    border-radius: 0 !important;             /* clip-path defines the shape */
+    clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%) !important;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.45)) !important;
+    box-shadow: none !important;
+}
+/* kill the base border-triangle arrow — the clip-path point replaces it */
+#tid .woot-profuct-tag:after { display: none !important; }
+/* leading dot: subtle dark bullet, centred via flex gap (kill base margin) */
+#tid .woot-profuct-tag:before {
+    background: rgba(11, 16, 32, 0.55) !important;
+    width: 6px !important;
+    height: 6px !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+}
+/* separated tables (incl. the single-product popup) draw a light #eceeef
+   divider on th; retint it to the skin so no light line bleeds */
+#tid.data-table-23-separated table thead th,
+#tid.data-table-23-separated table tfoot th {
+    border-right: 1px solid var(--woot-fable-border) !important;
+}
+
+/* price + title + links */
+#tid .woot-data-table .table23_td_price,
+#tid .woot-data-table .table23_td_sale_price { color: var(--woot-fable-price) !important; font-weight: 700 !important; }
+#tid .woot-data-table .table23_td_regular_price { color: var(--woot-fable-ink-soft) !important; font-weight: 400 !important; text-decoration: line-through !important; opacity: .75 !important; }
+/* approx / converted currency line stays soft, never harsh red */
+#tid .woot-data-table .table23_td_price small,
+#tid .woot-data-table .table23_td_cell em { color: var(--woot-fable-ink-soft) !important; }
+
+#tid.woot-data-table table .table23_td_post_title,
+#tid.woot-data-table table .table23_td_title,
+#tid.woot-data-table table td a { color: var(--woot-fable-ink) !important; }
+#tid.woot-data-table table td a:hover { color: var(--woot-fable-accent) !important; }
+
+/* ---- filter control labels (Featured / On Sale / Comment count ...) --- */
+/* these sit on the dark shell and were nearly invisible in grey/black */
+
+#tid .woot-slider-label,
+#tid .switcher23-container,
+#tid .switcher23-container label,
+#tid .woot-filter-cell label,
+#tid .woot-filter-title,
+#tid .table23-filter-label,
+#tid .woot-filter-cell > span:first-child,
+#tid label {
+    color: var(--woot-fable-ink) !important;
+    font-weight: 500 !important;
+}
+
+/* mselect widget text inside filters (general.css paints it #333) */
+#tid .woot-filter-cell-type-mselect .selectm23,
+#tid .selectm23 { color: var(--woot-fable-ink) !important; }
+
+/* ---- cart column : master checkbox + "add selected" ------------------ */
+/* general.css pins the header master checkbox to top:0 and paints it lavender;
+   drop it to align with the cart controls and retune to the skin */
+#tid th[data-key="add_to_cart"] .woot-checkmark-container {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    right: 8px !important;
+}
+#tid .woot-checkmark {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid var(--woot-fable-border-strong) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+}
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark,
+#tid .woot-checkmark-container input:checked ~ .woot-checkmark::before {
+    background-color: var(--woot-fable-accent) !important;
+}
+
+/* "add selected" floating button (general.css paints it #37C) */
+#tid .woot-add-to-cart-all-btn {
+    background: linear-gradient(135deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important;
+    color: #0b1020 !important;
+    font-weight: 700 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    box-shadow: 0 8px 22px -8px var(--woot-fable-glow) !important;
+    letter-spacing: .04em !important;
+}
+#tid .woot-add-to-cart-all-btn:hover {
+    background: linear-gradient(135deg, var(--woot-fable-accent-2), var(--woot-fable-accent)) !important;
+    filter: brightness(1.05) !important;
+}
+
+/* cart cell container (general.css: bg #f7f9fe, blue border) */
+#tid .woot-woocommerce-cart {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 12px !important;
+}
+/* quantity input inside the cart cell */
+#tid .table23_td_quantity input,
+#tid .woot-data-table .table23_td_quantity input {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid var(--woot-fable-border-strong) !important;
+    color: var(--woot-fable-ink) !important;
+    border-radius: 8px !important;
+}
+
+/* the "Comment count:" style range titles */
+#tid .ranger23-title,
+#tid .woot-filter-navigation-label,
+#tid .woot-filter-cell-type-range .woot-filter-title {
+    color: var(--woot-fable-ink) !important;
+}
+
+/* ---- pagination + counter (render inside #tid, but visually on the shell) --- */
+
+#tid .table23-pagination {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    color: var(--woot-fable-ink) !important;
+    margin: 6px 0 !important;
+}
+
+/* page-number input */
+#tid input.table23-pager {
+    background: var(--woot-fable-surface) !important;
+    color: var(--woot-fable-ink) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    min-width: 56px !important;
+    min-height: 44px !important;
+    box-sizing: border-box !important;
+    font-weight: 600 !important;
+}
+
+/* prev / next arrows */
+#tid .table23-prev,
+#tid .table23-next {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+#tid .table23-prev a,
+#tid .table23-next a,
+#tid .table23-pagination a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+    box-sizing: border-box !important;
+    background: linear-gradient(120deg, var(--woot-fable-accent), var(--woot-fable-accent-2)) !important;
+    color: #0b1020 !important;
+    border-radius: 8px !important;
+    padding: 0 20px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    border: none !important;
+    box-shadow: 0 6px 18px -8px var(--woot-fable-glow) !important;
+    transition: transform .18s ease, filter .2s ease !important;
+}
+#tid .table23-pagination a:hover { transform: translateY(-1px) !important; filter: brightness(1.06) !important; }
+
+/* "Pages: 3, Products: 21" counter - was invisible on white */
+#tid .table23-current-page {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 44px !important;
+    box-sizing: border-box !important;
+    color: var(--woot-fable-ink-soft) !important;
+    background: var(--woot-fable-surface) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+    font-style: normal !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* per-page selector ("10") */
+#tid .table23-per-page-selector {
+    min-height: 44px !important;
+    box-sizing: border-box !important;
+    background: var(--woot-fable-surface) !important;
+    color: var(--woot-fable-ink) !important;
+    border: 1px solid var(--woot-fable-border) !important;
+    border-radius: 8px !important;
+}

@@ -1,0 +1,26 @@
+#woot_attachments_in_popup .table23_td_title,
+.woot_attachments_in_popup .table23_td_title{
+    min-width: 150px;
+    font-size: 0.95em;
+    color: #428bca;
+}
+
+#woot_attachments_in_popup .table23_td_description,
+.woot_attachments_in_popup .table23_td_description{
+    font-style: italic;
+    width: 40%;
+}
+
+#woot_attachments_in_popup tbody td,
+.woot_attachments_in_popup tbody td{
+    vertical-align: middle;
+}
+
+.woot-download-file img{
+    display: inline !important;
+}
+
+.table23_td_file audio{
+    max-width: 270px !important;
+}
+

@@ -80,11 +80,11 @@ if (!defined('ABSPATH'))
                     <div style="float: right;">
                         <?php
                         echo WOOT_HELPER::draw_html_item('a', [
-                            'href' => 'https://products-tables.com/downloads',
+                            'href' => 'https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/',
                             'target' => '_blank',
                             'class' => 'button woot-btn-upgrade',
                                 //'style' => '',
-                                ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Upgrade to Premium', 'profit-products-tables-for-woocommerce'));
+                                ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Support', 'profit-products-tables-for-woocommerce'));
                         ?>
                     </div>
                 <?php endif; ?>
@@ -140,11 +140,6 @@ if (!defined('ABSPATH'))
             </section>
 
             <section id="tabs-main-settings">
-                <?php if (woot()->show_notes): ?>
-                    <p class="notice notice-error">
-                        <?php printf(esc_html__('In free version is possible to display only first %s columns!', 'profit-products-tables-for-woocommerce'), woot()->max_col) ?>
-                    </p>
-                <?php endif; ?>
 
                 <?php
                 echo wp_kses($settings_table, [
@@ -220,12 +215,6 @@ if (!defined('ABSPATH'))
 
             <?php if (WOOT_Vocabulary::is_enabled()): ?>
                 <section id="tabs-main-vocabulary">
-
-                    <?php if (woot()->show_notes): ?>
-                        <p class="notice notice-error">
-                            <?php printf(esc_html__('In free version is possible to display only first %s columns!', 'profit-products-tables-for-woocommerce'), woot()->max_col) ?>
-                        </p>
-                    <?php endif; ?>
 
                     <div class="woot-notice">
                         <?php
@@ -449,9 +438,9 @@ if (!defined('ABSPATH'))
                     </div>
 
                     <ul class="woof__features-gallery woof__col-6">
-                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woof-woocommerce-products-filter"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>/img/banners/woof-banner.png"></a></li>
-                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woobe-woocommerce-bulk-editor-professional/21779835"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png"></a></li>
-                        <li><a target="_blank" href="https://codecanyon.pluginus.net/item/woocommerce-currency-switcher/8085217"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png"></a></li>
+                        <li><a target="_blank" href="https://products-filter.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>/img/banners/woof-banner.png"></a></li>
+                        <li><a target="_blank" href="https://bulk-editor.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png"></a></li>
+                        <li><a target="_blank" href="https://currency-switcher.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png"></a></li>
                     </ul>
 
                 </div>
@@ -468,10 +457,9 @@ if (!defined('ABSPATH'))
     <?php if (woot()->show_notes): ?>
         <br />
         <div>
-            <a href="https://codecanyon.pluginus.net/item/woot-woocommerce-products-tables/27928580" title="PREMIUM version: WOOT - WooCommerce Active Products Tables" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woot-banner.png" width="250" alt="WOOT - WooCommerce Active Products Tables"></a>
-            &nbsp;<a href="https://products-filter.com/" title="WOOF - WooCommerce Products Filter" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woof-banner.png" width="250" alt="WOOF - WooCommerce Products Filter"></a>
-            &nbsp;<a href="https://currency-switcher.com/" title="WOOCS - WooCommerce Currency Switcher" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png" width="250" alt="WOOCS - WooCommerce Currency Switcher"></a>
-            &nbsp;<a href="https://bulk-editor.com/" title="WOOBE - WooCommerce Bulk Editor and Products Manager Professional" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png" width="250" alt="WOOBE - WooCommerce Bulk Editor and Products Manager Professional"></a>
+            <a href="https://products-filter.com/" title="HUSKY - WooCommerce Products Filter" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woof-banner.png" width="250" alt="HUSKY - WooCommerce Products Filter"></a>
+            &nbsp;<a href="https://currency-switcher.com/" title="FOX - WooCommerce Currency Switcher" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png" width="250" alt="FOX - WooCommerce Currency Switcher"></a>
+            &nbsp;<a href="https://bulk-editor.com/" title="BEAR - WooCommerce Bulk Editor and Products Manager Professional" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png" width="250" alt="BEAR - WooCommerce Bulk Editor and Products Manager Professional"></a>
             &nbsp;<a href="https://posts-table.com/" title="TABLEON - WordPress Post Tables Filterable" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/tableon-banner.png" width="250" alt="TABLEON - WordPress Post Tables Filterable"></a>
         </div>
     <?php endif; ?>
@@ -555,11 +543,6 @@ if (!defined('ABSPATH'))
                                 <section id="tabs-columns" class="content-current">
 
                                     <div>
-                                        <?php if (woot()->show_notes): ?>
-                                            <p class="notice notice-error">
-                                                <?php printf(esc_html__('In free version is possible to display only first %s columns!', 'profit-products-tables-for-woocommerce'), woot()->max_col) ?>
-                                            </p>
-                                        <?php endif; ?>
 
                                         <?php
                                         echo WOOT_HELPER::draw_html_item('a', [
@@ -644,11 +627,6 @@ if (!defined('ABSPATH'))
                                                         ], 'WOOF'))
                                         ?></p>
 
-                                    <?php if (woot()->show_notes): ?>
-                                        <p class="notice notice-error">
-                                            <?php printf(esc_html__('In free version is possible to display only first %s items!', 'profit-products-tables-for-woocommerce'), 2) ?>
-                                        </p>
-                                    <?php endif; ?>
                                     <div class="tabs-filter-container"></div>
                                 </section>
 
