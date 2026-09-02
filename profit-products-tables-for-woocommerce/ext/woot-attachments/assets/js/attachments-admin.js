@@ -22,7 +22,8 @@ class WOOT_Attachments {
             body: woot_helper.prepare_ajax_form_data({
                 action: 'woot_get_table_attachments',
                 post_id: this.post_id,
-                table_id: table_html_id
+                table_id: table_html_id,
+                settings_nonce: woot_helper_vars.settings_nonce
             })
         }).then((response) => response.json()).then((data) => {
             let div = document.createElement('div');
@@ -81,9 +82,16 @@ class WOOT_Attachments {
                         credentials: 'same-origin',
                         body: woot_helper.prepare_ajax_form_data({
                             action: 'woot_get_attachments_icons_associations',
-                            table_html_id: table_html_id
+                            table_html_id: table_html_id,
+                            settings_nonce: woot_helper_vars.settings_nonce
                         })
                     }).then(response => response.text()).then(html => {
+                        
+                        if (html.indexOf('"success":false') !== -1) {
+                            woot_helper.message(woot_helper_vars.lang.error, 'error', 5000);
+                            return;
+                        }
+                        
                         popup.set_content(html);
                         popup.set_title_info(woot_helper_vars.lang.attachments_icons_default_assoc_info);
                         self.associations_table = new WOOT_GeneratedTables(JSON.parse(popup.node.querySelector(`[data-table-id="${table_html_id}"]`).innerText), table_html_id);
@@ -126,7 +134,8 @@ class WOOT_Attachments {
                             body: woot_helper.prepare_ajax_form_data({
                                 action: 'woot_add_table_attachments',
                                 post_id: _this.post_id,
-                                value: JSON.stringify(uploaded_images)
+                                value: JSON.stringify(uploaded_images),
+                                settings_nonce: woot_helper_vars.settings_nonce
                             })
                         }).then(response => response.json()).then(data => {
                             _this.table.settings.table_data = data;
@@ -155,7 +164,8 @@ class WOOT_Attachments {
                 body: woot_helper.prepare_ajax_form_data({
                     action: 'woot_delete_table_attachments',
                     post_id: this.post_id,
-                    attachment_id: attachment_id
+                    attachment_id: attachment_id,
+                    settings_nonce: woot_helper_vars.settings_nonce
                 })
             }).then(response => response.json()).then(data => {
                 this.table.settings.table_data = data;
@@ -198,7 +208,8 @@ class WOOT_Attachments {
                                 field: 'icon',
                                 attachment_id: attachment_id,
                                 post_id: self.post_id,
-                                value: uploaded_image.id
+                                value: uploaded_image.id,
+                                settings_nonce: woot_helper_vars.settings_nonce
                             })
                         }).then(response => response.json()).then(data => {
                             woot_helper.message(woot_helper_vars.lang.saved, 'notice');
@@ -243,7 +254,8 @@ class WOOT_Attachments {
                             body: woot_helper.prepare_ajax_form_data({
                                 action: 'woot_update_association',
                                 mime_type: mime_type,
-                                value: uploaded_image.id
+                                value: uploaded_image.id,
+                                settings_nonce: woot_helper_vars.settings_nonce
                             })
                         }).then(response => response.json()).then(data => {
                             //as the table is jsoned and data is in memory - we should update it mannually 

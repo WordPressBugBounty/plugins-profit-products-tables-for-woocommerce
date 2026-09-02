@@ -50,7 +50,16 @@ add_filter("woot_profile_extend", function($profile, $action, $shortcode_args) {
                             }
 							$args['wc_query'] = 'product_query';
                             $WOOF->woof_products_ids_prediction(true);
-                            $ids = $_REQUEST['woof_wp_query_ids'];
+                            // WOOF fills this superglobal itself in woof_products_ids_prediction()
+                            // just above, normally as an array of post IDs. Accept a comma
+                            // separated string too, and keep only positive integers.
+                            $ids = isset($_REQUEST['woof_wp_query_ids']) ? wp_unslash($_REQUEST['woof_wp_query_ids']) : [];
+                            if (!is_array($ids)) {
+                                $ids = explode(',', sanitize_text_field($ids));
+                            }
+                            $ids = array_values(array_filter(array_map('intval', $ids), function ($id) {
+                                return $id > 0;
+                            }));
 
                             if ($ids) {
                                 $args['post__in'] = $ids;

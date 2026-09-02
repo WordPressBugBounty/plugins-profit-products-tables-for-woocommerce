@@ -43,7 +43,7 @@ if (!class_exists('WOOT_STORAGE')) {
          * @return void
          */
         public function set_val($key, $value) {
-            $value = sanitize_text_field(esc_html__($value));
+            $value = sanitize_text_field($value);
             //***
             switch ($this->type) {
                 case 'session':
@@ -100,7 +100,7 @@ if (!class_exists('WOOT_STORAGE')) {
                     break;
             }
 
-            return sanitize_text_field(esc_html__($value));
+            return sanitize_text_field($value);
         }
 
         /**

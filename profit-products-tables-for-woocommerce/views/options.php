@@ -23,8 +23,15 @@ if (!defined('ABSPATH'))
 
 
 
-    <h3 class="woot-plugin-name"><?php printf(esc_html__('WOOT - WooCommerce Active Products Tables %s', 'profit-products-tables-for-woocommerce'), "<span>v." . WOOT_VERSION . "</span>") ?></h3>
-    <i><?php printf(esc_html__('Actualized for WooCommerce v.%s', 'profit-products-tables-for-woocommerce'), WOOCOMMERCE_VERSION) ?></i><br />
+    <h3 class="woot-plugin-name"><?php
+    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the version number is escaped, the surrounding <span> is a fixed literal
+    /* translators: %s: plugin version number, wrapped in a span element */
+    printf(esc_html__('WOOT - WooCommerce Active Products Tables %s', 'profit-products-tables-for-woocommerce'), "<span>v." . esc_html(WOOT_VERSION) . "</span>");
+    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+    ?></h3>
+    <i><?php
+    /* translators: %s: WooCommerce version number */
+    printf(esc_html__('Actualized for WooCommerce v.%s', 'profit-products-tables-for-woocommerce'), esc_html(WOOCOMMERCE_VERSION)) ?></i><br />
 
     <div class="woot-tabs">
 
@@ -70,21 +77,25 @@ if (!defined('ABSPATH'))
 
                 <div style="float: left;">
                     <?php
+                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                     echo WOOT_HELPER::draw_html_item('a', [
                         'href' => 'javascript: woot_main_table.create();void(0);',
                         'class' => 'woot-btn'
                             ], '<span class="icon-plus"></span>&nbsp;' . esc_html__('New table', 'profit-products-tables-for-woocommerce'));
+                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
                 </div>
                 <?php if (woot()->show_notes): ?>
                     <div style="float: right;">
                         <?php
+                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                         echo WOOT_HELPER::draw_html_item('a', [
                             'href' => 'https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/',
                             'target' => '_blank',
                             'class' => 'button woot-btn-upgrade',
                                 //'style' => '',
                                 ], '<span class="icon-upload"></span>&nbsp;' . esc_html__('Support', 'profit-products-tables-for-woocommerce'));
+                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                         ?>
                     </div>
                 <?php endif; ?>
@@ -186,6 +197,7 @@ if (!defined('ABSPATH'))
 
                 //+++
 
+                // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                 echo WOOT_HELPER::draw_html_item('a', [
                     'href' => '#',
                     'class' => 'woot-btn',
@@ -209,6 +221,7 @@ if (!defined('ABSPATH'))
                     'data-popup-title' => esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce'),
                     'data-what' => 'import'
                         ], esc_html__('Import WOOT Data', 'profit-products-tables-for-woocommerce'));
+                // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                 ?>
 
             </section>
@@ -218,17 +231,22 @@ if (!defined('ABSPATH'))
 
                     <div class="woot-notice">
                         <?php
+                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the link markup is generated and escaped inside draw_html_item()
+                        /* translators: %s: link to the Loco Translate plugin */
                         printf(esc_html__('This vocabulary is not for interface words, which you can translate for example by %s, but for the arbitrary words which you applied in the tables columns. Taxonomies terms also possible to translate here, to display them in the WOOT tables.', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                                     'href' => 'https://wordpress.org/plugins/loco-translate/',
                                     'target' => '_blank'
                                         ], 'Loco Translate'))
+                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                         ?>
                     </div>
                     <?php
+                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                     echo WOOT_HELPER::draw_html_item('a', [
                         'href' => 'javascript: woot_vocabulary_table.create();void(0);',
                         'class' => 'woot-btn'
                             ], '<span class="icon-plus"></span>&nbsp;' . esc_html__('New key word', 'profit-products-tables-for-woocommerce'));
+                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
 
                     <br /><br />
@@ -248,7 +266,7 @@ if (!defined('ABSPATH'))
 
                             <div class="woof-card woof-transition woof-text-center woof-rounded">
                                 <div class="woof-card-body">
-                                    <a href="https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/support.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
+                                    <a href="https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/support.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
                                     <h5 class="woof-h5"><a href="https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/" class="woof-text-dark" target="_blank"><?php esc_html_e("Support", 'profit-products-tables-for-woocommerce') ?></a></h5>
                                     <p><?php esc_html_e("If you have questions about plugin functionality or found bug write us please", 'profit-products-tables-for-woocommerce') ?></p>
                                 </div>
@@ -260,7 +278,7 @@ if (!defined('ABSPATH'))
 
                             <div class="woof-card woof-transition woof-text-center woof-rounded">
                                 <div class="woof-card-body">
-                                    <h5 class="woof-h5"><a href="https://products-tables.com/faq" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/faq.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
+                                    <h5 class="woof-h5"><a href="https://products-tables.com/faq" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/faq.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
                                         <h5 class="woof-h5"><a href="https://products-tables.com/faq" class="woof-text-dark" target="_blank"><?php esc_html_e("FAQ", 'profit-products-tables-for-woocommerce') ?></a></h5>
                                         <p><?php esc_html_e("If you have questions check please already prepared answers", 'profit-products-tables-for-woocommerce') ?></p>
                                 </div>
@@ -272,7 +290,7 @@ if (!defined('ABSPATH'))
 
                             <div class="woof-card woof-transition woof-text-center woof-rounded">
                                 <div class="woof-card-body">
-                                    <a href="https://products-tables.com/codex" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/codex.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
+                                    <a href="https://products-tables.com/codex" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/codex.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
                                     <h5 class="woof-h5"><a href="https://products-tables.com/codex" class="woof-text-dark" target="_blank"><?php esc_html_e("Codex", 'profit-products-tables-for-woocommerce') ?></a></h5>
                                     <p><?php esc_html_e("For developers WOOT has power bunch of functionality", 'profit-products-tables-for-woocommerce') ?></p>
                                 </div>
@@ -284,7 +302,7 @@ if (!defined('ABSPATH'))
 
                             <div class="woof-card woof-transition woof-text-center woof-rounded">
                                 <div class="woof-card-body">
-                                    <a href="https://products-tables.com/video" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/video.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
+                                    <a href="https://products-tables.com/video" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/video.svg" class="woof-avatar woof-avatar-small woof-mb-3" alt=""></a>
                                     <h5 class="woof-h5"><a href="https://products-tables.com/video" class="woof-text-dark" target="_blank"><?php esc_html_e("Video", 'profit-products-tables-for-woocommerce') ?></a></h5>
                                     <p><?php esc_html_e("If you are beginner watch the video please", 'profit-products-tables-for-woocommerce') ?></p>
                                 </div>
@@ -406,6 +424,7 @@ if (!defined('ABSPATH'))
                     <h3><?php echo esc_html__('Extensions for WOOT', 'profit-products-tables-for-woocommerce') ?>:</h3>
 
                     <?php
+                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                     echo WOOT_HELPER::draw_html_item('a', [
                         'href' => 'https://products-tables.com/extension/favourites/',
                         'target' => '_blank',
@@ -423,6 +442,7 @@ if (!defined('ABSPATH'))
                         'target' => '_blank',
                         'class' => 'woot-btn'
                             ], esc_html__('Attachments', 'profit-products-tables-for-woocommerce'))
+                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                     ?>
 
                     <br>
@@ -438,9 +458,9 @@ if (!defined('ABSPATH'))
                     </div>
 
                     <ul class="woof__features-gallery woof__col-6">
-                        <li><a target="_blank" href="https://products-filter.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>/img/banners/woof-banner.png"></a></li>
-                        <li><a target="_blank" href="https://bulk-editor.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png"></a></li>
-                        <li><a target="_blank" href="https://currency-switcher.com/downloads"><img class="woof-rounded" width="300" src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png"></a></li>
+                        <li><a target="_blank" href="https://products-filter.com/downloads"><img class="woof-rounded" width="300" src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>/img/banners/woof-banner.png"></a></li>
+                        <li><a target="_blank" href="https://bulk-editor.com/downloads"><img class="woof-rounded" width="300" src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/woobe-banner.png"></a></li>
+                        <li><a target="_blank" href="https://currency-switcher.com/downloads"><img class="woof-rounded" width="300" src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/woocs-banner.png"></a></li>
                     </ul>
 
                 </div>
@@ -457,10 +477,10 @@ if (!defined('ABSPATH'))
     <?php if (woot()->show_notes): ?>
         <br />
         <div>
-            <a href="https://products-filter.com/" title="HUSKY - WooCommerce Products Filter" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woof-banner.png" width="250" alt="HUSKY - WooCommerce Products Filter"></a>
-            &nbsp;<a href="https://currency-switcher.com/" title="FOX - WooCommerce Currency Switcher" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woocs-banner.png" width="250" alt="FOX - WooCommerce Currency Switcher"></a>
-            &nbsp;<a href="https://bulk-editor.com/" title="BEAR - WooCommerce Bulk Editor and Products Manager Professional" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/woobe-banner.png" width="250" alt="BEAR - WooCommerce Bulk Editor and Products Manager Professional"></a>
-            &nbsp;<a href="https://posts-table.com/" title="TABLEON - WordPress Post Tables Filterable" target="_blank"><img src="<?php echo WOOT_ASSETS_LINK ?>img/banners/tableon-banner.png" width="250" alt="TABLEON - WordPress Post Tables Filterable"></a>
+            <a href="https://products-filter.com/" title="HUSKY - WooCommerce Products Filter" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/woof-banner.png" width="250" alt="HUSKY - WooCommerce Products Filter"></a>
+            &nbsp;<a href="https://currency-switcher.com/" title="FOX - WooCommerce Currency Switcher" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/woocs-banner.png" width="250" alt="FOX - WooCommerce Currency Switcher"></a>
+            &nbsp;<a href="https://bulk-editor.com/" title="BEAR - WooCommerce Bulk Editor and Products Manager Professional" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/woobe-banner.png" width="250" alt="BEAR - WooCommerce Bulk Editor and Products Manager Professional"></a>
+            &nbsp;<a href="https://posts-table.com/" title="TABLEON - WordPress Post Tables Filterable" target="_blank"><img src="<?php echo esc_url(WOOT_ASSETS_LINK) ?>img/banners/tableon-banner.png" width="250" alt="TABLEON - WordPress Post Tables Filterable"></a>
         </div>
     <?php endif; ?>
 
@@ -545,10 +565,12 @@ if (!defined('ABSPATH'))
                                     <div>
 
                                         <?php
+                                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                                         echo WOOT_HELPER::draw_html_item('a', [
                                             'href' => 'javascript: woot_columns_table.create();void(0);',
                                             'class' => 'button woot-dash-btn'
                                                 ], '<span class="dashicons-before dashicons-welcome-add-page"></span>' . esc_html__('Prepend column', 'profit-products-tables-for-woocommerce'));
+                                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                         ?>
                                     </div>
                                     <br />
@@ -559,10 +581,12 @@ if (!defined('ABSPATH'))
 
                                     <div>
                                         <?php
+                                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                                         echo WOOT_HELPER::draw_html_item('a', [
                                             'href' => 'javascript: woot_columns_table.create(false);void(0);',
                                             'class' => 'button woot-dash-btn woot-dash-btn-rotate'
                                                 ], '<span class="dashicons-before dashicons-welcome-add-page"></span>' . esc_html__('Append column', 'profit-products-tables-for-woocommerce'));
+                                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                         ?>
                                     </div>
 
@@ -578,10 +602,13 @@ if (!defined('ABSPATH'))
 
                                             <td>
                                                 <div class="woot-notice"><?php
+                                                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the link markup is generated and escaped inside draw_html_item()
+                                                    /* translators: %s: link to the table skins documentation page */
                                                     printf(esc_html__('You can use custom CSS for small changes, but for quite big the table restyling its recommended to use %s. Use hotkey combination CTRL+S for CSS code saving!', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                                                                 'href' => 'https://products-tables.com/document/skins/',
                                                                 'target' => '_blank',
                                                                     ], esc_html__('table skins', 'profit-products-tables-for-woocommerce')))
+                                                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                                     ?></div>
                                             </td>
 
@@ -601,18 +628,23 @@ if (!defined('ABSPATH'))
 
                                     <div class="woot-notice">
                                         <?php
+                                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the link markup is generated and escaped inside draw_html_item()
+                                        /* translators: %s: link to the meta fields documentation page */
                                         printf(esc_html__('If to use sorting by meta keys - will be visible only products which has any value for the selected meta key. %s', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                                                     'href' => 'https://products-tables.com/document/meta/',
                                                     'target' => '_blank'
                                                         ], esc_html__('Also read', 'profit-products-tables-for-woocommerce')))
+                                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                         ?>
                                     </div>
 
                                     <?php
+                                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item()
                                     echo WOOT_HELPER::draw_html_item('a', [
                                         'href' => 'javascript: woot_meta_table.create();void(0);',
                                         'class' => 'button'
                                             ], '<span class="icon-plus"></span>' . esc_html__('Add meta field', 'profit-products-tables-for-woocommerce'));
+                                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                     ?>
                                     <br /><br />
 
@@ -621,10 +653,13 @@ if (!defined('ABSPATH'))
 
                                 <section id="tabs-filter">
                                     <p class="notice notice-success"><?php
+                                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the link markup is generated and escaped inside draw_html_item()
+                                        /* translators: %s: link to the WOOF products filter plugin */
                                         printf(esc_html__('Also for products filtration you can use %s filter!', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                                                     'href' => 'https://demo.products-filter.com/demonstration-of-woot-and-woof-compatibility/',
                                                     'target' => '_blank'
                                                         ], 'WOOF'))
+                                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                         ?></p>
 
                                     <div class="tabs-filter-container"></div>
@@ -632,10 +667,13 @@ if (!defined('ABSPATH'))
 
                                 <section id="tabs-predefinition">
                                     <div class="woot-notice"><?php
+                                        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the link markup is generated and escaped inside draw_html_item()
+                                        /* translators: %s: link to the predefinition documentation page */
                                         printf(esc_html__('Here you can set rules about what products to display in the table. The filtration will work with the predefined products as with basic ones. %s.', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                                                     'href' => 'https://products-tables.com/document/predefinition/',
                                                     'target' => '_blank'
                                                         ], esc_html__('Read more here', 'profit-products-tables-for-woocommerce')))
+                                        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                                         ?></div>
                                     <div class="woot-predefinition-table-zone"></div>
                                 </section>
@@ -657,7 +695,9 @@ if (!defined('ABSPATH'))
 
     </div>
 
-    <?php echo WOOT_HELPER::render_html('views/popup.php'); ?>
+    <?php 
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
+	echo WOOT_HELPER::render_html('views/popup.php'); ?>
 
 
 </div>

@@ -19,7 +19,7 @@ if (!defined('ABSPATH'))
                 <a href="javascript: void(0);" class="woot-modal-close"></a>
             </div>
             <div class="woot-modal-inner-content">
-                <div class="woot-form-element-container"><div class="table23-place-loader"><?php echo WOOT_Vocabulary::get(esc_html__('Loading ...', 'profit-products-tables-for-woocommerce')) ?></div><br /></div>
+                <div class="woot-form-element-container"><div class="table23-place-loader"><?php echo esc_html(WOOT_Vocabulary::get(esc_html__('Loading ...', 'profit-products-tables-for-woocommerce'))) ?></div><br /></div>
             </div>
             <div class="woot-modal-inner-footer">
                 <a href="javascript: void(0);" class="<?php if (is_admin()): ?>button <?php endif; ?>woot-btn woot-modal-button-large-1"><?php esc_html_e('Close', 'profit-products-tables-for-woocommerce') ?></a>

@@ -225,7 +225,9 @@ class WOOT_Filter {
                         if (isset($tmp[$k]['view']) AND $tmp[$k]['view'] === 'calendar') {
                             $tmp[$k . '---to'] = $tmp[$k];
                             $placeholder = $tmp[$k]['placeholder'];
+                            /* translators: %s: the calendar field placeholder text */
                             $tmp[$k]['title'] = $tmp[$k]['placeholder'] = WOOT_Vocabulary::get(sprintf(esc_html__('From: %s', 'profit-products-tables-for-woocommerce'), $placeholder));
+                            /* translators: %s: the calendar field placeholder text */
                             $tmp[$k . '---to']['title'] = $tmp[$k . '---to']['placeholder'] = WOOT_Vocabulary::get(sprintf(esc_html__('To: %s', 'profit-products-tables-for-woocommerce'), $placeholder));
                         }
                     }
@@ -282,9 +284,11 @@ class WOOT_Filter {
                             if (isset($available_fields[$field_key]['meta_key'])) {
                                 if (!is_numeric($value) OR intval($value) === -1) {
                                     global $wpdb;
+									// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter -- the query is passed through $wpdb->prepare() on the next line, $option_key is an internal whitelisted keyword
                                     $sql = "SELECT {$option_key}(cast(meta_value as UNSIGNED)) FROM {$wpdb->postmeta} WHERE meta_key='%s'";
                                     $query = $wpdb->prepare($sql, $available_fields[$field_key]['meta_key']);
                                     $value = $wpdb->get_var($query);
+									// phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
                                 }
                             }
 

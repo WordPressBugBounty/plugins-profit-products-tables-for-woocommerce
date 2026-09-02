@@ -24,6 +24,7 @@ class WOOT_FilterFieldsOptions {
             $this->table_html_id = $call_id;
 
             if (isset($args['table_id']) AND intval($args['table_id']) > 0) {
+				// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html() and draw_table_data()
                 echo WOOT_HELPER::render_html('views/table.php', array(
                     'table_html_id' => $this->table_html_id,
                     'hide_text_search' => true,
@@ -36,6 +37,7 @@ class WOOT_FilterFieldsOptions {
                     'per_page' => -1,
                     'table_data' => $this->get_field_data(intval($args['table_id']), $args['field_key'])
                         ], $this->table_html_id);
+                // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
             }
 
             return '';
@@ -234,6 +236,7 @@ class WOOT_FilterFieldsOptions {
                                     'datetime' => 'datetime',
                                     'unixtimestamp' => 'unixtimestamp'
                                         ], $val),
+                                /* translators: %s: ACF data type name */
                                 'notes' => sprintf(esc_html__('In ACF is used %s data type', 'profit-products-tables-for-woocommerce'), 'datetime'),
                             ];
 
@@ -353,7 +356,7 @@ class WOOT_FilterFieldsOptions {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }
         $table_id = intval($_REQUEST['table_id']);

@@ -122,6 +122,7 @@ final class WOOT_WooCommerceSingle {
             if ($product_id > 0 AND get_post_field('post_type', $product_id) === 'product') {
                 return $this->draw_table($product_id, uniqid('t'), $args);
             } else {
+                /* translators: %s: product ID */
                 return '<div class="woot-notice">' . sprintf(esc_html__('Product #%s does not exists!', 'profit-products-tables-for-woocommerce'), $product_id) . '</div>';
             }
         });
@@ -137,6 +138,7 @@ final class WOOT_WooCommerceSingle {
      * @return string table HTML
      */
     private function draw_table($product_id, $table_html_id, $args = []) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
         return WOOT_HELPER::render_html('views/table.php', array(
                     'table_html_id' => $table_html_id,
                     'hide_text_search' => true,

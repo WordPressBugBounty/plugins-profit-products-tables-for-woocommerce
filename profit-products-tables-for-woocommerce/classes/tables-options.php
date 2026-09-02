@@ -51,6 +51,7 @@ class WOOT_TablesOptions {
      */
     public function get_options() {
         $table_id = 'woot_options_columns_table';
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_table_data()
         echo woot()->draw_table_data([
             'mode' => 'json',
             'action' => 'woot_options_columns_table',
@@ -60,6 +61,7 @@ class WOOT_TablesOptions {
             'use_flow_header' => 0,
             'table_data' => $this->get_options_data(intval($_REQUEST['post_id']))
                 ], $table_id, FALSE);
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
         exit;
     }
@@ -280,6 +282,7 @@ class WOOT_TablesOptions {
                 'title' => esc_html__('Show search by title', 'profit-products-tables-for-woocommerce'),
                 'value' => WOOT_HELPER::draw_switcher('show_text_search', $this->get($table_id, 'show_text_search', true), $table_id, 'woot_save_table_option'),
                 'value_custom_field_key' => 'show_text_search',
+                /* translators: %s: link to the shortcode documentation page */
                 'notes' => sprintf(esc_html__('Show search by product title textinput. To make it works with product content text and product excerpt text use shortcode attributes %s', 'profit-products-tables-for-woocommerce'), WOOT_HELPER::draw_html_item('a', [
                             'href' => 'https://products-tables.com/shortcode/woot/',
                             'target' => '_blank'
@@ -539,7 +542,7 @@ class WOOT_TablesOptions {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }	
 		

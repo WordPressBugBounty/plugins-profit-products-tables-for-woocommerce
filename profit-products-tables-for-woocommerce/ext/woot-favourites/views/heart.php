@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="woot-favourites-heart-wrapper woot-favourites-heart-wrapper-<?php echo $post_id ?> <?php if ($selected): ?>woot-favourites-active<?php endif; ?>" onclick="return woot_favourites.toggle(this, <?php echo $post_id ?>)">
+<div class="woot-favourites-heart-wrapper woot-favourites-heart-wrapper-<?php echo intval($post_id) ?> <?php if ($selected): ?>woot-favourites-active<?php endif; ?>" onclick="return woot_favourites.toggle(this, <?php echo intval($post_id) ?>)">
     <div class="woot-favourites-heart">
         <div class="woot-favourites-tl"></div>
         <div class="woot-favourites-tr"></div>
@@ -20,4 +20,4 @@ if (!defined('ABSPATH')) {
     <div class="woot-favourites-circles"></div>
 </div>
 
-<a href="javascript: void(0);" data-key="favourites" class="woot-favourites-btn"><?php echo WOOT_Vocabulary::get(esc_html__('My Favourites', 'woot-favourites')) ?></a><br />
+<a href="javascript: void(0);" data-key="favourites" class="woot-favourites-btn"><?php echo esc_html(WOOT_Vocabulary::get(esc_html__('My Favourites', 'profit-products-tables-for-woocommerce'))) ?></a><br />

@@ -113,7 +113,7 @@ class WOOT_TablesFilter {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }		
         $acceptor_data = WOOT_HELPER::sanitize_array(array_keys(json_decode(stripslashes($_REQUEST['acceptor_data']), true)));

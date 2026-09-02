@@ -5,6 +5,10 @@
  * @see https://products-tables.com/how-to-create-remote-page-with-the-products-table/
  * @version 1.0.0
  */
+
+if (!defined('ABSPATH'))
+    die('No direct access allowed');
+
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>

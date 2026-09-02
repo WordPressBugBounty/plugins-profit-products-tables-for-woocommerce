@@ -93,6 +93,7 @@ final class WOOT_WooCommerceReviews {
         }
 
         $_REQUEST['woot_review_in_table'] = true; //flag to hide links to popup
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
         return WOOT_HELPER::render_html('views/table.php', array(
                     'table_html_id' => $table_html_id,
                     'hide_text_search' => true,
@@ -142,6 +143,7 @@ final class WOOT_WooCommerceReviews {
                     foreach ($fields as $field) {
                         switch ($field) {
                             case 'comment_content':
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
                                 $h = WOOT_HELPER::render_html('profiles/woocommerce/views/reviews.php', [
                                             'product_id' => $product_id,
                                             'average_rating' => get_comment_meta($comment->comment_ID, 'rating', true),
@@ -155,6 +157,7 @@ final class WOOT_WooCommerceReviews {
                                 $tmp[$field] = date_i18n(get_option('date_format'), strtotime($comment->comment_date));
                                 break;
                             case 'stars':
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
                                 $tmp[$field] = WOOT_HELPER::render_html('profiles/woocommerce/views/reviews.php', [
                                             'product_id' => $product_id,
                                             'average_rating' => get_comment_meta($comment->comment_ID, 'rating', true),

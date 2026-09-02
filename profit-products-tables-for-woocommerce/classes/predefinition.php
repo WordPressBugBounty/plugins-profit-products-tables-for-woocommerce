@@ -57,7 +57,8 @@ class WOOT_Predefinition {
      */
     public function get_table() {
         $table_html_id = 'woot-predefinition-table';
-
+		
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html() and draw_table_data()
         echo WOOT_HELPER::render_html('views/table.php', array(
             'table_html_id' => $table_html_id,
             'hide_text_search' => true,
@@ -71,6 +72,7 @@ class WOOT_Predefinition {
             'use_flow_header' => 0,
             'table_data' => $this->get_table_columns_data(intval($_REQUEST['post_id']))
                 ], $table_html_id);
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
         exit;
     }
 
@@ -325,7 +327,7 @@ class WOOT_Predefinition {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }	
         $value = WOOT_HELPER::sanitize_text($_REQUEST['value']);

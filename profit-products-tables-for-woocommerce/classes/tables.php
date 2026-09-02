@@ -129,7 +129,7 @@ class WOOT_Tables {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$this->db->insert($this->db_table, [
@@ -162,7 +162,7 @@ class WOOT_Tables {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$table_id = intval($_REQUEST['post_id']);
@@ -217,7 +217,7 @@ class WOOT_Tables {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$table_id = intval($_REQUEST['id']);
@@ -253,7 +253,7 @@ class WOOT_Tables {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$donor_table_id = intval($_REQUEST['id']);
@@ -268,6 +268,7 @@ class WOOT_Tables {
 			]);
 
 			$new_table_id = intval($this->db->insert_id);
+			/* translators: %s: title of the table being cloned */
 			$table['title'] = sprintf(esc_html__('%s (clone)', 'profit-products-tables-for-woocommerce'), $table['title']);
 			$this->db->update($this->db_table, $table, array('id' => $new_table_id));
 

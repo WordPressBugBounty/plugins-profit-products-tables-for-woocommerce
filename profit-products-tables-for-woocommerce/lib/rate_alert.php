@@ -62,7 +62,7 @@ class WOOT_RATE_ALERT {
                 ?>
                 <div id="woot-rate-alert">
                     <p>
-                        <?php printf("Hi, looks like you using <b>WOOT - WooCommerce Active Products Tables</b> for some time and I hope this software helped you with your business. If you satisfied with the plugin functionality, could you please give us BIG favor and give it a 5-star rating to help us spread the word and boost our motivation?<br /><br /><strong>~ PluginUs.NET developers team</strong>", "<a href='{$support_link}' target='_blank'>" . __('support', 'profit-products-tables-for-woocommerce') . "</a>") ?>
+                        <?php echo wp_kses_post("Hi, looks like you using <b>WOOT - WooCommerce Active Products Tables</b> for some time and I hope this software helped you with your business. If you satisfied with the plugin functionality, could you please give us BIG favor and give it a 5-star rating to help us spread the word and boost our motivation?<br /><br /><strong>~ PluginUs.NET developers team</strong>") ?>
                     </p>
 
                     <hr />
@@ -76,15 +76,15 @@ class WOOT_RATE_ALERT {
                     <table>
                         <tr>
                             <td>
-                                <a href="javascript: woot_manage_alert(0);void(0);" class="button button-large dashicons-before dashicons-clock">&nbsp;<?php echo __('Nope, maybe later!', 'profit-products-tables-for-woocommerce') ?></a>
+                                <a href="javascript: woot_manage_alert(0);void(0);" class="button button-large dashicons-before dashicons-clock">&nbsp;<?php echo esc_html__('Nope, maybe later!', 'profit-products-tables-for-woocommerce') ?></a>
                             </td>
 
                             <td>
-                                <a href="<?php echo $link ?>" target="_blank" class="woot-panel-button dashicons-before dashicons-star-filled">&nbsp;<?php echo __('Ok, you deserve it', 'profit-products-tables-for-woocommerce') ?></a>
+                                <a href="<?php echo esc_url($link) ?>" target="_blank" class="woot-panel-button dashicons-before dashicons-star-filled">&nbsp;<?php echo esc_html__('Ok, you deserve it', 'profit-products-tables-for-woocommerce') ?></a>
                             </td>
 
                             <td>
-                                <a href="javascript: woot_manage_alert(1);void(0);" class="button button-large dashicons-before dashicons-thumbs-up">&nbsp;<?php echo __('Thank you, I did it!', 'profit-products-tables-for-woocommerce') ?></a>
+                                <a href="javascript: woot_manage_alert(1);void(0);" class="button button-large dashicons-before dashicons-thumbs-up">&nbsp;<?php echo esc_html__('Thank you, I did it!', 'profit-products-tables-for-woocommerce') ?></a>
                             </td>
                         </tr>
                     </table>

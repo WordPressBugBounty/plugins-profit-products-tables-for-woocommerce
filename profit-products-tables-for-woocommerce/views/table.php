@@ -65,23 +65,24 @@ if (!isset($skin)) {
 
 <?php if (boolval($published)): ?>
 
-    <div class='data-table-23 woot-data-table <?php if (isset($table_view) AND $table_view) echo 'data-table-23-' . esc_attr($table_view); ?> <?php esc_attr_e($action) ?> <?php esc_attr_e($classes) ?>' data-skin="<?php esc_attr_e($skin) ?>" id='<?php esc_attr_e($table_html_id) ?>'>
-        <input type="search" data-key="<?php esc_attr_e($search_data_key) ?>" value="" minlength="<?php esc_attr_e($text_search_min_symbols) ?>" class="woot-text-search" <?php if ($hide_text_search): ?>style="display: none;"<?php endif; ?> placeholder="<?php esc_attr_e($placeholder) ?>" />
-
+    <div class='data-table-23 woot-data-table <?php if (isset($table_view) AND $table_view) echo 'data-table-23-' . esc_attr($table_view); ?> <?php echo esc_attr($action) ?> <?php echo esc_attr($classes) ?>' data-skin="<?php echo esc_attr($skin) ?>" id='<?php echo esc_attr($table_html_id) ?>'>
+        <input type="search" data-key="<?php echo esc_attr($search_data_key) ?>" value="" minlength="<?php echo esc_attr($text_search_min_symbols) ?>" class="woot-text-search" <?php if ($hide_text_search): ?>style="display: none;"<?php endif; ?> placeholder="<?php echo esc_attr($placeholder) ?>" />
 
         <?php if (isset($filter) AND!empty($filter)): ?>
-            <div class="woot-filter-data" style="display: none;"><?php echo $filter ?></div>
+            <div class="woot-filter-data" style="display: none;"><?php echo esc_html($filter) ?></div>
 
             <?php
             if ($has_filter):
                 ?>
                 <?php
                 if ($hide_filter_form) {
+                    // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_html_item(); the button label is filtered markup by design
                     echo WOOT_HELPER::draw_html_item('a', [
                         'href' => 'javascript: void(0);',
                         'onclick' => 'javascript: woot_show_filter(this);void(0);',
                         'class' => 'woot-btn woot-filter-show-btn'
                             ], apply_filters('woot_show_filter_btn_txt', '<i class="woot-icon">&#xf0b0;</i>'));
+                    // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
                 ?>
                 <div class="woot-filter-list  <?php if ($hide_filter_form): ?>woot-hidden<?php endif; ?>"></div>
@@ -104,7 +105,7 @@ if (!isset($skin)) {
 
         <div class="woot-clearfix"></div>
 
-        <div class="table23-place-loader"><?php echo WOOT_Vocabulary::get(esc_html__('Loading ...', 'profit-products-tables-for-woocommerce')) ?></div>
+        <div class="table23-place-loader"><?php echo esc_html(WOOT_Vocabulary::get(esc_html__('Loading ...', 'profit-products-tables-for-woocommerce'))) ?></div>
         <table class="woot-table"></table>
 
     </div>
@@ -112,12 +113,15 @@ if (!isset($skin)) {
     <?php
     $table_html_id = esc_attr($table_html_id);
     $skin = esc_attr($skin);
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $style is the raw skin CSS from woot()->skins->get_theme_css(); $skin and $table_html_id are esc_attr()-ed just above
     echo(isset($style) ? "<style data-table23-skin='{$skin}' data-table23-skin-of='{$table_html_id}'>" . $style . '</style>' : '')
     ?>
 
 
 <?php else: ?>
 
-    <div class="woot-notice"><strong><?php printf(WOOT_Vocabulary::get(esc_html__('Table %s is not active!', 'profit-products-tables-for-woocommerce')), $table_id) ?></strong></div>
+    <div class="woot-notice"><strong><?php 
+	/* translators: %s: table ID */
+	printf(esc_html(WOOT_Vocabulary::get(esc_html__('Table %s is not active!', 'profit-products-tables-for-woocommerce'))), intval($table_id)) ?></strong></div>
 
 <?php endif; ?>

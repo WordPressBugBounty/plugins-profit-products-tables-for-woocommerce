@@ -13,9 +13,9 @@ $table_html_id = uniqid('t-');
 ?>
 
 
-<div class="woot-woocommerce-text-search-container" style="width: <?php echo $width ?>;" data-table-id="<?php echo $table_html_id ?>">
-	<input type="search" value="" autocomplete="off" placeholder="<?php echo $placeholder ?>" /><br />
-	<div class="woot-woocommerce-text-search-wrapper" style="display: none; max-height: <?php echo $height ?>px; overflow: auto; overflow-x: hidden;"><?php echo do_shortcode("[woot id={$table_id} skin='{$skin}' table_html_id='{$table_html_id}' not_load_on_init=1]") ?></div>
+<div class="woot-woocommerce-text-search-container" style="width: <?php echo esc_attr($width) ?>;" data-table-id="<?php echo esc_attr($table_html_id) ?>">
+	<input type="search" value="" autocomplete="off" placeholder="<?php echo esc_attr($placeholder) ?>" /><br />
+	<div class="woot-woocommerce-text-search-wrapper" style="display: none; max-height: <?php echo esc_attr($height) ?>px; overflow: auto; overflow-x: hidden;"><?php echo do_shortcode("[woot id={$table_id} skin='{$skin}' table_html_id='{$table_html_id}' not_load_on_init=1]") ?></div>
 </div>
 
 

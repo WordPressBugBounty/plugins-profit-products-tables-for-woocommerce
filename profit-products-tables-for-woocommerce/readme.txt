@@ -1,11 +1,11 @@
 === Active Woot Products Tables for WooCommerce. 100% FREE  ===
 Contributors: RealMag777
 Donate link: https://www.paypal.com/donate/?hosted_button_id=9SU55EFFWLTV2
-Tags: woocommerce,product table,woof,husky,bear,table
+Tags: woocommerce,product table,woof,husky,table
 Requires at least: 5.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,13 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 
 == Changelog ==
+
+= 2.1.3 =
+* security release
+* attachments AJAX handlers: added nonce and capability checks
+* fixed path traversal in the skin parameter
+* output escaping and i18n fixes across the plugin
+* removed dead translation catalogues from extensions
 
 = 2.1.2 =
 * 1 security fix, thanks to Asim Alshaya and Darius from patchstack.com

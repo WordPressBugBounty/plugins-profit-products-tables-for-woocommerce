@@ -94,7 +94,8 @@ abstract class WOOT_WooCommerceUniversal {
                             ], $options, $selected),
                     'custom_field_key' => $this->setting_key
                 ],
-                'notes' => sprintf(esc_html__('Columns for %s and shortcode [%s]. Press and wait to reorder.', 'profit-products-tables-for-woocommerce'), $this->settings_columns_title, $this->filter_provider)
+                /* translators: 1: columns settings title, 2: shortcode name */
+                'notes' => sprintf(esc_html__('Columns for %1$s and shortcode [%2$s]. Press and wait to reorder.', 'profit-products-tables-for-woocommerce'), $this->settings_columns_title, $this->filter_provider)
             ];
 
             return $rows;

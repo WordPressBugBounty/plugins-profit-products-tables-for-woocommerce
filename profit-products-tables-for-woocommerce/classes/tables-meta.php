@@ -186,7 +186,7 @@ class WOOT_TablesMeta {
 						$val = strtotime($val);
 					}
 
-					return date(apply_filters('woot_date_format', get_option('date_format')), $val);
+					return gmdate(apply_filters('woot_date_format', get_option('date_format')), $val);
 				};
 
 				$tmp['get_filter_query_args'] = function ($args, $value, $is_calendar_dir_to = false) use ($m, $table_id) {
@@ -215,7 +215,7 @@ class WOOT_TablesMeta {
 						case 'datetime':
 							$args['meta_query'][] = array(
 								'key' => $fkey,
-								'value' => date('Y-m-d H:i:s', $value),
+								'value' => gmdate('Y-m-d H:i:s', $value),
 								'type' => 'DATETIME',
 								'compare' => $is_calendar_dir_to ? '<=' : '>='
 							);
@@ -247,6 +247,7 @@ class WOOT_TablesMeta {
 	 */
 	public function draw_table() {
 		$table_html_id = 'woot_meta_table';
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside draw_table_data()
 		echo woot()->draw_table_data([
 			'mode' => 'json',
 			'action' => 'woot_meta_table',
@@ -257,6 +258,7 @@ class WOOT_TablesMeta {
 			'per_page' => -1,
 			'table_data' => $this->get_prepared_data(intval($_REQUEST['post_id']))
 			], $table_html_id, FALSE);
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		exit;
 	}
@@ -444,7 +446,7 @@ class WOOT_TablesMeta {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$this->update_field($_REQUEST['field'], $_REQUEST['post_id'], WOOT_HELPER::sanitize_text($_REQUEST['value']));
@@ -479,7 +481,7 @@ class WOOT_TablesMeta {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		$table_id = intval($_REQUEST['table_id']);
@@ -517,7 +519,7 @@ class WOOT_TablesMeta {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 

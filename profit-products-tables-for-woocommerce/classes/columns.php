@@ -255,7 +255,7 @@ class WOOT_Columns {
 							break;
 
 						case 'created':
-							$tmp[$field] = date(get_option('date_format') . ' ' . get_option('time_format'), $c['created']);
+							$tmp[$field] = gmdate(get_option('date_format') . ' ' . get_option('time_format'), $c['created']);
 							break;
 
 						case 'field_key':
@@ -293,7 +293,8 @@ class WOOT_Columns {
 
 						case 'actions':
 
-							$edit_popup_title = sprintf(esc_html__('Table: %s. Field: %s', 'profit-products-tables-for-woocommerce'), addslashes(woot()->tables->get($table_id)['title']), $c['title']);
+							/* translators: 1: table title, 2: field title */
+							$edit_popup_title = sprintf(esc_html__('Table: %1$s. Field: %2$s', 'profit-products-tables-for-woocommerce'), addslashes(woot()->tables->get($table_id)['title']), $c['title']);
 
 							//***                 
 
@@ -341,7 +342,8 @@ class WOOT_Columns {
 	 */
 	public function get_columns_data() {
 		$table_html_id = sanitize_key($_REQUEST['table_html_id']);
-
+		
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html() and draw_table_data()
 		echo WOOT_HELPER::render_html('views/table.php', array(
 			'table_html_id' => $table_html_id,
 			'hide_text_search' => false,
@@ -358,6 +360,7 @@ class WOOT_Columns {
 			'per_page' => -1,
 			'table_data' => $this->get_table_columns_data(intval($_REQUEST['post_id']))
 			], $table_html_id);
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		exit;
 	}
 
@@ -374,7 +377,7 @@ class WOOT_Columns {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 
@@ -435,7 +438,7 @@ class WOOT_Columns {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		if ($prepend) {
@@ -506,7 +509,7 @@ class WOOT_Columns {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		if (!$id) {

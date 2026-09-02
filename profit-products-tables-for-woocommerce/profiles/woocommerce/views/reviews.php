@@ -12,11 +12,12 @@ if (!defined('ABSPATH'))
 <div class="woocommerce">
 
     <?php if (!isset($_REQUEST['woot_review_in_table'])) : ?>
-        <span class="woot-num-cell"><?php echo $average_rating; ?></span>
+        <span class="woot-num-cell"><?php echo esc_html($average_rating); ?></span>
     <?php endif; ?>
 
     <div class="woocommerce-product-rating">
-        <?php echo wc_get_rating_html($average_rating, $reviews_count); ?>
+        <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wc_get_rating_html() is a WooCommerce core function returning ready-made, escaped star markup
+        echo wc_get_rating_html($average_rating, $reviews_count); ?>
     </div>
 
     <?php
@@ -35,12 +36,16 @@ if (!defined('ABSPATH'))
 
             $unique_id = uniqid('tr');
             $title = addslashes($title);
+            /* translators: %s: product ID followed by the product title */
             $title = sprintf(WOOT_Vocabulary::get(esc_html__('%s reviews', 'profit-products-tables-for-woocommerce')), "#{$product_id}. {$title}");
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- the anchor markup is assembled by draw_html_item(); the inline JS arguments are slashed above by addslashes()
             echo WOOT_HELPER::draw_html_item('a', [
                 'href' => '#',
                 'onclick' => "let skin=woot_helper.get_closest_skin(this, \"{$skin}\"); return woot_helper.call_popup(\"woot_get_woocommerce_reviews_table\",{product_id: {$product_id}, skin: skin, not_paste:1}, \"{$unique_id}\", \"{$title}\");",
                 'title' => $title
+                    /* translators: %s: number of product reviews */
                     ], sprintf(WOOT_Vocabulary::get(esc_html__('%s reviews', 'profit-products-tables-for-woocommerce')), $reviews_count));
+            // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
     ?>

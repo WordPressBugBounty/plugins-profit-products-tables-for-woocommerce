@@ -21,6 +21,7 @@ class WOOT_ColumnsFieldsOptions {
 
         //fields options popup data 
         add_filter('woot_show_column_field_option', function($what) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
             $res = WOOT_HELPER::render_html('views/table.php', array(
                         'table_html_id' => $this->table_html_id,
                         'hide_text_search' => true,
@@ -387,7 +388,7 @@ class WOOT_ColumnsFieldsOptions {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }
         $d = [];

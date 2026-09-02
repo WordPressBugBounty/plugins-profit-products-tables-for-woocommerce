@@ -4,17 +4,19 @@
   Plugin URI: https://products-tables.com/
   Description: WooCommerce plugin for displaying shop products in table format. Tables makes focus for your buyers on the things they want to get, nothing superfluous, just what the client wants, and full attention to what is offered!
   Requires at least: 5.0
-  Tested up to: 7.0
+  Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.2
+  Version: 2.1.3
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 10.9
+  WC tested up to: 11.1
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
+  License: GPLv2 or later
+  License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if (!defined('ABSPATH')) {
@@ -28,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.2');
+define('WOOT_VERSION', '2.1.3');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -58,7 +60,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//25-07-2026
+//02-09-2026
 class WOOT {
 
 	public $tables = null;
@@ -137,7 +139,8 @@ class WOOT {
 		$this->tables = new WOOT_Tables();
 		$this->columns = new WOOT_Columns();
 
-		load_plugin_textdomain('profit-products-tables-for-woocommerce', false, dirname(plugin_basename(__FILE__)) . '/languages');
+		// No load_plugin_textdomain() call: since WordPress 4.6 translations for a
+		// plugin hosted on wordpress.org are loaded automatically from the slug.
 
 		if (WOOT_HELPER::can_manage_data()) {
 
@@ -169,7 +172,8 @@ class WOOT {
 					//+++
 
 					$args['settings_table'] = $this->settings->draw_table();
-
+					
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 					echo WOOT_HELPER::render_html('views/options.php', apply_filters('woot_print_plugin_options', $args));
 				}, 'dashicons-woot', '57.1');
 			}, 99);
@@ -178,6 +182,7 @@ class WOOT {
 		//***
 
 		add_action('wp_print_footer_scripts', function () {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 			echo WOOT_HELPER::render_html('views/popup.php');
 		});
 	}
@@ -388,6 +393,7 @@ class WOOT {
 
 		if ($table_id > 0) {
 			if (!$this->tables->is_exists($table_id)) {
+				/* translators: %s: table ID */
 				return '<div class="woot-notice">' . sprintf(esc_html__('Table #%s does not exists!', 'profit-products-tables-for-woocommerce'), $table_id) . '</div>';
 			}
 		}
@@ -467,7 +473,8 @@ class WOOT {
 		}
 
 		$args = apply_filters('woot_review_shortcode_args', $args);
-
+		
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 		return WOOT_HELPER::render_html('views/table.php', array(
 				'table_html_id' => $table_html_id,
 				'table_id' => $table_id,
@@ -1585,7 +1592,7 @@ class WOOT {
 			die('0');
 		}
 
-		$what = WOOT_HELPER::sanitize_text(strip_tags($_REQUEST['what']));
+		$what = WOOT_HELPER::sanitize_text(wp_strip_all_tags($_REQUEST['what']));
 		///$what = sanitize_text_field($what);
 		$post_id = 0;
 
@@ -1616,6 +1623,7 @@ class WOOT {
 
 			case 'shortcodes_help':
 				//disabled
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 				$res = WOOT_HELPER::render_html('views/shortcodes_help.php');
 				break;
 
@@ -1723,6 +1731,7 @@ class WOOT {
 				break;
 		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $res is prepared markup returned by render_html()/apply_filters(); escaping it would break the popup rendering
 		die('<div class="woot-content-in-popup"><p>' . $res . '</div>');
 	}
 
@@ -1837,9 +1846,11 @@ class WOOT {
 		}
 
 		if (empty($view_path)) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 			return WOOT_HELPER::render_html('views/set.php', ['shortcodes' => $shortcodes]);
 		}
-
+		
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 		return WOOT_HELPER::render_html($view_path, ['shortcodes' => $shortcodes], FALSE);
 	}
 
@@ -1856,7 +1867,7 @@ class WOOT {
 			die('0');
 		}
 
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
 			die('0');
 		}
 		if (WOOT_HELPER::can_manage_data()) {
@@ -1942,54 +1953,56 @@ class WOOT {
 			$link = 'https://wordpress.org/support/plugin/profit-products-tables-for-woocommerce/reviews/#new-post';
 			$on = 'WordPress';
 			?>
-			<div class="notice notice-info" id="pn_<?php echo $slug ?>_ask_favour" style="position: relative;">
-					<button onclick="javascript: pn_<?php echo $slug ?>_dismiss_review(1);
-			                            void(0);" title="<?php _e('Later', 'profit-products-tables-for-woocommerce'); ?>" class="notice-dismiss"></button>
-				<div id="pn_<?php echo $slug ?>_review_suggestion">
-					<p><?php _e('Hi! Are you enjoying using WOOT - WooCommerce Active Products Tables?', 'profit-products-tables-for-woocommerce'); ?></p>
-					<p><a href="javascript: pn_<?php echo $slug ?>_set_review(1); void(0);"><?php _e('Yes, I love it', 'profit-products-tables-for-woocommerce'); ?></a> 🙂 | <a href="javascript: pn_<?php echo $slug ?>_set_review(0); void(0);"><?php _e('Not really...', 'profit-products-tables-for-woocommerce'); ?></a></p>
+			<div class="notice notice-info" id="pn_<?php echo esc_attr($slug) ?>_ask_favour" style="position: relative;">
+					<button onclick="javascript: pn_<?php echo esc_attr($slug) ?>_dismiss_review(1);
+			                            void(0);" title="<?php esc_html_e('Later', 'profit-products-tables-for-woocommerce'); ?>" class="notice-dismiss"></button>
+				<div id="pn_<?php echo esc_attr($slug) ?>_review_suggestion">
+					<p><?php esc_html_e('Hi! Are you enjoying using WOOT - WooCommerce Active Products Tables?', 'profit-products-tables-for-woocommerce'); ?></p>
+					<p><a href="javascript: pn_<?php echo esc_attr($slug) ?>_set_review(1); void(0);"><?php esc_html_e('Yes, I love it', 'profit-products-tables-for-woocommerce'); ?></a> 🙂 | <a href="javascript: pn_<?php echo esc_attr($slug) ?>_set_review(0); void(0);"><?php esc_html_e('Not really...', 'profit-products-tables-for-woocommerce'); ?></a></p>
 				</div>
 
-				<div id="pn_<?php echo $slug ?>_review_yes" style="display: none;">
-					<p><?php printf(__('That\'s awesome! Could you please do us a BIG favor and give it a 5-star rating on %s to help us spread the word and boost our motivation?', 'profit-products-tables-for-woocommerce'), $on) ?></p>
+				<div id="pn_<?php echo esc_attr($slug) ?>_review_yes" style="display: none;">
+					<p><?php
+					/* translators: %s: name of the site hosting the reviews, e.g. WordPress */
+					printf(esc_html__('That\'s awesome! Could you please do us a BIG favor and give it a 5-star rating on %s to help us spread the word and boost our motivation?', 'profit-products-tables-for-woocommerce'), esc_html($on)) ?></p>
 					<p style="font-weight: bold;">~ PluginUs.NET developers team</p>
 					<p>
-						<a href="<?php echo $link ?>" style="display: inline-block; margin-right: 10px;" onclick="pn_<?php echo $slug ?>_dismiss_review(2)" target="_blank"><?php esc_html_e('Okay, you deserve it', 'profit-products-tables-for-woocommerce'); ?></a>
-						<a href="javascript: pn_<?php echo $slug ?>_dismiss_review(1); void(0);" style="display: inline-block; margin-right: 10px;"><?php esc_html_e('Nope, maybe later', 'profit-products-tables-for-woocommerce'); ?></a>
-						<a href="javascript: pn_<?php echo $slug ?>_dismiss_review(2); void(0);"><?php esc_html_e('I already did', 'profit-products-tables-for-woocommerce'); ?></a>
+						<a href="<?php echo esc_url($link) ?>" style="display: inline-block; margin-right: 10px;" onclick="pn_<?php echo esc_attr($slug) ?>_dismiss_review(2)" target="_blank"><?php esc_html_e('Okay, you deserve it', 'profit-products-tables-for-woocommerce'); ?></a>
+						<a href="javascript: pn_<?php echo esc_attr($slug) ?>_dismiss_review(1); void(0);" style="display: inline-block; margin-right: 10px;"><?php esc_html_e('Nope, maybe later', 'profit-products-tables-for-woocommerce'); ?></a>
+						<a href="javascript: pn_<?php echo esc_attr($slug) ?>_dismiss_review(2); void(0);"><?php esc_html_e('I already did', 'profit-products-tables-for-woocommerce'); ?></a>
 					</p>
 				</div>
 
-				<div id="pn_<?php echo $slug ?>_review_no" style="display: none;">
-					<p><?php _e('We are sorry to hear you aren\'t enjoying WOOT. We would love a chance to improve it. Could you take a minute and let us know what we can do better?', 'profit-products-tables-for-woocommerce'); ?></p>
+				<div id="pn_<?php echo esc_attr($slug) ?>_review_no" style="display: none;">
+					<p><?php esc_html_e('We are sorry to hear you aren\'t enjoying WOOT. We would love a chance to improve it. Could you take a minute and let us know what we can do better?', 'profit-products-tables-for-woocommerce'); ?></p>
 					<p>
-						<a href="https://pluginus.net/contact-us/" onclick="pn_<?php echo $slug ?>_dismiss_review(2)" target="_blank"><?php esc_html_e('Give Feedback', 'profit-products-tables-for-woocommerce'); ?></a>&nbsp;
-						|&nbsp;<a href="javascript: pn_<?php echo $slug ?>_dismiss_review(2); void(0);"><?php esc_html_e('No thanks', 'profit-products-tables-for-woocommerce'); ?></a>
+						<a href="https://pluginus.net/contact-us/" onclick="pn_<?php echo esc_attr($slug) ?>_dismiss_review(2)" target="_blank"><?php esc_html_e('Give Feedback', 'profit-products-tables-for-woocommerce'); ?></a>&nbsp;
+						|&nbsp;<a href="javascript: pn_<?php echo esc_attr($slug) ?>_dismiss_review(2); void(0);"><?php esc_html_e('No thanks', 'profit-products-tables-for-woocommerce'); ?></a>
 					</p>
 				</div>
 
 
 				<script>
-					function pn_<?php echo $slug ?>_set_review(yes) {
-						document.getElementById('pn_<?php echo $slug ?>_review_suggestion').style.display = 'none';
+					function pn_<?php echo esc_attr($slug) ?>_set_review(yes) {
+						document.getElementById('pn_<?php echo esc_attr($slug) ?>_review_suggestion').style.display = 'none';
 						if (yes) {
-							document.getElementById('pn_<?php echo $slug ?>_review_yes').style.display = 'block';
+							document.getElementById('pn_<?php echo esc_attr($slug) ?>_review_yes').style.display = 'block';
 						} else {
-							document.getElementById('pn_<?php echo $slug ?>_review_no').style.display = 'block';
+							document.getElementById('pn_<?php echo esc_attr($slug) ?>_review_no').style.display = 'block';
 						}
 					}
 
-					function pn_<?php echo $slug ?>_dismiss_review(what = 1) {
+					function pn_<?php echo esc_attr($slug) ?>_dismiss_review(what = 1) {
 						//1 maybe later, 2 do not ask more
-						jQuery('#pn_<?php echo $slug ?>_ask_favour').fadeOut();
+						jQuery('#pn_<?php echo esc_attr($slug) ?>_ask_favour').fadeOut();
 
 						if (what === 1) {
 							jQuery.post(ajaxurl, {
-								action: '<?php echo $slug ?>_later_rate_alert'
+								action: '<?php echo esc_attr($slug) ?>_later_rate_alert'
 							});
 						} else {
 							jQuery.post(ajaxurl, {
-								action: '<?php echo $slug ?>_dismiss_rate_alert'
+								action: '<?php echo esc_attr($slug) ?>_dismiss_rate_alert'
 							});
 						}
 
@@ -2027,13 +2040,16 @@ add_action('wp_loaded', function () {
 	$get_data = WOOT_HELPER::sanitize_array($_GET);
 	if (isset($get_data['woot-remote-page']) AND isset($get_data['anchor'])) {
 		?>
-		var woot_remote_src = "<?php esc_attr_e(home_url($get_data['woot-remote-page'])) ?>";
-		var woot_remote_width = '<?php esc_attr_e(isset($get_data['width']) ? urldecode($get_data['width']) : '100%') ?>';
-		var woot_remote_height = <?php esc_attr_e(isset($get_data['height']) ? intval($get_data['height']) : 500) ?>;
-		var woot_remote_anchor = "#<?php esc_attr_e(strip_tags(strval($get_data['anchor']))) ?>";
+		var woot_remote_src = "<?php echo esc_url(home_url($get_data['woot-remote-page'])) ?>";
+		var woot_remote_width = '<?php echo esc_js(isset($get_data['width']) ? urldecode($get_data['width']) : '100%') ?>';
+		var woot_remote_height = <?php echo intval(isset($get_data['height']) ? intval($get_data['height']) : 500) ?>;
+		var woot_remote_anchor = "#<?php echo esc_js(wp_strip_all_tags(strval($get_data['anchor']))) ?>";
 		<?php
 		echo 'var woot_link_get_data=' . json_encode($get_data) . ';';
-		die(WOOT_HELPER::render_html('assets/js/remote.js'));
+		die(
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
+			WOOT_HELPER::render_html('assets/js/remote.js')
+		);
 	}
 });
 
@@ -2147,6 +2163,7 @@ add_shortcode('woot_gallery', function ($args) {
 					'is_shortcode' => true
 				];
 
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 				return WOOT_HELPER::render_html('views/gallery.php', apply_filters('woot_print_plugin_options', $data));
 			} else {
 				return '';
@@ -2175,7 +2192,7 @@ add_shortcode('woot_single_btn', function ($args) {
 	if ($post_id > 0) {
 		woot()->include_assets();
 
-		$title = esc_html__('Product', 'woot-products-tables') . ': ';
+		$title = esc_html__('Product', 'profit-products-tables-for-woocommerce') . ': ';
 		$title .= addslashes(get_post_field('post_title', $post_id));
 		$unique_id = uniqid('gp');
 

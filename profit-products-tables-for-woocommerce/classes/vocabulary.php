@@ -122,7 +122,8 @@ class WOOT_Vocabulary {
      */
     public function draw_table() {
         $table_html_id = 'woot-vocabulary-table';
-
+		
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html() and draw_table_data()
         echo WOOT_HELPER::render_html('views/table.php', array(
             'table_html_id' => $table_html_id,
             'hide_text_search' => false,
@@ -139,6 +140,7 @@ class WOOT_Vocabulary {
             'per_page' => 10,
             'table_data' => array_values(self::$translations)
                 ], $table_html_id, 'woot-vocabulary-json-data');
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     /**
@@ -209,7 +211,7 @@ class WOOT_Vocabulary {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }		
         $post_id = intval($_REQUEST['post_id']);
@@ -253,7 +255,7 @@ class WOOT_Vocabulary {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }		
         $this->db->insert($this->db_table, [
@@ -275,7 +277,7 @@ class WOOT_Vocabulary {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }		
         $this->db->delete($this->db_table, ['id' => intval($_REQUEST['id'])]);

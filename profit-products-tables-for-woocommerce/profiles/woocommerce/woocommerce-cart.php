@@ -122,6 +122,7 @@ final class WOOT_Cart {
 
         add_shortcode('woot_cart', function($args) {
             woot()->include_assets();
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
             return WOOT_HELPER::render_html('profiles/woocommerce/views/woot_cart.php', $args);
         });
 
@@ -179,6 +180,7 @@ final class WOOT_Cart {
 
     //ajax
     public function get_cart_info() {
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- __get_cart_info() returns prepared cart markup; escaping it would break the rendering
         die($this->__get_cart_info());
     }
 
@@ -265,6 +267,7 @@ final class WOOT_Cart {
                 }
             }
 
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- __get_cart_info() returns prepared cart markup; escaping it would break the rendering
             die($this->__get_cart_info());
         }
 
@@ -279,6 +282,7 @@ final class WOOT_Cart {
         if (!empty($products_ids)) {
             global $woocommerce;
             $woocommerce->cart->empty_cart();
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- __get_cart_info() returns prepared cart markup; escaping it would break the rendering
             die($this->__get_cart_info());
         }
 
@@ -303,6 +307,7 @@ final class WOOT_Cart {
                 }
             }
 
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- __get_cart_info() returns prepared cart markup; escaping it would break the rendering
             die($this->__get_cart_info());
         }
 
@@ -333,6 +338,7 @@ final class WOOT_Cart {
             }
         }
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- __get_cart_info() returns prepared cart markup; escaping it would break the rendering
         die($this->__get_cart_info());
     }
 

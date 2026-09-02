@@ -53,6 +53,7 @@ class WOOT_Settings {
             });
 
             add_action('wp_ajax_woot_get_table_custom_css', function() {
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- returns the raw stored CSS verbatim for the admin CSS editor; escaping it would corrupt the stylesheet
                 die(self::get_table_custom_css(intval($_REQUEST['table_id'])));
             });
 
@@ -289,7 +290,7 @@ class WOOT_Settings {
             die('0');
         }
 		
-		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce($_REQUEST['settings_nonce'], 'woot_settings_nonce')) {
+		if (!isset($_REQUEST['settings_nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_REQUEST['settings_nonce'])), 'woot_settings_nonce')) {
             die('0');
         }	
         if (is_int($_REQUEST['value'])) {
