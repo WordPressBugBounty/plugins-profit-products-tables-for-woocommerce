@@ -235,7 +235,9 @@ final class WOOT_Favourites {
 	 */
 	public function get($table_html_id, $post_type = 'product', $skin = '', $is_shortcode = false, $args = []) {
 		$table_data = [];
-		$posts_ids = $this->get_user_data(isset($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0);
+
+		// Always the caller's own list, never another user's
+		$posts_ids = $this->get_user_data();
 
 		//***
 		//woot_favourites_profile_extend
@@ -254,7 +256,7 @@ final class WOOT_Favourites {
 
 		if (!empty($posts_ids)) {
 			foreach ($posts_ids as $post_id) {
-				if ($post_type === get_post_field('post_type', $post_id)) {
+				if ($post_type === get_post_field('post_type', $post_id) AND woot_can_read_post($post_id)) {
 					$tmp = [];
 					$tmp['pid'] = $post_id;
 					foreach ($profile as $field_key => $field) {
@@ -333,7 +335,12 @@ final class WOOT_Favourites {
 	 */
 	public function add() {
 		$table_data = $this->get_user_data();
-		$table_data[] = intval($_REQUEST['post_id']);
+		$post_id = isset($_REQUEST['post_id']) ? intval($_REQUEST['post_id']) : 0;
+		// Only posts the visitor may see can be stored
+		if (woot_can_read_post($post_id)) {
+			$table_data[] = $post_id;
+		}
+
 		$table_data = array_unique($table_data);
 
 		update_user_meta(get_current_user_id(), $this->storage_key, $table_data);

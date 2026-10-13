@@ -44,7 +44,7 @@ final class WOOT_WooCommerceVariations extends WOOT_WooCommerceUniversal {
             $args['post_type'] = 'product_variation';
             $product = WOOT_WooCommerce::get_product(intval($filter_data['product_id']));
 
-            if ($product AND method_exists($product, 'get_children')) {
+            if ($product AND woot_can_read_post($product->get_id()) AND method_exists($product, 'get_children')) {
                 if (!$args['post__in'] = $product->get_children()) {
                     $args['post__in'] = [-1];
                 }

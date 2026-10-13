@@ -7,13 +7,13 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.3
+  Version: 2.1.4
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 11.1
+  WC tested up to: 11.2
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
   License: GPLv2 or later
   License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.3');
+define('WOOT_VERSION', '2.1.4');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -60,7 +60,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//02-09-2026
+//12-10-2026
 class WOOT {
 
 	public $tables = null;
@@ -172,7 +172,7 @@ class WOOT {
 					//+++
 
 					$args['settings_table'] = $this->settings->draw_table();
-					
+
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 					echo WOOT_HELPER::render_html('views/options.php', apply_filters('woot_print_plugin_options', $args));
 				}, 'dashicons-woot', '57.1');
@@ -473,7 +473,7 @@ class WOOT {
 		}
 
 		$args = apply_filters('woot_review_shortcode_args', $args);
-		
+
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 		return WOOT_HELPER::render_html('views/table.php', array(
 				'table_html_id' => $table_html_id,
@@ -1161,13 +1161,28 @@ class WOOT {
 			'posts_per_page' => $posts_per_page,
 			'orderby' => $orderby,
 			'order' => $order,
-			'paged' => $current_page
+			'paged' => $current_page,
+			'perm' => 'readable'
 		);
 
 		//***
 
 		if (isset($requested_data['table_id'])) {
 			$table_id = intval($requested_data['table_id']);
+		}
+
+
+		// Non-public post types (coupons, orders, templates) are never served to visitors,
+		// unless the table itself was built for that post type by the admin
+		if (!current_user_can('edit_posts') && !is_post_type_viewable($post_type)) {
+			$table_data = ($table_id > 0) ? $this->tables->get($table_id) : [];
+			$table_post_type = (is_array($table_data) && isset($table_data['post_type'])) ? $table_data['post_type'] : '';
+			if ($post_type !== $table_post_type) {
+				if ($return) {
+					return ['rows' => [], 'count' => 0];
+				}
+				die(json_encode(['rows' => [], 'count' => 0]));
+			}
 		}
 
 
@@ -1531,7 +1546,16 @@ class WOOT {
 			}
 		}
 
-		$query = new WP_Query(apply_filters('woot_wp_query_args', $args, $table_id));
+		$args = apply_filters('woot_wp_query_args', $args, $table_id);
+
+		// Visitors without read_private_posts only ever get published content,
+		// whatever status the request, the shortcode or the table settings ask for
+		$args['perm'] = 'readable';
+		if (!current_user_can('read_private_posts')) {
+			$args['post_status'] = 'publish';
+		}
+
+		$query = new WP_Query($args);
 
 		if ($limit_found_posts > 0) {
 			//for bestsellers and newest predefinitions
@@ -1613,12 +1637,12 @@ class WOOT {
 		switch ($what) {
 			case 'excerpt':
 				//disabled
-				$res = apply_filters('woot_filter_smth_excerpt', apply_filters('the_content', get_the_excerpt($post_id)), $what);
+				$res = woot_can_read_post($post_id) ? apply_filters('woot_filter_smth_excerpt', apply_filters('the_content', get_the_excerpt($post_id)), $what) : '';
 				break;
 
 			case 'content':
 				//disabled
-				$res = apply_filters('woot_filter_smth_content', apply_filters('the_content', get_the_content(null, false, $post_id)), $what);
+				$res = woot_can_read_post($post_id) ? apply_filters('woot_filter_smth_content', apply_filters('the_content', get_the_content(null, false, $post_id)), $what) : '';
 				break;
 
 			case 'shortcodes_help':
@@ -1849,7 +1873,7 @@ class WOOT {
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 			return WOOT_HELPER::render_html('views/set.php', ['shortcodes' => $shortcodes]);
 		}
-		
+
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 		return WOOT_HELPER::render_html($view_path, ['shortcodes' => $shortcodes], FALSE);
 	}
@@ -1963,8 +1987,9 @@ class WOOT {
 
 				<div id="pn_<?php echo esc_attr($slug) ?>_review_yes" style="display: none;">
 					<p><?php
-					/* translators: %s: name of the site hosting the reviews, e.g. WordPress */
-					printf(esc_html__('That\'s awesome! Could you please do us a BIG favor and give it a 5-star rating on %s to help us spread the word and boost our motivation?', 'profit-products-tables-for-woocommerce'), esc_html($on)) ?></p>
+						/* translators: %s: name of the site hosting the reviews, e.g. WordPress */
+						printf(esc_html__('That\'s awesome! Could you please do us a BIG favor and give it a 5-star rating on %s to help us spread the word and boost our motivation?', 'profit-products-tables-for-woocommerce'), esc_html($on))
+						?></p>
 					<p style="font-weight: bold;">~ PluginUs.NET developers team</p>
 					<p>
 						<a href="<?php echo esc_url($link) ?>" style="display: inline-block; margin-right: 10px;" onclick="pn_<?php echo esc_attr($slug) ?>_dismiss_review(2)" target="_blank"><?php esc_html_e('Okay, you deserve it', 'profit-products-tables-for-woocommerce'); ?></a>
@@ -2127,6 +2152,10 @@ add_shortcode('woot_gallery', function ($args) {
 		$post_id = intval($args['id']);
 	}
 
+	if ($post_id > 0 && !woot_can_read_post($post_id)) {
+		return '';
+	}
+
 	if (!$post_id) {
 		global $post;
 		$post_id = $post->ID;
@@ -2187,6 +2216,10 @@ add_shortcode('woot_single_btn', function ($args) {
 		if (is_object($post)) {
 			$post_id = $post->ID;
 		}
+	}
+	
+	if ($post_id > 0 && !woot_can_read_post($post_id)) {
+		return '';
 	}
 
 	if ($post_id > 0) {

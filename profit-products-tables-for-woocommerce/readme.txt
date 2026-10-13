@@ -5,7 +5,7 @@ Tags: woocommerce,product table,woof,husky,table
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -167,6 +167,9 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 
 == Changelog ==
+
+= 2.1.4 =
+* Security update. Thanks to hooman and the Patchstack team for the responsible disclosure.
 
 = 2.1.3 =
 * security release

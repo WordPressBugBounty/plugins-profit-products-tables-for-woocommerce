@@ -460,7 +460,9 @@ final class WOOT_WooCommerce {
 			$post_statuses = woot()->columns->options->get($table_id, 'post_statuses', 'publish');
 		}
 
-		if (isset($shortcode_args['post_status'])) {
+		// Shortcode arguments can arrive straight from an AJAX request,
+		// so a status from them is honoured only for users allowed to see non-public content
+		if (isset($shortcode_args['post_status']) && current_user_can('read_private_posts')) {
 			$post_statuses = $shortcode_args['post_status'];
 		}
 
@@ -591,6 +593,9 @@ final class WOOT_WooCommerce {
 				'filter_view' => 'textinput',
 				'filter_options' => ['placeholder', 'minlength', 'width'],
 				'action' => function ($post_id) use ($table_id, $shortcode_args) {
+					if (!woot_can_read_post($post_id)) {
+						return '';
+					}
 					$product = self::get_product($post_id);
 
 					if (is_object($product)) {
@@ -711,6 +716,9 @@ final class WOOT_WooCommerce {
 				'filter_view' => 'textinput',
 				'filter_options' => ['placeholder', 'minlength', 'width'],
 				'action' => function ($post_id) {
+					if (!woot_can_read_post($post_id)) {
+						return '';
+					}
 					return WOOT_HELPER::wrap_text_to_container(wp_strip_all_tags(apply_filters('the_content', get_the_excerpt($post_id)), self::$allowed_tags), get_post_field('post_title', $post_id));
 				},
 				'get_filter_query_args' => function ($args, $value) {
@@ -740,6 +748,9 @@ final class WOOT_WooCommerce {
 				'filter_view' => 'textinput',
 				'filter_options' => ['placeholder', 'minlength', 'width'],
 				'action' => function ($post_id) {
+					if (!woot_can_read_post($post_id)) {
+						return '';
+					}
 					return WOOT_HELPER::wrap_text_to_container(wp_strip_all_tags(apply_filters('the_content', get_the_content(null, false, $post_id)), self::$allowed_tags), get_post_field('post_title', $post_id));
 				},
 				'get_filter_query_args' => function ($args, $value) {
@@ -766,6 +777,9 @@ final class WOOT_WooCommerce {
 				'title' => esc_html__('Single', 'profit-products-tables-for-woocommerce'),
 				'options' => ['css-background', 'css-media-hide'],
 				'action' => function ($post_id) use ($table_id, $shortcode_args) {
+					if (!woot_can_read_post($post_id)) {
+						return '';
+					}
 					$title = esc_html__('Single product data', 'profit-products-tables-for-woocommerce') . ': ';
 					$title .= addslashes(get_post_field('post_title', $post_id));
 					$unique_id = uniqid('gp');
@@ -829,9 +843,14 @@ final class WOOT_WooCommerce {
 
 					if (!empty($res)) {
 						foreach ($res as $r) {
+							// products can keep the id of a deleted user or 0 after an import
+							$user = get_user_by('id', $r['post_author']);
+							if (!$user) {
+								continue;
+							}
 							$options[] = [
 								'id' => $r['post_author'],
-								'title' => get_user_by('id', $r['post_author'])->display_name
+								'title' => $user->display_name
 							];
 						}
 					}

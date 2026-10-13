@@ -123,10 +123,11 @@ final class WOOT_WooCommerceReviews {
      * @return array table data
      */
     private function get_table_data($product_id) {
-        if ($product_id > 0) {
+        if ($product_id > 0 AND woot_can_read_post($product_id)) {
             $query = new WP_Comment_Query([
                 'post_id' => $product_id,
                 'comment_type' => 'review',
+                'status' => 'approve',
                 'orderby' => 'comment_date',
                 'order' => 'desc'
             ]);

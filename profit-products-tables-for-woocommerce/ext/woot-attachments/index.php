@@ -119,8 +119,12 @@ final class WOOT_Attachments {
 		//***
 		//for media in popup
 		add_filter('woot_show_front_attachments_in_popup', function ($what, $post_id) {
+			//public popup: only posts the visitor may see
+			if (!woot_can_read_post($post_id)) {
+				return '';
+			}
 			$table_html_id = 'woot_attachments_in_popup';
-			
+
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 			$res = WOOT_HELPER::render_html('views/table.php', array(
 				'table_html_id' => $table_html_id,
@@ -419,6 +423,11 @@ final class WOOT_Attachments {
 	 * @return array
 	 */
 	private function prepare_table_data($post_id, $profile_hook, $table_id = 0, $allow_group = -1, $columns = []) {
+
+		if (!woot_can_read_post($post_id)) {
+			return [];
+		}
+
 		$table_data = [];
 		$attachments = $this->get_data($post_id);
 		$allow_group = intval($allow_group);
@@ -553,7 +562,12 @@ final class WOOT_Attachments {
 	 */
 	public function get_front($post_id, $table_id = 0, $table_html_id = 0, $group = -1, $columns = [], $args = []) {
 
+		if (!woot_can_read_post($post_id)) {
+			return '';
+		}
+
 		$skin = '';
+
 		if (isset($args['skin'])) {
 			$skin = $args['skin'];
 		}
@@ -741,7 +755,7 @@ final class WOOT_Attachments {
 				}
 
 				$data = $this->get_data($post_id);
-				
+
 				$ids = isset($_REQUEST['value']) ? explode(',', sanitize_text_field(wp_unslash($_REQUEST['value']))) : array();
 				if (!empty($ids)) {
 					foreach ($ids as $pos => $att_id) {
@@ -794,6 +808,11 @@ final class WOOT_Attachments {
 	 * @return array
 	 */
 	public function draw_cell($product_id, $table_id, $shortcode_args = []) {
+
+		if (!woot_can_read_post($product_id)) {
+			return '';
+		}
+
 		$attachments = $this->get_data($product_id);
 		$res = '';
 		$options = [];
@@ -1070,7 +1089,7 @@ final class WOOT_Attachments {
 						$_REQUEST['attachments_shortcode_columns'] = $columns = explode(',', $args['columns']);
 						add_filter("{$this->action}_in_popup", [$this, '__front_columns_managing']);
 					}
-					
+
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 					$res = WOOT_HELPER::render_html('views/table.php', array(
 							'table_html_id' => $table_html_id,
@@ -1235,7 +1254,6 @@ final class WOOT_Attachments {
 		}
 
 		//***
-
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html() and draw_table_data()
 		die(
 			WOOT_HELPER::render_html('views/table.php', array(

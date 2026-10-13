@@ -163,6 +163,9 @@ final class WOOT_Compare {
 				$posts_ids = $this->get_user_data();
 			}
 
+			// Never build columns for posts the visitor is not allowed to see
+			$posts_ids = array_values(array_filter(array_map('intval', (array) $posts_ids), 'woot_can_read_post'));
+
 			$columns = [
 				'compare_fields' => [
 					'title' => esc_html__('Fields', 'profit-products-tables-for-woocommerce')
@@ -219,6 +222,11 @@ final class WOOT_Compare {
 				if (!$value) {
 					unset($posts_ids[$key]);
 				}
+			}
+
+			$posts_ids = array_values(array_filter(array_map('intval', (array) $posts_ids), 'woot_can_read_post'));
+			if (isset($args['ids']) AND !empty($args['ids'])) {
+				$this->ids_from_shortcode = $posts_ids;
 			}
 		}
 
@@ -349,7 +357,12 @@ final class WOOT_Compare {
 	 */
 	public function add() {
 		$table_data = $this->get_user_data();
-		$table_data[] = intval($_REQUEST['post_id']);
+		$post_id = isset($_REQUEST['post_id']) ? intval($_REQUEST['post_id']) : 0;
+		// Only posts the visitor may see can be stored
+		if (woot_can_read_post($post_id)) {
+			$table_data[] = $post_id;
+		}
+		
 		$table_data = array_unique($table_data);
 
 		update_user_meta(get_current_user_id(), $this->storage_key, $table_data);

@@ -48,6 +48,7 @@ final class WOOT_HELPER {
 		return $item;
 	}
 
+
 	/**
 	 * Draw <select> item
 	 *
@@ -498,4 +499,45 @@ add_filter('woot_get_calendar_names', function ($names) {
 		]
 	];
 });
+
+	
+	
+/**
+ * Whether the current visitor may see this post's data in a table.
+ * Published posts of front-end post types are open to everyone.
+ * Non-public post types (coupons, orders, templates) need edit rights.
+ * A variation is visible only when its parent product is.
+ *
+ * @param int $post_id
+ * @return bool
+ */
+function woot_can_read_post($post_id) {
+	$post_id = intval($post_id);
+	if ($post_id <= 0) {
+		return false;
+	}
+
+	$post_type = get_post_type($post_id);
+	if (!$post_type) {
+		return false;
+	}
+
+	if ($post_type === 'product_variation') {
+		$parent_id = wp_get_post_parent_id($post_id);
+		if (!$parent_id || !woot_can_read_post($parent_id)) {
+			return false;
+		}
+		return get_post_status($post_id) === 'publish' || current_user_can('edit_post', $post_id);
+	}
+
+	if (!is_post_type_viewable($post_type)) {
+		return current_user_can('edit_post', $post_id);
+	}
+
+	if (get_post_status($post_id) === 'publish') {
+		return true;
+	}
+
+	return current_user_can('read_post', $post_id);
+}
 

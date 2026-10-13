@@ -87,7 +87,13 @@ final class WOOT_WooCommerceSingle {
 
             $args['table_view'] = 'separated';
 
-            return $this->draw_table(intval($what['product_id']), $table_html_id, $args);
+            $product_id = isset($what['product_id']) ? intval($what['product_id']) : 0;
+            //public popup: only posts the visitor may see
+            if (!woot_can_read_post($product_id)) {
+                return '';
+            }
+
+            return $this->draw_table($product_id, $table_html_id, $args);
         }, 10, 2);
 
         //***
@@ -119,7 +125,7 @@ final class WOOT_WooCommerceSingle {
 
             //***
 
-            if ($product_id > 0 AND get_post_field('post_type', $product_id) === 'product') {
+            if ($product_id > 0 AND get_post_field('post_type', $product_id) === 'product' AND woot_can_read_post($product_id)) {
                 return $this->draw_table($product_id, uniqid('t'), $args);
             } else {
                 /* translators: %s: product ID */
