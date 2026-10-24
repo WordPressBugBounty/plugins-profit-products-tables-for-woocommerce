@@ -167,8 +167,19 @@ class WOOT_Columns {
 	 * @return int
 	 */
 	public function get_count($table_id, $args = [], $where = []) {
-		$args['fields'] = 'COUNT(*) as count';
-		return $this->get_table_columns($table_id, $args, $where)[0]['count'];
+		//own query: get_table_columns() keeps only plain column names in fields, so COUNT(*) cannot pass through it
+		$and_where = '';
+		if (!empty($where)) {
+			foreach ($where as $key => $value) {
+				$key = preg_replace('/[^a-zA-Z0-9_]/', '', (string) $key);
+				if ($key === '') {
+					continue;
+				}
+				$and_where .= $this->db->prepare(" AND {$key}=%s", $value);
+			}
+		}
+
+		return intval($this->db->get_var($this->db->prepare("SELECT COUNT(*) FROM {$this->db_table} WHERE table_id=%d", absint($table_id)) . $and_where));
 	}
 
 	/**
@@ -294,7 +305,7 @@ class WOOT_Columns {
 						case 'actions':
 
 							/* translators: 1: table title, 2: field title */
-							$edit_popup_title = sprintf(esc_html__('Table: %1$s. Field: %2$s', 'profit-products-tables-for-woocommerce'), addslashes(woot()->tables->get($table_id)['title']), $c['title']);
+							$edit_popup_title = sprintf(esc_html__('Table: %1$s. Field: %2$s', 'profit-products-tables-for-woocommerce'), addslashes(strval(WOOT_HELPER::array_value(woot()->tables->get($table_id), 'title', ''))), $c['title']);
 
 							//***                 
 

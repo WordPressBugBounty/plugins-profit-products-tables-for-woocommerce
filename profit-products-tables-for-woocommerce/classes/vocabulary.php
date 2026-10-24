@@ -295,6 +295,10 @@ class WOOT_Vocabulary {
     public static function get($title_key, $lang = '') {
         $res = $title_key;
 
+        if (!is_string($title_key) AND !is_int($title_key)) {
+            return $res;
+        }
+
         if (isset(self::$translations[$title_key]) AND!empty(self::$translations[$title_key])) {
             if (empty($lang)) {
                 $lang = apply_filters('woot_current_lang', get_locale());

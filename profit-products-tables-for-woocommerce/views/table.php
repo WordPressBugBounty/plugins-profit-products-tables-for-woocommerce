@@ -69,7 +69,8 @@ if (!isset($skin)) {
         <input type="search" data-key="<?php echo esc_attr($search_data_key) ?>" value="" minlength="<?php echo esc_attr($text_search_min_symbols) ?>" class="woot-text-search" <?php if ($hide_text_search): ?>style="display: none;"<?php endif; ?> placeholder="<?php echo esc_attr($placeholder) ?>" />
 
         <?php if (isset($filter) AND!empty($filter)): ?>
-            <div class="woot-filter-data" style="display: none;"><?php echo esc_html($filter) ?></div>
+            <?php //wrapped into <code> so text filters of themes (wptexturize in block themes) do not change it ?>
+            <div class="woot-filter-data" style="display: none;"><code><?php echo esc_html($filter) ?></code></div>
 
             <?php
             if ($has_filter):
@@ -97,7 +98,7 @@ if (!isset($skin)) {
                 $first_option = [0 => esc_html__('Sorted by table', 'profit-products-tables-for-woocommerce')];
                 $orderby_select = array_merge($first_option, $orderby_select);
                 ?>
-                <div class="woot-order-select" style="display: none;"><?php echo json_encode($orderby_select) ?></div>
+                <div class="woot-order-select" style="display: none;"><code><?php echo json_encode($orderby_select, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP) ?></code></div>
             <?php endif; ?>
         </div>  
 

@@ -843,14 +843,9 @@ final class WOOT_WooCommerce {
 
 					if (!empty($res)) {
 						foreach ($res as $r) {
-							// products can keep the id of a deleted user or 0 after an import
-							$user = get_user_by('id', $r['post_author']);
-							if (!$user) {
-								continue;
-							}
 							$options[] = [
 								'id' => $r['post_author'],
-								'title' => $user->display_name
+								'title' => get_user_by('id', $r['post_author'])->display_name
 							];
 						}
 					}
@@ -1777,7 +1772,7 @@ final class WOOT_WooCommerce {
 
 								if ($table_id > 0) {
 									if ($tmp = woot()->columns->get_by_field_key($table_id, $t->name)) {
-										$tmp = json_decode($tmp['options'], true);
+										$tmp = is_string($tmp['options']) ? json_decode($tmp['options'], true) : null; //options are empty (NULL) until the column options are saved
 										if (isset($tmp['display_as_text'])) {
 											$display_as_text = boolval(intval($tmp['display_as_text']));
 										}

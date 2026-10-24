@@ -184,7 +184,7 @@ final class WOOT_Favourites {
 					if (isset($columns[$key])) {
 						$selected_columns[$key] = $columns[$key];
 					} else {
-						$selected_columns[$key] = $woo_profile[$key];
+						$selected_columns[$key] = isset($woo_profile[$key]) ? $woo_profile[$key] : null; //key not known by the profile: empty column, as before
 					}
 				}
 			}

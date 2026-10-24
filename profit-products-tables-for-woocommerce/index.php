@@ -7,7 +7,7 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.4
+  Version: 2.1.5
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.4');
+define('WOOT_VERSION', '2.1.5');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -60,7 +60,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//12-10-2026
+//24-10-2026
 class WOOT {
 
 	public $tables = null;
@@ -1031,7 +1031,8 @@ class WOOT {
 
 
 		if ($as_script) {
-			return "<div class='{$as_script}' data-table-id='" . esc_attr($table_html_id) . "' style='display: none;'>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG) . '</div>';
+			//JSON is wrapped into <code> so text filters of themes (wptexturize in block themes) do not change it, JS reads textContent of the div
+			return "<div class='{$as_script}' data-table-id='" . esc_attr($table_html_id) . "' style='display: none;'><code>" . json_encode($js_script_data, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP) . '</code></div>';
 		}
 
 
@@ -1809,7 +1810,7 @@ class WOOT {
 	 * @return array one field(column) options
 	 */
 	public function get_field_options($table_id, $field_key) {
-		$options = $this->columns->get_by_field_key($table_id, $field_key)['options'];
+		$options = WOOT_HELPER::array_value($this->columns->get_by_field_key($table_id, $field_key), 'options');
 
 		if (!empty($options)) {
 			$options = json_decode($options, true);

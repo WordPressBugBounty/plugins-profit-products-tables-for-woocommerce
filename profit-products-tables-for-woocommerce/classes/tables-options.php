@@ -556,7 +556,7 @@ class WOOT_TablesOptions {
 
         //***
 
-        if ($options = woot()->tables->get($table_id)['options']) {
+        if ($options = WOOT_HELPER::array_value(woot()->tables->get($table_id), 'options')) {
             $options = json_decode($options, true);
         } else {
             $options = [];

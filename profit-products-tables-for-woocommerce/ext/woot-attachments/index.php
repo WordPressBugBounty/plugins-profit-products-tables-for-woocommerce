@@ -444,7 +444,7 @@ final class WOOT_Attachments {
 		$profile = apply_filters($profile_hook, NULL);
 
 		if ($table_id > 0) {
-			$options = woot()->columns->get_by_field_key($table_id, 'attachments')['options'];
+			$options = WOOT_HELPER::array_value(woot()->columns->get_by_field_key($table_id, 'attachments'), 'options');
 			if (!empty($options)) {
 				$options = json_decode($options, true);
 			}

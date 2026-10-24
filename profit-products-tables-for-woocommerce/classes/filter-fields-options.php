@@ -378,7 +378,7 @@ class WOOT_FilterFieldsOptions {
      * @return void
      */
     private function update($table_id, $field_key, $value) {
-        $options = woot()->tables->get($table_id)['filter_options'];
+        $options = WOOT_HELPER::array_value(woot()->tables->get($table_id), 'filter_options');
 
         if ($options) {
             $options = json_decode($options, true);

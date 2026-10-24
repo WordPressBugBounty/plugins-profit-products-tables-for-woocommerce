@@ -25,7 +25,7 @@ add_filter("woot_profile_extend", function($profile, $action, $shortcode_args) {
 
                     add_action('woot_filter_provider_woof', function ($args, $filter_data) {
                         if (!is_array($filter_data)) {
-                            $filter_data = json_decode($filter_data, true);
+                            $filter_data = is_string($filter_data) ? json_decode($filter_data, true) : null; //no filter data yet
                         }
 
                         if (!empty($filter_data) AND is_array($filter_data)) {
@@ -131,7 +131,7 @@ add_filter("woot_profile_extend", function($profile, $action, $shortcode_args) {
                 add_action('woot_filter_provider_mdtf', function ($args, $filter_data) {
 
                     if (!is_array($filter_data)) {
-                        $filter_data = json_decode($filter_data, true);
+                        $filter_data = is_string($filter_data) ? json_decode($filter_data, true) : null; //no filter data yet
                     }
 
                     if (isset($filter_data['post_title']) AND!empty($filter_data['post_title'])) {

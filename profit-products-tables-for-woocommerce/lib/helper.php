@@ -288,6 +288,19 @@ final class WOOT_HELPER {
 	}
 
 	/**
+	 * Value of an array key, or $default if the value is not an array or has no such key
+	 *
+	 * @since 2.1.4
+	 * @param mixed $array
+	 * @param string|int $key
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public static function array_value($array, $key, $default = null) {
+		return (is_array($array) AND array_key_exists($key, $array)) ? $array[$key] : $default;
+	}
+
+	/**
 	 * String sanitizer
 	 *
 	 * @since 1.0.0
@@ -422,7 +435,7 @@ function woot_profiles_data_processor($table_id, $shortcode_args, $current_actio
 	$post_statuses = 'publish';
 
 	if ($table_id > 0) {
-		$post_type = woot()->tables->get($table_id)['post_type'];
+		$post_type = WOOT_HELPER::array_value(woot()->tables->get($table_id), 'post_type');
 		$post_statuses = woot()->columns->options->get($table_id, 'post_statuses', 'publish');
 	} else {
 //for shortcodes

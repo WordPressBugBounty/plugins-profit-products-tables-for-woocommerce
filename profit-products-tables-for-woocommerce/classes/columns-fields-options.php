@@ -454,7 +454,7 @@ class WOOT_ColumnsFieldsOptions {
 
         if (!isset($options[$table_id])) {
 
-            $options[$table_id] = woot()->columns->get_by_field_key($table_id, $field_key)['options'];
+            $options[$table_id] = WOOT_HELPER::array_value(woot()->columns->get_by_field_key($table_id, $field_key), 'options');
 
             if (!$options[$table_id]) {
                 $options[$table_id] = [];
