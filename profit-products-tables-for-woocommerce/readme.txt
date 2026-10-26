@@ -1,7 +1,7 @@
 === Active Woot Products Tables for WooCommerce. 100% FREE  ===
 Contributors: RealMag777
 Donate link: https://www.paypal.com/donate/?hosted_button_id=9SU55EFFWLTV2
-Tags: woocommerce,product table,woof,husky,table
+Tags: woocommerce, product table, woocommerce product table, product list, order form
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
