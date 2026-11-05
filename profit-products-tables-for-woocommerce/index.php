@@ -7,7 +7,7 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.5
+  Version: 2.1.6
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.5');
+define('WOOT_VERSION', '2.1.6');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -49,10 +49,22 @@ include_once WOOT_PATH . 'classes/tables.php';
 //include WOOT_PATH . 'profiles/default.php';
 include_once WOOT_PATH . 'profiles/woocommerce/woocommerce.php';
 
-// load bundled always-on extensions
-foreach (glob(WOOT_PATH . 'ext/*/index.php') as $woot_ext) {
-	include_once $woot_ext;
-}
+// Load bundled always-on extensions after all plugins are loaded, and skip any extension
+// whose class was already declared by an older separately installed copy (avoids "Cannot declare class")
+add_action('plugins_loaded', function () {
+	$woot_ext_classes = [
+		'woot-attachments' => 'WOOT_Attachments',
+		'woot-compare' => 'WOOT_Compare',
+		'woot-favourites' => 'WOOT_Favourites',
+	];
+	foreach (glob(WOOT_PATH . 'ext/*/index.php') as $woot_ext) {
+		$woot_ext_slug = basename(dirname($woot_ext));
+		if (isset($woot_ext_classes[$woot_ext_slug]) && class_exists($woot_ext_classes[$woot_ext_slug], false)) {
+			continue;
+		}
+		include_once $woot_ext;
+	}
+}, 1);
 
 add_action('before_woocommerce_init', function () {
 	if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
@@ -60,7 +72,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//24-10-2026
+//04-11-2026
 class WOOT {
 
 	public $tables = null;
@@ -1203,7 +1215,13 @@ class WOOT {
 			$wp_columns_actions = sanitize_key($requested_data['wp_columns_actions']);
 		}
 
+		// Only the plugin's own hooks or registered table profiles may be called from a request, never a core or third-party hook
+		if (strpos($wp_columns_actions, 'woot_') !== 0 && !isset($GLOBALS['active_tables_actions'][$wp_columns_actions])) {
+			$wp_columns_actions = WOOT_WooCommerce::$action;
+		}
+
 		$profile = apply_filters($wp_columns_actions, $table_id, $shortcode_args_set);
+
 		if (!empty($profile)) {
 			if (isset($profile[$orderby])) {
 				$orderby_field = $profile[$orderby];
@@ -2218,7 +2236,7 @@ add_shortcode('woot_single_btn', function ($args) {
 			$post_id = $post->ID;
 		}
 	}
-	
+
 	if ($post_id > 0 && !woot_can_read_post($post_id)) {
 		return '';
 	}
@@ -2242,12 +2260,12 @@ add_shortcode('woot_single_btn', function ($args) {
 
 		$columns = '';
 		if (isset($args['columns'])) {
-			$columns = esc_js(sanitize_text_field($args['columns']));
+			$columns = sanitize_text_field($args['columns']);
 		}
 
 		$help_title = '';
 		if (isset($args['help_title'])) {
-			$help_title = esc_js(WOOT_Vocabulary::get($args['help_title']));
+			$help_title = sanitize_text_field(WOOT_Vocabulary::get($args['help_title']));
 			//$help_title = trim($help_title, '"');
 			//$help_title = trim($help_title, "'");
 			unset($args['help_title']);
@@ -2261,11 +2279,18 @@ add_shortcode('woot_single_btn', function ($args) {
 
 		$skin = '';
 		if (isset($args) AND isset($args['skin'])) {
-			$skin = esc_js(sanitize_text_field($args['skin']));
+			$skin = sanitize_text_field($args['skin']);
 		}
 
+		// JSON with hex flags writes quotes as \u0022, so HTML-decoding the href cannot break out of the JS strings
+		$js_flags = JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP;
+		$js_skin = wp_json_encode($skin, $js_flags);
+		$js_columns = wp_json_encode($columns, $js_flags);
+		$js_help_title = wp_json_encode($help_title, $js_flags);
+		$js_title = wp_json_encode(stripslashes($title), $js_flags);
+
 		return WOOT_HELPER::draw_html_item('a', array(
-				'href' => "javascript: woot_helper.call_popup(\"woot_get_table_single_product\",{product_id: {$post_id}, skin: \"{$skin}\", columns:\"{$columns}\", not_paste:1}, \"{$unique_id}\", \"{$title}\", {help_title: \"{$help_title}\",help_link: \"{$help_link}\"}); void(0);",
+				'href' => "javascript: woot_helper.call_popup(\"woot_get_table_single_product\",{product_id: {$post_id}, skin: {$js_skin}, columns:{$js_columns}, not_paste:1}, \"{$unique_id}\", {$js_title}, {help_title: {$js_help_title},help_link: \"{$help_link}\"}); void(0);",
 				'title' => $title,
 				'class' => $css_class
 				), $button_text);

@@ -5,7 +5,7 @@ Tags: woocommerce, product table, woocommerce product table, product list, order
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -168,6 +168,10 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 == Changelog ==
 
+= 2.1.6 =
+* Security update. Thanks to Kuba and Wordfence for the responsible disclosure.
+* Security fix, thanks to Wordfence Prism System
+
 = 2.1.5 =
 * Fixed: tables not displayed on block themes
 * Fixed: new columns were not added to the end of the table
@@ -263,7 +267,7 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 == License ==
 
-This plugin is copyright pluginus.net &copy; 2012-2026 with [GPLv2](https://en.wikipedia.org/wiki/GNU_General_Public_License) by realmag777.
+This plugin is copyright pluginus.net &copy; 2012-2027 with [GPLv2](https://en.wikipedia.org/wiki/GNU_General_Public_License) by realmag777.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the [GNU General Public License][] as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

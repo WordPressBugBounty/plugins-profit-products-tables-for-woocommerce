@@ -109,7 +109,12 @@ class WOOT_FilterFieldsOptions {
     public function get_field_data($table_id, $field_key) {
         $rows = [];
 
-        $profile = apply_filters(WOOT::get_table_action($table_id), $table_id);
+        // The profile is identical for every field of one table within a request; rebuilding it per field is O(N^2) on shops with thousands of attributes
+		static $profiles = [];
+		if (!isset($profiles[$table_id])) {
+			$profiles[$table_id] = apply_filters(WOOT::get_table_action($table_id), $table_id);
+		}
+		$profile = $profiles[$table_id];
 
         if (isset($profile[$field_key]['filter_options'])) {
             $filter_options = $profile[$field_key]['filter_options'];
