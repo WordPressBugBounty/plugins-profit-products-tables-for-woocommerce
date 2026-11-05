@@ -7,7 +7,7 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.6
+  Version: 2.1.7
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.6');
+define('WOOT_VERSION', '2.1.7');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -72,7 +72,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//04-11-2026
+//05-11-2026
 class WOOT {
 
 	public $tables = null;
@@ -1677,7 +1677,9 @@ class WOOT {
 				break;
 
 			case 'shortcodes_set':
-				$content = WOOT_HELPER::delete_not_allowed_shortcodes(esc_html($_REQUEST['shortcodes_set'] ?? ''));
+				// only a plain string is accepted, arrays and other types are ignored
+				$shortcodes_set = (isset($_REQUEST['shortcodes_set']) && is_string($_REQUEST['shortcodes_set'])) ? $_REQUEST['shortcodes_set'] : '';
+				$content = WOOT_HELPER::delete_not_allowed_shortcodes(esc_html($shortcodes_set));
 				$res = WOOT_HELPER::sanitize_array(do_shortcode($content));
 				break;
 

@@ -48,7 +48,6 @@ final class WOOT_HELPER {
 		return $item;
 	}
 
-
 	/**
 	 * Draw <select> item
 	 *
@@ -94,7 +93,7 @@ final class WOOT_HELPER {
 				}
 
 				// single quoted attributes, so only the apostrophe needs encoding - see draw_html_item()
-                $content .= '<option ' . self::selected(in_array($option_value, $selected)) . ' ' . $data_color . " value='" . str_replace("'", '&#039;', (string) $option_value) . "' title='" . str_replace("'", '&#039;', (string) $value) . "'>" . esc_html($value) . '</option>';
+				$content .= '<option ' . self::selected(in_array($option_value, $selected)) . ' ' . $data_color . " value='" . str_replace("'", '&#039;', (string) $option_value) . "' title='" . str_replace("'", '&#039;', (string) $value) . "'>" . esc_html($value) . '</option>';
 			}
 		}
 
@@ -389,18 +388,34 @@ final class WOOT_HELPER {
 		);
 		$allowed_shortcodes = apply_filters('woot_allowed_shortcodes', $tags);
 
-		$all_shortcodes = [];
-		foreach ($matches as $shortcode) {
-			$all_shortcodes[] = $shortcode[2];
+		// Allowlist only: rebuild the content from allowed shortcode matches and drop everything else
+		$allowed_shortcodes = array_values(array_filter(array_map('strval', (array) $allowed_shortcodes), 'shortcode_exists'));
+		if (empty($allowed_shortcodes) || !is_string($content) || $content === '') {
+			return '';
 		}
 
-		$not_allowed_shortcodes = array_diff($all_shortcodes, $allowed_shortcodes);
+		$matches = array();
+		preg_match_all('/' . get_shortcode_regex($allowed_shortcodes) . '/s', $content, $matches, PREG_SET_ORDER);
 
-		$pattern = get_shortcode_regex($not_allowed_shortcodes);
+		$result = '';
+		foreach ($matches as $m) {
+			// groups 1 and 6 are the [[...]] escape brackets: escaped forms are dropped
+			if (!empty($m[1]) || !empty($m[6])) {
+				continue;
+			}
+			// group 5 is enclosed content: only self-closing forms are accepted
+			if (isset($m[5]) && $m[5] !== '') {
+				continue;
+			}
+			// attributes must not carry brackets, so no other shortcode can hide inside them
+			$atts = isset($m[3]) ? $m[3] : '';
+			if (strpbrk($atts, '[]') !== false) {
+				continue;
+			}
+			$result .= '[' . $m[2] . $atts . ']';
+		}
 
-		$content = preg_replace_callback('/' . $pattern . '/s', 'strip_shortcode_tag', $content);
-
-		return $content;
+		return $result;
 	}
 }
 
@@ -513,8 +528,6 @@ add_filter('woot_get_calendar_names', function ($names) {
 	];
 });
 
-	
-	
 /**
  * Whether the current visitor may see this post's data in a table.
  * Published posts of front-end post types are open to everyone.
@@ -553,4 +566,3 @@ function woot_can_read_post($post_id) {
 
 	return current_user_can('read_post', $post_id);
 }
-
