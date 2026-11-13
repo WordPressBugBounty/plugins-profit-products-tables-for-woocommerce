@@ -7,13 +7,13 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.7
+  Version: 2.1.8
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
   Domain Path: /languages
   WC requires at least: 6.0
-  WC tested up to: 11.2
+  WC tested up to: 11.3
   Forum URI: https://pluginus.net/support/forum/woot-woocommerce-active-products-tables/
   License: GPLv2 or later
   License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.7');
+define('WOOT_VERSION', '2.1.8');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -72,7 +72,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//05-11-2026
+//13-11-2026
 class WOOT {
 
 	public $tables = null;
@@ -2084,14 +2084,26 @@ add_action('wp_loaded', function () {
 	//Example: https://site.com/?woot-remote-page=__PAGE_SLUG__&width=800&height=600&anchor=__CONTAINER_HTML_ID__
 	//Example: https://site.com/woot-remote.php?woot-remote-page=__PAGE_SLUG__&width=800&height=600&anchor=__CONTAINER_HTML_ID__
 	$get_data = WOOT_HELPER::sanitize_array($_GET);
-	if (isset($get_data['woot-remote-page']) AND isset($get_data['anchor'])) {
+	if (isset($get_data['woot-remote-page']) AND isset($get_data['anchor']) AND is_scalar($get_data['woot-remote-page']) AND is_scalar($get_data['anchor'])) {
+		//remote.js reads only scalar woot_* params, nothing else from the request reaches the output
+		$link_data = [];
+		foreach ($get_data as $key => $value) {
+			$key = (string) $key;
+			if (is_scalar($value) AND strpos($key, 'woot_') === 0 AND sanitize_key($key) === $key) {
+				$link_data[$key] = (string) $value;
+			}
+		}
+
+		//this response is a script, not an HTML page
+		header('Content-Type: application/javascript; charset=UTF-8');
+		header('X-Content-Type-Options: nosniff');
 		?>
 		var woot_remote_src = "<?php echo esc_url(home_url($get_data['woot-remote-page'])) ?>";
 		var woot_remote_width = '<?php echo esc_js(isset($get_data['width']) ? urldecode($get_data['width']) : '100%') ?>';
 		var woot_remote_height = <?php echo intval(isset($get_data['height']) ? intval($get_data['height']) : 500) ?>;
 		var woot_remote_anchor = "#<?php echo esc_js(wp_strip_all_tags(strval($get_data['anchor']))) ?>";
 		<?php
-		echo 'var woot_link_get_data=' . json_encode($get_data) . ';';
+		echo 'var woot_link_get_data=' . wp_json_encode($link_data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ';';
 		die(
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is generated and escaped inside render_html()
 			WOOT_HELPER::render_html('assets/js/remote.js')
