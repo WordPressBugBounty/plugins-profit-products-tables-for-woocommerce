@@ -318,6 +318,12 @@ final class WOOT_HELPER {
 
 		if (is_array($array) AND !empty($array)) {
 			foreach ($array as $key => $data) {
+				// keys reach JSON and HTML output too: only plain identifiers pass, anything else is dropped
+				if (!is_int($key) AND !preg_match('/^[A-Za-z0-9_\-.:]+$/', (string) $key)) {
+					unset($array[$key]);
+					continue;
+				}
+
 				if (is_array($data)) {
 					$array[$key] = self::sanitize_array($data);
 				} else {

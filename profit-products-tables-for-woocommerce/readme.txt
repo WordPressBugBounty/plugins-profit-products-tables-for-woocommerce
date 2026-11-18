@@ -5,7 +5,7 @@ Tags: woocommerce, product table, woocommerce product table, product list, order
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.1.8
+Stable tag: 2.1.9
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 6.0
@@ -170,6 +170,9 @@ R: You can report security bugs through the Patchstack Vulnerability Disclosure 
 
 
 == Changelog ==
+
+= 2.1.9 =
+* Security fix. Thanks to Zenith (Patchstack)
 
 = 2.1.8 =
 * Security fix. Thanks to Zenith (Patchstack)

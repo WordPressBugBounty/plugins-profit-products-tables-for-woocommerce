@@ -323,6 +323,9 @@ final class WOOT_Favourites {
 		// return the table wrapped in a <div>, while favourites.js reads this
 		// response with response.json() and expects the bare JSON payload.
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get() returns the JSON payload assembled by draw_table_data()
+		// the payload is JSON, favourites.js reads it with response.json()
+		header('Content-Type: application/json; charset=UTF-8');
+		header('X-Content-Type-Options: nosniff');
 		die($this->get($table_html_id, $post_type, $skin));
 	}
 

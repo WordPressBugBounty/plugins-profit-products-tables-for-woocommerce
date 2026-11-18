@@ -345,6 +345,9 @@ final class WOOT_Compare {
 		}
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- get() returns table HTML assembled by draw_table_data()
+		// the payload is JSON, compare.js reads it with response.json()
+		header('Content-Type: application/json; charset=UTF-8');
+		header('X-Content-Type-Options: nosniff');
 		die($this->get($table_id, $post_type, false, ['ids' => $ids], $skin));
 	}
 
@@ -362,7 +365,7 @@ final class WOOT_Compare {
 		if (woot_can_read_post($post_id)) {
 			$table_data[] = $post_id;
 		}
-		
+
 		$table_data = array_unique($table_data);
 
 		update_user_meta(get_current_user_id(), $this->storage_key, $table_data);

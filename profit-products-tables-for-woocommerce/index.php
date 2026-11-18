@@ -7,7 +7,7 @@
   Tested up to: 7.1
   Author: realmag777
   Author URI: https://pluginus.net/
-  Version: 2.1.8
+  Version: 2.1.9
   Requires PHP: 7.4
   Tags: tables, products, filter, woocommerce, products table
   Text Domain: profit-products-tables-for-woocommerce
@@ -30,7 +30,7 @@ define('WOOT_LINK', plugin_dir_url(__FILE__));
 define('WOOT_ASSETS_LINK', WOOT_LINK . 'assets/');
 define('WOOT_ASSETS_PATH', WOOT_PATH . 'assets/');
 define('WOOT_PLUGIN_NAME', plugin_basename(__FILE__));
-define('WOOT_VERSION', '2.1.8');
+define('WOOT_VERSION', '2.1.9');
 //define('WOOT_VERSION', uniqid('woot-')); //for dev
 
 require_once WOOT_PATH . 'install.php';
@@ -72,7 +72,7 @@ add_action('before_woocommerce_init', function () {
 	}
 });
 
-//13-11-2026
+//18-11-2026
 class WOOT {
 
 	public $tables = null;
@@ -965,7 +965,15 @@ class WOOT {
 			}
 		});
 
-		$get_data = WOOT_HELPER::sanitize_array($_GET);
+		// only scalar woot_* parameters of the link go to the table, nothing else from the request reaches the output
+		$get_data = [];
+		foreach ($_GET as $key => $value) {
+			$key = (string) $key;
+			if (is_scalar($value) AND strpos($key, 'woot_') === 0 AND sanitize_key($key) === $key) {
+				$get_data[$key] = stripslashes(sanitize_textarea_field(wp_unslash((string) $value)));
+			}
+		}
+
 		$js_script_data = [
 			'mode' => isset($args['mode']) ? $args['mode'] : 'ajax',
 			'ajax_url' => admin_url('admin-ajax.php'),
@@ -1027,7 +1035,7 @@ class WOOT {
 				'per_page' => $per_page,
 				'current_page' => $current_page,
 				'shortcode_args_set' => json_encode($args),
-				'woot_link_get_data' => json_encode($get_data)
+				'woot_link_get_data' => wp_json_encode($get_data)
 			]
 		];
 
@@ -1048,7 +1056,8 @@ class WOOT {
 		}
 
 
-		return json_encode($js_script_data);
+		// returned as raw JSON to AJAX callers, so tags and quotes are escaped as \u sequences
+		return wp_json_encode($js_script_data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 	}
 
 	/**
@@ -2099,7 +2108,15 @@ add_action('wp_loaded', function () {
 		header('X-Content-Type-Options: nosniff');
 		?>
 		var woot_remote_src = "<?php echo esc_url(home_url($get_data['woot-remote-page'])) ?>";
-		var woot_remote_width = '<?php echo esc_js(isset($get_data['width']) ? urldecode($get_data['width']) : '100%') ?>';
+
+		// width is a number with optional px or %, anything else falls back to the default
+		$woot_width = isset($get_data['width']) && is_scalar($get_data['width']) ? trim((string) $get_data['width']) : '';
+		if (!preg_match('/^\d+(px|%)?$/', $woot_width)) {
+		$woot_width = '100%';
+		}
+		?>
+		var woot_remote_width = '<?php echo esc_js($woot_width) ?>';
+
 		var woot_remote_height = <?php echo intval(isset($get_data['height']) ? intval($get_data['height']) : 500) ?>;
 		var woot_remote_anchor = "#<?php echo esc_js(wp_strip_all_tags(strval($get_data['anchor']))) ?>";
 		<?php
